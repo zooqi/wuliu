@@ -1,0 +1,126 @@
+#main {
+	width: 1080px;
+	height: 620px;
+}
+
+#head {
+	position: absolute;
+	margin: 0 auto;
+	top: 20px;
+	left: 40px;
+	width: 1050px;
+	height: 115px;
+}
+
+#two {
+	position: absolute;
+	margin: 0 auto;
+	top: 110px;
+	height: 450px;
+	width: 1250px;
+	left: 40px;
+}
+
+#three {
+	position: relative;
+	top: 580px;
+	left: 220px;
+	font-size: 14px;
+	font-color: black;
+}
+
+#four {
+	position: absolute;
+	text-align: center;
+	top: 65px;
+	left: 30px;
+	background-color: #FFF6D2;
+	width: 277px;
+	height: 19px;
+	font-size: 13.2px;
+	color: gray;
+	background-image: url(../img/login.png);
+	background-repeat: no-repeat;
+	/*要加长度单位*/
+	background-position: -92px -18px;
+	padding-left: 10px;
+	padding-top: 6px;
+	border: solid 1.5px #FFE57D;
+}
+
+#background {
+	position: absolute;
+	top: 65px;
+	left: 80px;
+}
+
+#login {
+	position: absolute;
+	background-color: white;
+	top: 55px;
+	right: 65px;
+	height: 310px;
+	width: 350px;
+	border: solid 1px #CCC;
+}
+
+#ll {
+	position: absolute;
+	z-index: 3;
+	top: 105px;
+	left: 30px;
+	width: 38px;
+	height: 38px;
+	border: 1px solid black;
+	border-right: 1px solid #bdbdbd;
+	background-image: url(../img/login.png);
+	background-repeat: no-repeat;
+	/*要加长度单位*/
+	background-position: 0px 0px;
+}
+
+#loginname {
+	position: relative;
+	top: 2px;
+	left: 70px;
+	height: 32px;
+	width: 245px;
+}
+
+#ps {
+	position: absolute;
+	z-index: 4;
+	top: 161px;
+	left: 30px;
+	width: 38px;
+	height: 38px;
+	border: 1px solid black;
+	border-right: 1px solid #bdbdbd;
+	background-image: url(../img/login.png);
+	background-repeat: no-repeat;
+	background-position: -49px 0px;
+}
+
+#password {
+	position: relative;
+	top: 2px;
+	left: 70px;
+	height: 32px;
+	width: 245px;
+}
+
+#loginButton {
+	position: relative;
+	top: 8px;
+	left: 27px;
+	height: 35px;
+	width: 290px;
+}
+
+a:link, a:visited {
+	text-decoration: none; /*超链接无下划线*/
+}
+
+a:hover {
+	text-decoration: underline; /*鼠标放上去有下划线*/
+}
