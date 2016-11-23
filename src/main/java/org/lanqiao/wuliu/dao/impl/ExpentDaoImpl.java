@@ -7,7 +7,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import org.lanqiao.wuliu.bean.Emp;
 import org.lanqiao.wuliu.bean.Expent;
 
 /**
@@ -25,10 +24,10 @@ public class ExpentDaoImpl extends BaseDaoImpl {
 	 * @return
 	 */
 	public int expInsert(Expent expent) {
-		String sql = "INSERT expent(expFunction,expMoney,expDate,expRemak,empId) VALUES(?,?,?,?,?)";
+		String sql = "INSERT expent(expFunction,expMoney,expDate,expRemak) VALUES(?,?,?,?,?)";
 		Object[] params = new Object[] { expent.getExpFunction(),
 				expent.getExpMoney(), expent.getExpDate(),
-				expent.getExpRemark(), expent.getEmp().getEmpId() };
+				expent.getExpRemark()};
 		return cud(sql, params);
 	}
 
@@ -38,13 +37,12 @@ public class ExpentDaoImpl extends BaseDaoImpl {
 		return cud(sql, params);
 	}
 
-	public int expUpdate(int expId, int empId) {
+	public int expUpdate(int expId) {
 		Expent expent = new Expent();
-		String sql = "UPDATE expent ex,emp e SET expFunction=?,expMoney=?,expDate=?,expRemak=?,empName=? WHERE ex.empId=e.empId AND expId=? AND empId=?";
+		String sql = "UPDATE expent SET expFunction=?,expMoney=?,expDate=?,expRemak=? WHERE expId=?";
 		Object[] params = new Object[] { expent.getExpFunction(),
 				expent.getExpMoney(), expent.getExpDate(),
-				expent.getExpRemark(), expent.getEmp().getEmpId(),
-				expent.getEmp().getEmpName(), expent.getEmp().getEmpNum() };
+				expent.getExpRemark()};
 		return cud(sql, params);
 	}
 
@@ -53,7 +51,7 @@ public class ExpentDaoImpl extends BaseDaoImpl {
 		ArrayList<Expent> list = new ArrayList<Expent>();
 		
 		StringBuffer sql = new StringBuffer(
-				"SELECT empNum,empName,empDepart,expFunction,expMoney,expDate,expRemak FROM emp e,expent ex WHERE e.empId=ex.empId AND empId=? AND expId=?");
+				"SELECT empNum,empName,expFunction,expMoney,expDate,expRemak FROM expent WHERE expId=?");
 		if (expentReach.getExpFunction() != null
 				&& !expentReach.getExpFunction().equals("")) {
 			sql.append("AND expentFuncton like '%")
@@ -64,36 +62,29 @@ public class ExpentDaoImpl extends BaseDaoImpl {
 			sql.append("AND expentDate like '%")
 					.append(expentReach.getExpDate()).append("%' ");
 		}
-		if (expentReach.getEmp().getEmpName() != null
-				&& !expentReach.getEmp().getEmpName().equals("")) {
+		if (expentReach.getExpEmpName()!= null
+				&& !expentReach.getExpEmpName().equals("")) {
 			sql.append("AND empName like '%")
-					.append(expentReach.getEmp().getEmpName()).append("%' ");
+					.append(expentReach.getExpEmpName()).append("%' ");
 		}
-		if (expentReach.getEmp().getEmpNum() != null
-				&& !expentReach.getEmp().getEmpNum().equals("")) {
+		if (expentReach.getExpEmpNum() != null
+				&& !expentReach.getExpEmpNum().equals("")) {
 			sql.append("AND empNum like '%")
-					.append(expentReach.getEmp().getEmpNum()).append("%' ");
-		}
-		if (expentReach.getEmp().getEmpDepart() != null
-				&& !expentReach.getEmp().getEmpDepart().equals("")) {
-			sql.append("AND empDepart like '%")
-					.append(expentReach.getEmp().getEmpDepart()).append("%' ");
+					.append(expentReach.getExpEmpNum()).append("%' ");
 		}
 		sql.append(" ORDER BY ex.expId LIMIT ?, ?");
 		ResultSet rs = select(sql.toString(), new Object[] { pageCurrentFirst,
 				pageRows });
 		try {
 			while(rs.next()){
-				Emp emp=new Emp();
+			
 				Expent expent=new Expent();
-				emp.setEmpNum(rs.getString(1));
-				emp.setEmpDepart(rs.getString(2));
-				emp.setEmpDepart(rs.getString(3));
-				expent.setExpFunction(rs.getString(4));
-				expent.setExpMoney(rs.getDouble(5));
-				expent.setExpDate(rs.getDate(6));
-				expent.setExpRemark(rs.getString(7));
-				expent.setEmp(emp);
+				expent.setExpEmpNum(rs.getString(1));
+				expent.setExpEmpName(rs.getString(2));
+				expent.setExpFunction(rs.getString(3));
+				expent.setExpMoney(rs.getDouble(4));
+				expent.setExpDate(rs.getDate(5));
+				expent.setExpRemark(rs.getString(6));
 				list.add(expent);
 			}
 		} catch (SQLException e) {

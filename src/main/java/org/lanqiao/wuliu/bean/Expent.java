@@ -14,7 +14,8 @@ public class Expent {
 	private Double expMoney;
 	private Date expDate;
 	private String expRemark;
-	private Emp emp;
+	private String expEmpNum;
+	private String expEmpName;
 
 	public Integer getExpId() {
 		return expId;
@@ -52,16 +53,24 @@ public class Expent {
 		return expRemark;
 	}
 
+	public String getExpEmpNum() {
+		return expEmpNum;
+	}
+
+	public void setExpEmpNum(String expEmpNum) {
+		this.expEmpNum = expEmpNum;
+	}
+
+	public String getExpEmpName() {
+		return expEmpName;
+	}
+
+	public void setExpEmpName(String expEmpName) {
+		this.expEmpName = expEmpName;
+	}
+
 	public void setExpRemark(String expRemark) {
 		this.expRemark = expRemark;
-	}
-
-	public Emp getEmp() {
-		return emp;
-	}
-
-	public void setEmp(Emp emp) {
-		this.emp = emp;
 	}
 
 }

@@ -8,37 +8,37 @@
 	</div>
 
 	<div style="margin: 20px 30px auto 30px;">
-		<table id="goods_datagrid"></table>
+		<table id="deliver_datagrid"></table>
 		<!-- 工具栏按钮 -->
-		<div id="goods_toolbar">
-			<a id="goods_reload" href="javascript:void(0)"
+		<div id="deliver_toolbar">
+			<a id="deliver_reload" href="javascript:void(0)"
 				class="easyui-linkbutton"
 				data-options="iconCls:'icon-reload',plain:true">显示所有</a> <a
-				id="goods_add" href="javascript:void(0)" class="easyui-linkbutton"
+				id="deliver_add" href="javascript:void(0)" class="easyui-linkbutton"
 				data-options="iconCls:'icon-add',plain:true">添加</a> <a
-				id="goods_edit" href="javascript:void(0)" class="easyui-linkbutton"
+				id="deliver_edit" href="javascript:void(0)" class="easyui-linkbutton"
 				data-options="iconCls:'icon-edit',plain:true">编辑</a> <a
-				id="goods_delete" href="javascript:void(0)"
+				id="deliver_delete" href="javascript:void(0)"
 				class="easyui-linkbutton"
 				data-options="iconCls:'icon-remove',plain:true">删除</a> <a
-				id="goods_search" href="javascript:void(0)"
+				id="deliver_search" href="javascript:void(0)"
 				class="easyui-linkbutton"
 				data-options="iconCls:'icon-search',plain:true">搜索</a> 
-				<a id="goods_print" href="javascript:void(0)" class="easyui-linkbutton"
+				<a id="deliver_print" href="javascript:void(0)" class="easyui-linkbutton"
 				data-options="iconCls:'icon-print',plain:true">打印预览</a>
-				<a id="goods_input" href="javascript:void(0)" class="easyui-linkbutton"
+				<a id="deliver_input" href="javascript:void(0)" class="easyui-linkbutton"
 				data-options="iconCls:'icon-undo',plain:true">数据导入</a>
 		</div>
 	</div>
 		<!-- 对话框 -->
-		<div id="goods_edit_dlg" class="easyui-dialog"
+		<div id="deliver_edit_dlg" class="easyui-dialog"
 			style="padding: 0px 0px; width: 805px; height: 380px;"
-			data-options="closed:true,buttons:'#goods_edit_dlg-buttons'">
+			data-options="closed:true,buttons:'#deliver_edit_dlg-buttons'">
 			<div id="other" style="margin: 20px auto auto 20px;">
 		
 			</div>
-			<form id="goods_edit_fm">
-				<div id="goods_edit_tabs" class="easyui-tabs">
+			<form id="deliver_edit_fm">
+				<div id="deliver_edit_tabs" class="easyui-tabs">
 					<div title="货物基本信息">
 						<table class="zooqi-frame-text" border="1"
 							style="border-collapse: collapse; border: 1px solid #D6E3F4; margin-left: 3px; margin-right: 1px"
@@ -185,53 +185,53 @@
 			</form>
 		</div>
 		<!-- 按钮 -->
-		<div id="goods_edit_dlg-buttons">
-			<a id="goods_edit_submit_button" href="javascript:void(0)"
+		<div id="deliver_edit_dlg-buttons">
+			<a id="deliver_edit_submit_button" href="javascript:void(0)"
 				class="easyui-linkbutton c6" data-options="iconCls:'icon-ok'"
 				style="width: 90px">保存</a> 
 			<a href="javascript:void(0)"
 				class="easyui-linkbutton" data-options="iconCls:'icon-cancel'"
-				onclick="javascript:$('#goods_edit_dlg').dialog('close');$('#goods_edit_fm').form('clear');"
+				onclick="javascript:$('#deliver_edit_dlg').dialog('close');$('#deliver_edit_fm').form('clear');"
 				style="width: 90px">取消</a>
 		</div>
 	</div>
 
 	<!-- 搜索表单 -->
-	<div id="goods_search_dlg" class="easyui-dialog"
+	<div id="deliver_search_dlg" class="easyui-dialog"
 		style="padding: 20px 50px;"
-		data-options="closed:true,buttons:'#goods_search_dlg-buttons'">
-		<form id="goods_search_fm">
+		data-options="closed:true,buttons:'#deliver_search_dlg-buttons'">
+		<form id="deliver_search_fm">
 			<table class="zooqi-frame-text" style="border-spacing: 10px;">
 				<tr>
 					<td width="70px">车 &nbsp;牌 &nbsp;号：</td>
-					<td><input id="goods_carLicence" class="easyui-validatebox"
+					<td><input id="deliver_carLicence" class="easyui-validatebox"
 						name="logCarLicence" data-options="validType:'length[0,32]'"
 						style="width: 110px"></td>
 				</tr>
 
 				<tr>
 					<td width="70px">发车日期：</td>
-					<td><input id="goods_logSendDate" class="easyui-validatebox"
+					<td><input id="deliver_logSendDate" class="easyui-validatebox"
 						name="logSendDate" data-options="validType:'length[0,32]'"
 						style="width: 110px"></td>
 				</tr>
 			</table>
 		</form>
 	</div>
-	<div id="goods_search_dlg-buttons">
-		<a id="goods_search_button" href="javascript:void(0)"
+	<div id="deliver_search_dlg-buttons">
+		<a id="deliver_search_button" href="javascript:void(0)"
 			class="easyui-linkbutton c6" data-options="iconCls:'icon-ok'"
 			style="width: 90px">搜索</a> <a href="javascript:void(0)"
 			class="easyui-linkbutton" data-options="iconCls:'icon-cancel'"
-			onclick="javascript:$('#goods_search_dlg').dialog('close')"
+			onclick="javascript:$('#deliver_search_dlg').dialog('close')"
 			style="width: 90px">取消</a>
 	</div>
 
 	<!-- 导入表单 -->
-	<div id="goods_input_dlg" class="easyui-dialog"
+	<div id="deliver_input_dlg" class="easyui-dialog"
 		style="padding: 20px 50px;"
-		data-options="closed:true,buttons:'#goods_input_dlg-buttons'">
-		<form id="goods_input_fm">
+		data-options="closed:true,buttons:'#deliver_input_dlg-buttons'">
+		<form id="deliver_input_fm">
 			<table class="zooqi-frame-text" style="border-spacing: 10px;">
 				<tr>
 					<td>物流清单：<input class="easyui-filebox" style="width:300px">
@@ -239,12 +239,12 @@
 			</table>
 		</form>
 	</div>
-	<div id="goods_input_dlg-buttons">
-		<a id="goods_input_button" href="javascript:void(0)"
+	<div id="deliver_input_dlg-buttons">
+		<a id="deliver_input_button" href="javascript:void(0)"
 			class="easyui-linkbutton c6" data-options="iconCls:'icon-ok'"
 			style="width: 90px">导入</a> <a href="javascript:void(0)"
 			class="easyui-linkbutton" data-options="iconCls:'icon-cancel'"
-			onclick="javascript:$('#goods_input_dlg').dialog('close')"
+			onclick="javascript:$('#deliver_input_dlg').dialog('close')"
 			style="width: 90px">取消</a>
 	</div>
 
@@ -254,13 +254,13 @@
 	var isAllNotNullStr = false;
 	var isSearchBtnClicked = false;
 		$("#other").hide();
-		$('#goods_datagrid').datagrid({
+		$('#deliver_datagrid').datagrid({
 			url : 'goodsReach',
 			fitColumns : true,
 			singleSelect : true,
 			pagination : true,
 			rownumbers : true,
-			toolbar : '#goods_toolbar',
+			toolbar : '#deliver_toolbar',
 			remoteSort : false,
 
 			columns : [ [ {
@@ -398,30 +398,30 @@
 		});
 
 		/* 显示所有 */
-		$('#goods_reload').click(function() {
-			$("#goods_datagrid").datagrid("load", {});
+		$('#deliver_reload').click(function() {
+			$("#deliver_datagrid").datagrid("load", {});
 		});
 
 		var url;
 		/* 弹出添加窗口 */
-		$('#goods_add').click(function() {
-			$('#goods_edit_dlg').dialog('open').dialog('setTitle', '添加');
+		$('#deliver_add').click(function() {
+			$('#deliver_edit_dlg').dialog('open').dialog('setTitle', '添加');
 			url = 'goodsAdd';
 		});
 		
 		/* 弹出编辑窗口 */
-		$('#goods_edit').click(function() {
-			var row = $('#goods_datagrid').datagrid('getSelected');
+		$('#deliver_edit').click(function() {
+			var row = $('#deliver_datagrid').datagrid('getSelected');
 			if (row) {
 				url = 'goodsUpda?goId=' + row.goId;
-				$('#goods_edit_dlg').dialog('open').dialog('setTitle', '编辑信息');
-				$('#goods_edit_fm').form('load', row);
+				$('#deliver_edit_dlg').dialog('open').dialog('setTitle', '编辑信息');
+				$('#deliver_edit_fm').form('load', row);
 			} else {
 				$.messager.alert('提示', '请选择数据！');
 			}
 		});
-		$('#goods_edit_submit_button').click(function() {
-			if (!$('#goods_edit_fm').form('validate')) {
+		$('#deliver_edit_submit_button').click(function() {
+			if (!$('#deliver_edit_fm').form('validate')) {
 				$.messager.alert('提示', '请正确填写信息！');
 				return;
 			}
@@ -430,12 +430,12 @@
 					$.ajax({
 						type : 'POST',
 						url : url,
-						data : $('#goods_edit_fm').serialize(),
+						data : $('#deliver_edit_fm').serialize(),
 						success : function(data) {
 							if (data.success) {
 								$.messager.alert('提示', '保存成功！');
-								$('#goods_edit_dlg').dialog('close');
-								$("#goods_datagrid").datagrid("reload");
+								$('#deliver_edit_dlg').dialog('close');
+								$("#deliver_datagrid").datagrid("reload");
 							} else {
 								$.messager.alert('提示', '保存失败，请稍后再试！');
 							}
@@ -445,15 +445,15 @@
 						}
 					});
 				} else {
-					$('#goods_edit_dlg').dialog('close');
+					$('#deliver_edit_dlg').dialog('close');
 				}
-				$('#goods_edit_fm').form('clear');
+				$('#deliver_edit_fm').form('clear');
 			});
 		});
 
 		/* 删除用户 */
-		$('#goods_delete').click(function() {
-			var row = $('#goods_datagrid').datagrid('getSelected');
+		$('#deliver_delete').click(function() {
+			var row = $('#deliver_datagrid').datagrid('getSelected');
 			if (row) {
 				$.messager.confirm('确认', '确认删除吗？', function(r) {
 					if (r) {
@@ -467,7 +467,7 @@
 								//var result = eval("(" + data + ")");
 								if (data.success) {
 									$.messager.alert('提示', '删除成功！');
-									$("#goods_datagrid").datagrid("reload");
+									$("#deliver_datagrid").datagrid("reload");
 								} else {
 									$.messager.alert('提示', '删除失败，请稍后再试！');
 								}
@@ -484,36 +484,36 @@
 		});
 
 		/*弹出搜索窗口*/
-		$('#goods_search').click(function() {
-			$('#goods_search_dlg').dialog('open').dialog('setTitle', '搜索');
+		$('#deliver_search').click(function() {
+			$('#deliver_search_dlg').dialog('open').dialog('setTitle', '搜索');
 		});
 		/* 搜索 */
-		$('#goods_search_button').click(function() {
+		$('#deliver_search_button').click(function() {
 			//验证是否都为空
 			
-			if (!$('#goods_search_fm').form('validate')) {
+			if (!$('#deliver_search_fm').form('validate')) {
 				$.messager.alert('提示', '请正确填写信息！');
 				return;
 			}
 			
 			isSearchBtnClicked = true;
-			isAllNotNullStr = ($('#goods_carLicence').val() != '' && $('#goods_logSendDate').val() != '');
+			isAllNotNullStr = ($('#deliver_carLicence').val() != '' && $('#deliver_logSendDate').val() != '');
 			
-			$('#goods_datagrid').datagrid('load', {
+			$('#deliver_datagrid').datagrid('load', {
 			});
 			$("#other").show();
-			$('#goods_search_dlg').dialog('close');
-			$('#goods_search_fm').form('clear');
+			$('#deliver_search_dlg').dialog('close');
+			$('#deliver_search_fm').form('clear');
 		});
 
 		/*弹出修改密码窗口*/
 		var cgpwd_id;
-		$('#goods_password').click(
+		$('#deliver_password').click(
 				function() {
-					var row = $('#goods_datagrid').datagrid('getSelected');
+					var row = $('#deliver_datagrid').datagrid('getSelected');
 					if (row) {
 						cgpwd_id = row.goId;
-						$('#goods_cgpwd_dlg').dialog('open').dialog('setTitle',
+						$('#deliver_cgpwd_dlg').dialog('open').dialog('setTitle',
 								'修改密码');
 					} else {
 						$.messager.alert('提示', '请选择数据！');
@@ -521,8 +521,8 @@
 				});
 		
 		/*打印*/
-		$('#goods_print').click(function() {
-			var row = $('#goods_datagrid').datagrid('getSelected');
+		$('#deliver_print').click(function() {
+			var row = $('#deliver_datagrid').datagrid('getSelected');
 			if (row) {
 				$.ajax({
 					type : 'POST',
@@ -543,8 +543,8 @@
 		});
 		
 		/*数据导入*/
-		$('#goods_input').click(function() {
-			$('#goods_input_dlg').dialog('open').dialog('setTitle', '数据导入');
+		$('#deliver_input').click(function() {
+			$('#deliver_input_dlg').dialog('open').dialog('setTitle', '数据导入');
 			url='goodInput';
 		});
 	</script>

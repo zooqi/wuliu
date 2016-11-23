@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.lanqiao.wuliu.bean.Emp;
 import org.lanqiao.wuliu.bean.Expent;
 import org.lanqiao.wuliu.service.impl.ExpentSerciceImpl;
 
@@ -28,6 +27,8 @@ public class ExpUpdate extends HttpServlet {
 		response.setContentType("application/json;charset=UTF-8");
 		PrintWriter out = response.getWriter();
 
+		String expEmpNum=request.getParameter("expEmpNum");
+		String expEmpName=request.getParameter("expEmpName");
 		int expId = Integer.parseInt(request.getParameter("expId"));
 		String expFunction = request.getParameter("expFunction");
 		double expMoney = Double.parseDouble(request.getParameter("expMoney"));
@@ -44,19 +45,19 @@ public class ExpUpdate extends HttpServlet {
 		}
 
 		String expRemark = request.getParameter("expRemark");
-		int empId = Integer.parseInt(request.getParameter("empId"));
 
 		Expent exp = new Expent();
-		Emp emp = new Emp();
+
+		exp.setExpEmpName(expEmpName);
+		exp.setExpEmpNum(expEmpNum);
 		exp.setExpId(expId);
 		exp.setExpFunction(expFunction);
 		exp.setExpMoney(expMoney);
 		exp.setExpDate(expDate);
 		exp.setExpRemark(expRemark);
-		emp.setEmpId(empId);
-		exp.setEmp(emp);
+		
 		ExpentSerciceImpl esi = new ExpentSerciceImpl();
-		if (esi.expUpdate(expId, empId) == 1) {
+		if (esi.expUpdate(expId) == 1) {
 			out.println("{\"success\":true}");
 		} else {
 			out.println("{\"success\":false}");

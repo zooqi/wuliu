@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.lanqiao.wuliu.bean.Emp;
 import org.lanqiao.wuliu.bean.Expent;
 import org.lanqiao.wuliu.service.impl.ExpentSerciceImpl;
 
@@ -27,9 +26,8 @@ public class ExpInsert extends HttpServlet {
 		response.setContentType("application/json;charset=UTF-8");
 		PrintWriter out = response.getWriter();
 
-		String empNum = request.getParameter("empNum");
-		String empName = request.getParameter("empName");
-		String empDepart = request.getParameter("empDepart");
+		String expEmpNum = request.getParameter("expEmpNum");
+		String expEmpName = request.getParameter("expEmpName");
 		String expFunction = request.getParameter("expFunction");
 		double expMoney = 0;
 		String a = request.getParameter("expMoney");
@@ -47,14 +45,10 @@ public class ExpInsert extends HttpServlet {
 			}
 		}
 		String expRemark = request.getParameter("expRemark");
-
-		Emp emp = new Emp();
 		Expent expent = new Expent();
 
-		emp.setEmpNum(empNum);
-		emp.setEmpName(empName);
-		emp.setEmpDepart(empDepart);
-		expent.setEmp(emp);
+		expent.setExpEmpNum(expEmpNum);
+		expent.setExpEmpName(expEmpName);
 		expent.setExpFunction(expFunction);
 		expent.setExpMoney(expMoney);
 		expent.setExpDate(expDate);

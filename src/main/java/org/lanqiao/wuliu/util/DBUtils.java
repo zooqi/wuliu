@@ -28,7 +28,7 @@ public class DBUtils {
 			Class.forName("com.mysql.jdbc.Driver");
 			connection = DriverManager.getConnection(URL, USER, PASSWORD);
 			statement = connection.createStatement();
-		} catch (Exception e) {
+		} catch (Exception e  ) {
 			e.printStackTrace();
 		}
 	}
