@@ -19,15 +19,14 @@ import org.json.JSONObject;
 import org.lanqiao.wuliu.bean.Goods;
 import org.lanqiao.wuliu.bean.Logistics;
 import org.lanqiao.wuliu.service.impl.BusinessManageServiceImpl;
-
 /**
  * 查找物流记录
  * 
  * @author 杨明静
  *
  */
-@WebServlet(name = "goodsReachs", urlPatterns = { "/goodsReachs" })
-public class GoodsReach extends HttpServlet {
+@WebServlet(name = "goodsReach", urlPatterns = { "/goodsReach" })
+public class GoodsReachs extends HttpServlet {
 
 	private static final long serialVersionUID = -4742707004844364472L;
 
@@ -58,7 +57,7 @@ public class GoodsReach extends HttpServlet {
 		goodsReach.setLogistics(logistics);
 
 		BusinessManageServiceImpl bms = new BusinessManageServiceImpl();
-		ArrayList<Goods> goods = bms.goReachs((page - 1) * rowsPerPage, rowsPerPage, goodsReach);
+		ArrayList<Goods> goods = bms.goReach((page - 1) * rowsPerPage, rowsPerPage, goodsReach);
 		JSONObject json = new JSONObject();
 		JSONArray arry1 = new JSONArray();
 		for (Goods good : goods) {

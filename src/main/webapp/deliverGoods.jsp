@@ -27,7 +27,7 @@
 				<a id="deliver_print" href="javascript:void(0)" class="easyui-linkbutton"
 				data-options="iconCls:'icon-print',plain:true">打印预览</a>
 				<a id="deliver_input" href="javascript:void(0)" class="easyui-linkbutton"
-				data-options="iconCls:'icon-undo',plain:true">数据导入</a>
+				data-options="iconCls:'icon-undo',plain:true">数据导出</a>
 		</div>
 	</div>
 		<!-- 对话框 -->

@@ -34,28 +34,30 @@
 							cellspacing="35%" cellpadding="8">
 							<tr>
 								<td style="width: 93px; text-align: center;">职&nbsp;工&nbsp;号：</td>
-							    <td><input id="expent" name="expEmpNum" style="width: 120px"></td>
+								<td><input id="expent_expEmpNum1" name="expEmpNum"
+									style="width: 120px"></td>
 								<td style="width: 93px; text-align: center;">姓&emsp;&emsp;名：</td>
-								<td><input id="expent" name="expEmpName" style="width: 113px"></td>
+								<td><input id="expent_expEmpName1" name="expEmpName"
+									style="width: 113px"></td>
 							</tr>
-							
+
 							<tr>
 								<td style="width: 93px; text-align: center;">用&emsp;&emsp;途：</td>
-								<td><input id="expent" name="expFunction"
+								<td><input id="expent_expFunction1" name="expFunction"
 									style="width: 120px"></td>
 								<td style="width: 93px; text-align: center;">金&emsp;&emsp;额：</td>
-								<td><input id="expent" name="expMoney"
+								<td><input id="expent_expMoney1" name="expMoney"
 									style="width: 113px"></td>
 							</tr>
 							<tr>
-								
+
 								<td style="width: 93px; text-align: center;">时&emsp;&emsp;间：</td>
-								<td><input class="easyui-datebox" name="expDate"
+								<td><input class="easyui-datebox" id="expent_expDate1" name="expDate"
 									data-options="validType:'length[0,32]'" style="width: 120px">
 								</td>
 								<td style="width: 93px; text-align: center;">备&emsp;&emsp;注：</td>
-								<td><input id="expent" name="expRemark"
-									style="width:113px"></td>
+								<td><input id="expent_expRemark1" name="expRemark"
+									style="width: 113px"></td>
 							</tr>
 						</table>
 					</div>
@@ -87,7 +89,7 @@
 				</tr>
 				<tr>
 					<td width="70px">员工姓名：</td>
-					<td><input id="expent_expEempName" name="expEmpName"
+					<td><input id="expent_expEmpName" name="expEmpName"
 						style="width: 114px"></td>
 				</tr>
 				<tr>
@@ -99,7 +101,7 @@
 					<td width="70px">日&emsp;&emsp;期 ：</td>
 					<td><input class="easyui-datebox" name="expDate"
 						id="expent_expDate" style="width: 116px"></td>
-						
+
 				</tr>
 			</table>
 		</form>
@@ -176,13 +178,13 @@
 				align : 'center',
 				sortable : true,
 				width : 100
-			},{
+			}, {
 				title : '备注',
 				field : 'expRemark',
 				align : 'center',
 				sortable : true,
 				width : 100
-			}] ]
+			} ] ]
 		});
 
 		/* 显示所有 */
@@ -286,9 +288,11 @@
 			}
 			$('#expent_datagrid').datagrid('load', {
 				expEmpNum : $('#expent_expEmpNum').val(),
-				expEmpName : $('#expent_expEmpName').combobox('getText'),
-				expDate : $('#expent_expDate').datebox('getValue')
+				expEmpName : $('#expent_expEmpName').val(),
+				expDate : $('#expent_expDate').datebox('getValue'),
+				expFunction : $('#expent_expFunction').val()
 			});
+			//console.log($('expDate').datebox('getValue'));
 			$('#expent_search_dlg').dialog('close');
 			$('#expent_search_fm').form('clear');
 		});

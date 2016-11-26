@@ -84,4 +84,20 @@ public class BusinessManageServiceImpl {
 	public int goInput(Goods goods) {
 		return 0;
 	}
+	
+	/**
+	 * 查到货物品清单信息
+	 * 
+	 * @param pageCurrentFirst
+	 *            某页的第一条记录
+	 * @param pageRows
+	 *            一页的记录数
+	 * @param goodsReach
+	 *            物品清单对象
+	 * @return 返回ArrayList对象
+	 */
+	public ArrayList<Goods> goReachs(int pageCurrentFirst, int pageRows,
+			Goods goodsReach) {
+		return bm.goReachs(pageCurrentFirst, pageRows, goodsReach);
+	}
 }

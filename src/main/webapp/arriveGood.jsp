@@ -248,7 +248,7 @@
 	var isSearchBtnClicked = false;*/
 		/*$("#other").hide();*/
 		$('#goods_datagrid').datagrid({
-			url : 'goodsReach',
+			url : 'goodsReachs',
 			fitColumns : true,
 			singleSelect : true,
 			pagination : true,

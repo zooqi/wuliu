@@ -30,9 +30,14 @@ public class ExpUpdate extends HttpServlet {
 		String expEmpNum=request.getParameter("expEmpNum");
 		String expEmpName=request.getParameter("expEmpName");
 		int expId = Integer.parseInt(request.getParameter("expId"));
+		//System.out.println(expId);
 		String expFunction = request.getParameter("expFunction");
-		double expMoney = Double.parseDouble(request.getParameter("expMoney"));
-
+		
+		String money=request.getParameter("expMoney");
+		double expMoney=0;
+		if(!money.equals(null)&&!money.equals("")){
+			expMoney = Double.parseDouble(money);
+		}
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 		Date expDate = null;
 		String c = request.getParameter("expDate");
@@ -57,7 +62,7 @@ public class ExpUpdate extends HttpServlet {
 		exp.setExpRemark(expRemark);
 		
 		ExpentSerciceImpl esi = new ExpentSerciceImpl();
-		if (esi.expUpdate(expId) == 1) {
+		if (esi.expUpdate(exp, expId)==1) {
 			out.println("{\"success\":true}");
 		} else {
 			out.println("{\"success\":false}");

@@ -119,7 +119,7 @@ public class BusinessManage extends BaseDaoImpl {
 			Goods goodsReach) {
 		ArrayList<Goods> ar = new ArrayList<Goods>();
 		StringBuffer sql = new StringBuffer(
-				"SELECT goBank,goName,goNum,goPack,goWeight,goVolume,goSendMan,goSendPhone,goSendAddress,goForMan,goForPhone,goForAddress,goGetWay,goPayWay,goPay,goInsurancePay,goReplacePay,goCommission,goDamagePay,goTransitPay,goSiteEnd,goRemark,goId FROM goods g,logistics l  WHERE g.logId=l.logId AND l.logSiteEnd='桂林'");
+				"SELECT goBank,goName,goNum,goPack,goWeight,goVolume,goSendMan,goSendPhone,goSendAddress,goForMan,goForPhone,goForAddress,goGetWay,goPayWay,goPay,goInsurancePay,goReplacePay,goCommission,goDamagePay,goTransitPay,goSiteEnd,goRemark,goId FROM goods g,logistics l  WHERE g.logId=l.logId AND l.logSiteEnd ='桂林'");
 		if (goodsReach.getLogistics().getLogCarLicence() != null
 				&& !goodsReach.getLogistics().getLogCarLicence().equals("")) {
 			sql.append("AND l.logCarLicence like '%")
@@ -180,5 +180,71 @@ public class BusinessManage extends BaseDaoImpl {
 	public int goDele(int goId) {
 		String sql = "DELETE FROM goods WHERE goId=?";
 		return cud(sql, new Object[] { goId });
+	}
+	
+	/**
+	 * 查找到货物品清单信息
+	 * 
+	 * @param pageCurrentFirst
+	 *            某页的第一条记录
+	 * @param pageRows
+	 *            一页的记录数
+	 * @param goodsReach
+	 *            物品清单对象
+	 * @return 返回ArrayList对象
+	 */
+	public ArrayList<Goods> goReachs(int pageCurrentFirst, int pageRows,
+			Goods goodsReach) {
+		ArrayList<Goods> ar = new ArrayList<Goods>();
+		StringBuffer sql = new StringBuffer(
+				"SELECT goBank,goName,goNum,goPack,goWeight,goVolume,goSendMan,goSendPhone,goSendAddress,goForMan,goForPhone,goForAddress,goGetWay,goPayWay,goPay,goInsurancePay,goReplacePay,goCommission,goDamagePay,goTransitPay,goSiteEnd,goRemark,goId FROM goods g,logistics l  WHERE g.logId=l.logId AND l.logSiteEnd != '桂林'");
+		if (goodsReach.getLogistics().getLogCarLicence() != null
+				&& !goodsReach.getLogistics().getLogCarLicence().equals("")) {
+			sql.append("AND l.logCarLicence like '%")
+					.append(goodsReach.getLogistics().getLogCarLicence())
+					.append("%' ");
+		}
+		if (goodsReach.getLogistics().getLogSendDate() != null
+				&& !goodsReach.getLogistics().getLogSendDate().equals("")) {
+			sql.append("AND l.logSendDate like '%")
+					.append(goodsReach.getLogistics().getLogSendDate())
+					.append("%' ");
+		}
+		sql.append(" ORDER BY g.goId LIMIT ?, ?");
+		ResultSet rs = select(sql.toString(), new Object[] { pageCurrentFirst,
+				pageRows });
+		try {
+			while (rs.next()) {
+				Goods goods = new Goods();
+				//ogistics log = new Logistics();
+				goods.setGoBank(rs.getString(1));
+				goods.setGoName(rs.getString(2));
+				goods.setGoNum(rs.getInt(3));
+				goods.setGoPack(rs.getString(4));
+				goods.setGoweight(rs.getDouble(5));
+				goods.setGoVolume(rs.getDouble(6));
+				goods.setGoSendMan(rs.getString(7));
+				goods.setGoSendPhone(rs.getString(8));
+				goods.setGoSendAddress(rs.getString(9));
+				goods.setGoForMan(rs.getString(10));
+				goods.setGoForPhone(rs.getString(11));
+				goods.setGoForAddress(rs.getString(12));
+				goods.setGoGetWay(rs.getString(13));
+				goods.setGoPayWay(rs.getString(14));
+				goods.setGoPay(rs.getDouble(15));
+				goods.setGoInsurancePay(rs.getDouble(16));
+				goods.setGoReplacePay(rs.getDouble(17));
+				goods.setGoCommission(rs.getDouble(18));
+				goods.setGoDamagePay(rs.getDouble(19));
+				goods.setGoTransitPay(rs.getShort(20));
+				goods.setGoSiteEnd(rs.getString(21));
+				goods.setGoRemark(rs.getString(22));
+				goods.setGoId(rs.getInt(23));
+				ar.add(goods);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return ar;
 	}
 }

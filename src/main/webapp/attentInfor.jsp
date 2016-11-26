@@ -348,7 +348,7 @@
 		
 		/*弹出搜索窗口*/
 		$('#attent_search').click(function() {
-			$('#attent_search_dlg').dialog('open').dialog('setTitle', '搜索车辆信息');
+			$('#attent_search_dlg').dialog('open').dialog('setTitle', '搜索出勤信息');
 		});
 		/* 搜索 */
 		$('#attent_search_button').click(function() {

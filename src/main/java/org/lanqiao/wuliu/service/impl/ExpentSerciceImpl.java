@@ -25,12 +25,16 @@ public class ExpentSerciceImpl {
 		return edi.expDelete(expId);
 	}
 	
-	public int expUpdate(int expId){
-		return edi.expUpdate(expId);
+	public int expUpdate(Expent expent,int expId){
+		return edi.expUpdate(expent,expId);
 	}
 	
 	public ArrayList<Expent> expSelect(int pageCurrentFirst, int pageRows,
 			Expent expentReach){
-		return expSelect(pageCurrentFirst, pageRows, expentReach);
+		return edi.expSelect(pageCurrentFirst, pageRows, expentReach);
+	}
+	
+	public int expCount(){
+		return edi.expcount();
 	}
 }

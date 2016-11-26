@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import javax.servlet.ServletException;
@@ -13,6 +14,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.lanqiao.wuliu.bean.Attent;
 import org.lanqiao.wuliu.bean.Expent;
 import org.lanqiao.wuliu.service.impl.ExpentSerciceImpl;
 
@@ -26,13 +30,14 @@ public class ExpReach extends HttpServlet {
 
 		response.setContentType("application/json;charset=UTF-8");
 		PrintWriter out = response.getWriter();
+		
+		int rowsPerPage = Integer.parseInt(request.getParameter("rows"));
+		int page = Integer.parseInt(request.getParameter("page"));
 
 		String expEmpNum=request.getParameter("expEmpNum");
 		String expEmpName=request.getParameter("expEmpName");
-		int expId = Integer.parseInt(request.getParameter("expId"));
 		String expFunction = request.getParameter("expFunction");
-		double expMoney = Double.parseDouble(request.getParameter("expMoney"));
-
+		
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 		Date expDate = null;
 		String c = request.getParameter("expDate");
@@ -44,19 +49,32 @@ public class ExpReach extends HttpServlet {
 			}
 		}
 
-		String expRemark = request.getParameter("expRemark");
-
 		Expent exp = new Expent();
 
 		exp.setExpEmpName(expEmpName);
 		exp.setExpEmpNum(expEmpNum);
-		exp.setExpId(expId);
 		exp.setExpFunction(expFunction);
-		exp.setExpMoney(expMoney);
 		exp.setExpDate(expDate);
-		exp.setExpRemark(expRemark);
 		
 		ExpentSerciceImpl esi=new ExpentSerciceImpl();
+		
+		ArrayList<Expent> expents = esi.expSelect((page - 1) * rowsPerPage, rowsPerPage, exp);
+		JSONObject json = new JSONObject();
+		JSONArray array = new JSONArray();
+		for (Expent expent : expents) {
+			JSONObject row = new JSONObject();
+			row.put("expId", expent.getExpId());
+			row.put("expEmpNum", expent.getExpEmpNum());
+			row.put("expEmpName", expent.getExpEmpName());
+			row.put("expFunction", expent.getExpFunction());
+			row.put("expMoney", expent.getExpMoney());
+			row.put("expDate", expent.getExpDate());
+			row.put("expRemark", expent.getExpRemark());
+			array.put(row);
+		}
+		json.put("rows", array);
+		json.put("total", esi.expCount());
+		out.println(json);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)

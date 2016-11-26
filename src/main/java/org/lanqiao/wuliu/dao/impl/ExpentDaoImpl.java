@@ -8,9 +8,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import org.lanqiao.wuliu.bean.Expent;
+import org.lanqiao.wuliu.bean.Goods;
 
 /**
- * 支出
+ * 财务管理
  * 
  * @author 杨明静
  *
@@ -24,61 +25,85 @@ public class ExpentDaoImpl extends BaseDaoImpl {
 	 * @return
 	 */
 	public int expInsert(Expent expent) {
-		String sql = "INSERT expent(expFunction,expMoney,expDate,expRemak) VALUES(?,?,?,?,?)";
-		Object[] params = new Object[] { expent.getExpFunction(),
+		String sql = "INSERT expent(expEmpNum,expEmpName,expFunction,expMoney,expDate,expRemark) VALUES(?,?,?,?,?,?)";
+		Object[] params = new Object[] { expent.getExpEmpNum(),
+				expent.getExpEmpName(), expent.getExpFunction(),
 				expent.getExpMoney(), expent.getExpDate(),
-				expent.getExpRemark()};
+				expent.getExpRemark() };
 		return cud(sql, params);
 	}
 
+	/**
+	 * 删除信息
+	 * 
+	 * @param expId
+	 *            支出Id
+	 * @return 返回删除记录数
+	 */
 	public int expDelete(int expId) {
-		String sql = "DELETE　FROM expent WHERE expId=?";
+		String sql = "DELETE FROM expent WHERE expId=?";
 		Object[] params = new Object[] { expId };
 		return cud(sql, params);
 	}
 
-	public int expUpdate(int expId) {
-		Expent expent = new Expent();
-		String sql = "UPDATE expent SET expFunction=?,expMoney=?,expDate=?,expRemak=? WHERE expId=?";
-		Object[] params = new Object[] { expent.getExpFunction(),
+	/**
+	 * 更新信息
+	 * 
+	 * @param expId
+	 *            支出Id
+	 * @return 返回更新记录数
+	 */
+	public int expUpdate(Expent expent, int expId) {
+		String sql = "UPDATE expent SET expEmpNum=?,expEmpName=?,expFunction=?,expMoney=?,expDate=?,expRemark=? WHERE expId=?";
+		Object[] params = new Object[] { expent.getExpEmpNum(),
+				expent.getExpEmpName(), expent.getExpFunction(),
 				expent.getExpMoney(), expent.getExpDate(),
-				expent.getExpRemark()};
+				expent.getExpRemark(), expId };
 		return cud(sql, params);
 	}
 
+	/**
+	 * 查找信息
+	 * 
+	 * @param pageCurrentFirst
+	 *            第一条记录
+	 * @param pageRows
+	 *            一页记录数
+	 * @param expentReach
+	 * @return 返回一个arraylist集合
+	 */
 	public ArrayList<Expent> expSelect(int pageCurrentFirst, int pageRows,
-			Expent expentReach) {
+			Expent expReach) {
 		ArrayList<Expent> list = new ArrayList<Expent>();
-		
+
 		StringBuffer sql = new StringBuffer(
-				"SELECT empNum,empName,expFunction,expMoney,expDate,expRemak FROM expent WHERE expId=?");
-		if (expentReach.getExpFunction() != null
-				&& !expentReach.getExpFunction().equals("")) {
-			sql.append("AND expentFuncton like '%")
-					.append(expentReach.getExpFunction()).append("%' ");
+				"SELECT expEmpNum,expEmpName,expFunction,expMoney,expDate,expRemark FROM expent WHERE 1=1 ");
+		if (expReach.getExpEmpNum() != null
+				&& !expReach.getExpEmpNum().equals("")) {
+			sql.append("AND expEmpNum like '%").append(expReach.getExpEmpNum())
+					.append("%' ");
 		}
-		if (expentReach.getExpDate() != null
-				&& !expentReach.getExpDate().equals("")) {
-			sql.append("AND expentDate like '%")
-					.append(expentReach.getExpDate()).append("%' ");
+		if (expReach.getExpEmpName() != null
+				&& !expReach.getExpEmpName().equals("")) {
+			sql.append("AND expEmpName like '%")
+					.append(expReach.getExpEmpName()).append("%' ");
 		}
-		if (expentReach.getExpEmpName()!= null
-				&& !expentReach.getExpEmpName().equals("")) {
-			sql.append("AND empName like '%")
-					.append(expentReach.getExpEmpName()).append("%' ");
+		if (expReach.getExpFunction() != null
+				&& !expReach.getExpFunction().equals("")) {
+			sql.append("AND expFunction like '%")
+					.append(expReach.getExpFunction()).append("%' ");
 		}
-		if (expentReach.getExpEmpNum() != null
-				&& !expentReach.getExpEmpNum().equals("")) {
-			sql.append("AND empNum like '%")
-					.append(expentReach.getExpEmpNum()).append("%' ");
+		if (expReach.getExpDate() != null && !expReach.getExpDate().equals("")) {
+			sql.append("AND expDate like '%").append(expReach.getExpDate())
+					.append("%' ");
 		}
-		sql.append(" ORDER BY ex.expId LIMIT ?, ?");
+		sql.append(" ORDER BY expId LIMIT ?, ?");
 		ResultSet rs = select(sql.toString(), new Object[] { pageCurrentFirst,
 				pageRows });
+		System.out.println(sql);
 		try {
-			while(rs.next()){
-			
-				Expent expent=new Expent();
+			while (rs.next()) {
+				Expent expent = new Expent();
 				expent.setExpEmpNum(rs.getString(1));
 				expent.setExpEmpName(rs.getString(2));
 				expent.setExpFunction(rs.getString(3));
@@ -91,5 +116,24 @@ public class ExpentDaoImpl extends BaseDaoImpl {
 			e.printStackTrace();
 		}
 		return list;
+	}
+
+	/**
+	 * 统计支出表的记录数
+	 * 
+	 * @return 返回总记录数
+	 */
+	public int expcount() {
+		String sql = "SELECT COUNT(expId) FROM expent";
+		ResultSet rs = select(sql);
+		int count = 0;
+		try {
+			while (rs.next()) {
+				count = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return count;
 	}
 }
