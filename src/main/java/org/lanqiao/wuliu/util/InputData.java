@@ -61,7 +61,7 @@ public class InputData {
 								.intValue());
 					} else if (cellIndex == 5)// 重量
 					{
-						goods.setGoweight(new Double(cell.getNumericCellValue())
+						goods.setGoWeight(new Double(cell.getNumericCellValue())
 								.doubleValue());
 					} else if (cellIndex == 6)// 体积
 					{

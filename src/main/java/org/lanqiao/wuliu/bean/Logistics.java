@@ -1,5 +1,6 @@
 package org.lanqiao.wuliu.bean;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -8,8 +9,9 @@ import java.util.Date;
  * @author 杨明静
  *
  */
-public class Logistics {
-	private int logId;
+public class Logistics implements Serializable {
+
+	private Integer logId;
 	private String logContractNum;
 	private Date logSendDate;
 	private String logSiteStart;
@@ -17,14 +19,15 @@ public class Logistics {
 	private String logCarLicence;
 	private String logCarDriver;
 	private String logCarPhone;
-	private String logCarPay;
+	private Double logCarPay;
 	private String logPartner;
+	private static final long serialVersionUID = 988100447712821205L;
 
-	public int getLogId() {
+	public Integer getLogId() {
 		return logId;
 	}
 
-	public void setLogId(int logId) {
+	public void setLogId(Integer logId) {
 		this.logId = logId;
 	}
 
@@ -84,11 +87,11 @@ public class Logistics {
 		this.logCarPhone = logCarPhone;
 	}
 
-	public String getLogCarPay() {
+	public Double getLogCarPay() {
 		return logCarPay;
 	}
 
-	public void setLogCarPay(String logCarPay) {
+	public void setLogCarPay(Double logCarPay) {
 		this.logCarPay = logCarPay;
 	}
 

@@ -1,24 +1,69 @@
-@CHARSET "UTF-8";
-
-#fm {
-	margin: 0;
-	padding: 10px 30px;
+* {
+	margin: 0px;
+	padding: 0px;
 }
 
-.ftitle {
-	font-size: 14px;
+a {
+	color: black;
+	text-decoration: none;
+}
+
+.easyui-accordion ul {
+	list-style-type: none;
+	margin: 0px;
+	padding: 10px;
+}
+
+.easyui-accordion ul li {
+	padding: 0px;
+}
+
+.easyui-accordion ul li a {
+	line-height: 24px;
+}
+
+.easyui-accordion ul li span {
+	font-size: 13px;
+}
+
+.easyui-accordion ul li div {
+	margin: 2px 0px;
+	padding-left: 10px;
+	padding-top: 2px;
+}
+
+.easyui-accordion ul li div:HOVER {
+	background: #E0ECFF;
+	cursor: pointer;
+}
+
+.easyui-accordion ul li div:HOVER a {
+	color: #416AA3;
+}
+
+/* 标题文字样式 */
+.zooqi-head-text {
+	font-size: 16px;
 	font-weight: bold;
-	color: #666;
-	padding: 5px 0;
-	margin-bottom: 10px;
-	border-bottom: 1px solid #ccc;
 }
 
-.fitem {
-	margin-bottom: 5px;
+/* 标题链接文字样式 */
+.zooqi-head-link {
+	color: blue;
+	font-size: 16px;
+	font-weight: normal;
+	text-decoration: underline;
 }
 
-.fitem label {
-	display: inline-block;
-	width: 80px;
+/* 普通链接文字样式 */
+.zooqi-link {
+	color: blue;
+	font-size: 14px;
+	font-weight: normal;
+	text-decoration: underline;
+}
+
+/* frame文字样式 */
+.zooqi-frame-text {
+	font-size: 13px;
 }

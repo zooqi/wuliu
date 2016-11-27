@@ -93,7 +93,7 @@ public class GoodsUpda extends HttpServlet {
 		goods.setGoName(goName);
 		goods.setGoNum(goNum);
 		goods.setGoPack(goPack);
-		goods.setGoweight(goWeight);
+		goods.setGoWeight(goWeight);
 		goods.setGoVolume(goVolume);
 		goods.setGoSendMan(goSendMan);
 		goods.setGoSendPhone(goSendPhone);

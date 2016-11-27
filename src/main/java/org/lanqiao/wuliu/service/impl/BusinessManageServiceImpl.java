@@ -37,8 +37,8 @@ public class BusinessManageServiceImpl {
 	 * 
 	 * @return 返回int
 	 */
-	public int goConut() {
-		return bm.goConut();
+	public int goCount() {
+		return bm.goCount();
 	}
 
 	/**
@@ -55,19 +55,21 @@ public class BusinessManageServiceImpl {
 	}
 
 	/**
-	 * 查找物品清单信息
+	 * 获取物流信息列表(发货和到货)
 	 * 
-	 * @param pageCurrentFirst
-	 *            某页的第一条记录
-	 * @param pageRows
-	 *            一页的记录数
-	 * @param goodsReach
-	 *            物品清单对象
-	 * @return 返回ArrayList对象
+	 * @param currentPage
+	 *            当前页
+	 * @param rowsPerPage
+	 *            每页记录数
+	 * @param srhLicence
+	 *            车牌号关键字
+	 * @param srhDate
+	 *            日期字符串(yyyy-MM-dd)
+	 * @return 物流信息列表
 	 */
-	public ArrayList<Goods> goReach(int pageCurrentFirst, int pageRows,
-			Goods goodsReach) {
-		return bm.goReach(pageCurrentFirst, pageRows, goodsReach);
+	public ArrayList<Goods> goReach(int goType, int currentPage, int rowsPerPage, String srhLicence,
+			String srhDateStr) {
+		return bm.goReach(goType, currentPage, rowsPerPage, srhLicence, srhDateStr);
 	}
 
 	/**
