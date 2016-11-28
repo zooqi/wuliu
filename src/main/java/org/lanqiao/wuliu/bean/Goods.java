@@ -1,19 +1,22 @@
 package org.lanqiao.wuliu.bean;
 
+import java.io.Serializable;
+
 /**
  * 物流表
  * 
  * @author 杨明静
  *
  */
-public class Goods {
+public class Goods implements Serializable {
+
 	private Integer goId;
 	private String goBank;
 	private String goName;
-	private Integer goNum;
 	private String goPack;
-	private double goweight;
-	private double goVolume;
+	private Integer goNum;
+	private Double goWeight;
+	private Double goVolume;
 	private String goSendMan;
 	private String goSendPhone;
 	private String goSendAddress;
@@ -22,16 +25,17 @@ public class Goods {
 	private String goForAddress;
 	private String goGetWay;
 	private String goPayWay;
-	private double goPay;
-	private double goInsurancePay;
-	private double goReplacePay;
-	private double goCommission;
-	private double goDamagePay;
-	private double goTransitPay;
+	private Double goPay;
+	private Double goInsurancePay;
+	private Double goReplacePay;
+	private Double goCommission;
+	private Double goDamagePay;
+	private Double goTransitPay;
 	private String goSiteEnd;
 	private String goRemark;
+	private Integer goType;
 	private Logistics logistics;
-	private House house;
+	private static final long serialVersionUID = 3578834615726369308L;
 
 	public Integer getGoId() {
 		return goId;
@@ -56,7 +60,15 @@ public class Goods {
 	public void setGoName(String goName) {
 		this.goName = goName;
 	}
-	
+
+	public String getGoPack() {
+		return goPack;
+	}
+
+	public void setGoPack(String goPack) {
+		this.goPack = goPack;
+	}
+
 	public Integer getGoNum() {
 		return goNum;
 	}
@@ -65,19 +77,19 @@ public class Goods {
 		this.goNum = goNum;
 	}
 
-	public double getGoweight() {
-		return goweight;
+	public Double getGoWeight() {
+		return goWeight;
 	}
 
-	public void setGoweight(double goweight) {
-		this.goweight = goweight;
+	public void setGoWeight(Double goWeight) {
+		this.goWeight = goWeight;
 	}
 
-	public double getGoVolume() {
+	public Double getGoVolume() {
 		return goVolume;
 	}
 
-	public void setGoVolume(double goVolume) {
+	public void setGoVolume(Double goVolume) {
 		this.goVolume = goVolume;
 	}
 
@@ -97,6 +109,14 @@ public class Goods {
 		this.goSendPhone = goSendPhone;
 	}
 
+	public String getGoSendAddress() {
+		return goSendAddress;
+	}
+
+	public void setGoSendAddress(String goSendAddress) {
+		this.goSendAddress = goSendAddress;
+	}
+
 	public String getGoForMan() {
 		return goForMan;
 	}
@@ -111,6 +131,14 @@ public class Goods {
 
 	public void setGoForPhone(String goForPhone) {
 		this.goForPhone = goForPhone;
+	}
+
+	public String getGoForAddress() {
+		return goForAddress;
+	}
+
+	public void setGoForAddress(String goForAddress) {
+		this.goForAddress = goForAddress;
 	}
 
 	public String getGoGetWay() {
@@ -129,84 +157,52 @@ public class Goods {
 		this.goPayWay = goPayWay;
 	}
 
-	public double getGoPay() {
+	public Double getGoPay() {
 		return goPay;
 	}
 
-	public void setGoPay(double goPay) {
+	public void setGoPay(Double goPay) {
 		this.goPay = goPay;
 	}
 
-	public double getGoReplacePay() {
-		return goReplacePay;
-	}
-
-	public void setGoReplacePay(double goReplacePay) {
-		this.goReplacePay = goReplacePay;
-	}
-
-	public double getGoCommission() {
-		return goCommission;
-	}
-
-	public void setGoCommission(double goCommission) {
-		this.goCommission = goCommission;
-	}
-
-	public double getGoDamagePay() {
-		return goDamagePay;
-	}
-
-	public void setGoDamagePay(double goDamagePay) {
-		this.goDamagePay = goDamagePay;
-	}
-
-	public double getGoTransitPay() {
-		return goTransitPay;
-	}
-
-	public void setGoTransitPay(double goTransitPay) {
-		this.goTransitPay = goTransitPay;
-	}
-
-	public String getGoRemark() {
-		return goRemark;
-	}
-
-	public void setGoRemark(String goRemark) {
-		this.goRemark = goRemark;
-	}
-
-	public String getGoPack() {
-		return goPack;
-	}
-
-	public void setGoPack(String goPack) {
-		this.goPack = goPack;
-	}
-
-	public String getGoSendAddress() {
-		return goSendAddress;
-	}
-
-	public void setGoSendAddress(String goSendAddress) {
-		this.goSendAddress = goSendAddress;
-	}
-
-	public String getGoForAddress() {
-		return goForAddress;
-	}
-
-	public void setGoForAddress(String goForAddress) {
-		this.goForAddress = goForAddress;
-	}
-
-	public double getGoInsurancePay() {
+	public Double getGoInsurancePay() {
 		return goInsurancePay;
 	}
 
-	public void setGoInsurancePay(double goInsurancePay) {
+	public void setGoInsurancePay(Double goInsurancePay) {
 		this.goInsurancePay = goInsurancePay;
+	}
+
+	public Double getGoReplacePay() {
+		return goReplacePay;
+	}
+
+	public void setGoReplacePay(Double goReplacePay) {
+		this.goReplacePay = goReplacePay;
+	}
+
+	public Double getGoCommission() {
+		return goCommission;
+	}
+
+	public void setGoCommission(Double goCommission) {
+		this.goCommission = goCommission;
+	}
+
+	public Double getGoDamagePay() {
+		return goDamagePay;
+	}
+
+	public void setGoDamagePay(Double goDamagePay) {
+		this.goDamagePay = goDamagePay;
+	}
+
+	public Double getGoTransitPay() {
+		return goTransitPay;
+	}
+
+	public void setGoTransitPay(Double goTransitPay) {
+		this.goTransitPay = goTransitPay;
 	}
 
 	public String getGoSiteEnd() {
@@ -217,6 +213,22 @@ public class Goods {
 		this.goSiteEnd = goSiteEnd;
 	}
 
+	public String getGoRemark() {
+		return goRemark;
+	}
+
+	public void setGoRemark(String goRemark) {
+		this.goRemark = goRemark;
+	}
+
+	public Integer getGoType() {
+		return goType;
+	}
+
+	public void setGoType(Integer goType) {
+		this.goType = goType;
+	}
+
 	public Logistics getLogistics() {
 		return logistics;
 	}
@@ -225,11 +237,4 @@ public class Goods {
 		this.logistics = logistics;
 	}
 
-	public House getHouse() {
-		return house;
-	}
-
-	public void setHouse(House house) {
-		this.house = house;
-	}
 }

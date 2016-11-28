@@ -2,8 +2,6 @@ package org.lanqiao.wuliu.servlet.goods;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -17,7 +15,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.lanqiao.wuliu.bean.Goods;
-import org.lanqiao.wuliu.bean.Logistics;
 import org.lanqiao.wuliu.service.impl.BusinessManageServiceImpl;
 
 /**
@@ -26,7 +23,7 @@ import org.lanqiao.wuliu.service.impl.BusinessManageServiceImpl;
  * @author 杨明静
  *
  */
-@WebServlet(name = "goodsReachs", urlPatterns = { "/goodsReachs" })
+@WebServlet(name = "goodsReach", urlPatterns = { "/goodsReach" })
 public class GoodsReach extends HttpServlet {
 
 	private static final long serialVersionUID = -4742707004844364472L;
@@ -36,31 +33,34 @@ public class GoodsReach extends HttpServlet {
 		response.setContentType("application/json;charset=UTF-8");
 		PrintWriter out = response.getWriter();
 
-		int rowsPerPage = Integer.parseInt(request.getParameter("rows"));
-		int page = Integer.parseInt(request.getParameter("page"));
+		// 分页参数、发、到货类型
+		int goType;
+		int currentPage;
+		int rowsPerPage;
+		try {
+			currentPage = Integer.parseInt(request.getParameter("page"));
+			rowsPerPage = Integer.parseInt(request.getParameter("rows"));
+			goType = Integer.parseInt(request.getParameter("goType"));
+		} catch (Exception e) {
+			return;
+		}
 
 		String logCarLicence = request.getParameter("logCarLicence");
 
-		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-		Date logSendDate = null;
-		String a = request.getParameter("logSendDate");
-		if (a != null && !a.equals("")) {
+		// 验证日期
+		String logSendDate = request.getParameter("logSendDate");
+		if (logSendDate != null && !logSendDate.equals("")) {
 			try {
-				logSendDate = df.parse(a);
-			} catch (ParseException e) {
-				e.printStackTrace();
+				new SimpleDateFormat("yyyy-MM-dd").parse(logSendDate);
+			} catch (Exception e) {
+				return;
 			}
 		}
-		Logistics logistics = new Logistics();
-		Goods goodsReach = new Goods();
-		logistics.setLogCarLicence(logCarLicence);
-		logistics.setLogSendDate(logSendDate);
-		goodsReach.setLogistics(logistics);
 
 		BusinessManageServiceImpl bms = new BusinessManageServiceImpl();
-		ArrayList<Goods> goods = bms.goReachs((page - 1) * rowsPerPage, rowsPerPage, goodsReach);
+		ArrayList<Goods> goods = bms.goReach(goType, currentPage, rowsPerPage, logCarLicence, logSendDate);
 		JSONObject json = new JSONObject();
-		JSONArray arry1 = new JSONArray();
+		JSONArray array = new JSONArray();
 		for (Goods good : goods) {
 			JSONObject row = new JSONObject();
 			row.put("goId", good.getGoId());
@@ -68,7 +68,7 @@ public class GoodsReach extends HttpServlet {
 			row.put("goName", good.getGoName());
 			row.put("goNum", good.getGoNum());
 			row.put("goPack", good.getGoPack());
-			row.put("goWeight", good.getGoweight());
+			row.put("goWeight", good.getGoWeight());
 			row.put("goVolume", good.getGoVolume());
 			row.put("goSendMan", good.getGoSendMan());
 			row.put("goSendPhone", good.getGoSendPhone());
@@ -83,19 +83,20 @@ public class GoodsReach extends HttpServlet {
 			row.put("goReplacePay", good.getGoReplacePay());
 			row.put("goCommission", good.getGoCommission());
 			row.put("goDamagePay", good.getGoDamagePay());
-
 			row.put("goTransitPay", good.getGoTransitPay());
-
 			row.put("goSiteEnd", good.getGoSiteEnd());
 			row.put("goRemark", good.getGoRemark());
-			// row.put("logId", good.getLogistics().getLogId());
+			row.put("goType", good.getGoType());
+			row.put("logId", good.getLogistics().getLogId());
 
-			arry1.put(row);
-
+			Date date = good.getLogistics().getLogSendDate();
+			row.put("logSendDate", (date == null) ? "" : new SimpleDateFormat("yyyy-MM-dd").format(date));
+			row.put("logCarLicense", good.getLogistics().getLogCarLicence());
+			row.put("logCarDriver", good.getLogistics().getLogCarDriver());
+			array.put(row);
 		}
-		json.put("rows", arry1);
-
-		json.put("total", bms.goConut());
+		json.put("rows", array);
+		json.put("total", goods.size());
 		out.println(json);
 	}
 

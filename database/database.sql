@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50552
 File Encoding         : 65001
 
-Date: 2016-11-20 23:00:54
+Date: 2016-11-28 12:54:49
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -20,19 +20,19 @@ SET FOREIGN_KEY_CHECKS=0;
 -- ----------------------------
 DROP TABLE IF EXISTS `attent`;
 CREATE TABLE `attent` (
-  `attentId` int(11) NOT NULL AUTO_INCREMENT COMMENT '考勤Id，主键',
+  `attentId` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '考勤ID',
   `attentDate` date DEFAULT NULL COMMENT '考勤日期',
-  `attentNum` double(10,2) DEFAULT NULL COMMENT '出勤次数',
-  `attentReasonNum` double(10,2) DEFAULT NULL COMMENT '请假次数',
-  `attentReason` varchar(255) DEFAULT NULL COMMENT '请假理由',
-  `attentOverTimeNum` double(10,0) DEFAULT NULL COMMENT '加班次数',
-  `attentOverTimePay` double(10,2) DEFAULT NULL COMMENT '加班费用',
-  `attentBonus` double(10,2) DEFAULT NULL COMMENT '奖金',
-  `attentRemark` varchar(255) DEFAULT NULL COMMENT '备注',
-  `empId` int(11) DEFAULT NULL COMMENT 'Emp外键',
+  `attentNum` double(10,2) unsigned DEFAULT NULL COMMENT '出勤次数',
+  `attentReasonNum` double(10,2) unsigned DEFAULT NULL COMMENT '请假次数',
+  `attentReason` varchar(255) DEFAULT '' COMMENT '请假理由',
+  `attentOverTimeNum` double(10,0) unsigned DEFAULT NULL COMMENT '加班次数',
+  `attentOverTimePay` double(10,2) unsigned DEFAULT NULL COMMENT '加班费用',
+  `attentBonus` double(10,2) unsigned DEFAULT NULL COMMENT '奖金',
+  `attentRemark` varchar(255) DEFAULT '' COMMENT '备注',
+  `empId` int(11) unsigned DEFAULT NULL COMMENT '员工ID',
   PRIMARY KEY (`attentId`),
   KEY `attent_ibfk_1` (`empId`),
-  CONSTRAINT `attent_ibfk_1` FOREIGN KEY (`empId`) REFERENCES `emp` (`empId`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `attent_ibfk_1` FOREIGN KEY (`empId`) REFERENCES `emp` (`empId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -47,23 +47,23 @@ INSERT INTO `attent` VALUES ('8', '2016-08-02', '0.00', '0.00', null, '0', '0.00
 -- ----------------------------
 DROP TABLE IF EXISTS `emp`;
 CREATE TABLE `emp` (
-  `empId` int(11) NOT NULL AUTO_INCREMENT COMMENT '员工Id',
-  `empNum` varchar(255) NOT NULL COMMENT '员工号',
-  `empName` varchar(255) DEFAULT NULL COMMENT '员工姓名',
-  `empDepart` varchar(255) DEFAULT NULL COMMENT '员工所在部门',
-  `empPosition` varchar(255) DEFAULT NULL COMMENT '员工职位',
-  `empWage` double(10,2) DEFAULT NULL COMMENT '员工基本工资',
+  `empId` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '员工Id',
+  `empNum` varchar(255) NOT NULL DEFAULT '' COMMENT '员工号',
+  `empName` varchar(255) DEFAULT '' COMMENT '员工姓名',
+  `empDepart` varchar(255) DEFAULT '' COMMENT '员工所在部门',
+  `empPosition` varchar(255) DEFAULT '' COMMENT '员工职位',
+  `empWage` double(10,2) unsigned DEFAULT NULL COMMENT '员工基本工资',
   `empDate` date DEFAULT NULL COMMENT '员工入职日期',
-  `empEdu` varchar(255) DEFAULT NULL COMMENT '员工学历',
-  `empSex` varchar(255) DEFAULT NULL COMMENT '员工性别',
+  `empEdu` varchar(255) DEFAULT '' COMMENT '员工学历',
+  `empSex` varchar(255) DEFAULT '' COMMENT '员工性别',
   `empBorn` date DEFAULT NULL COMMENT '员工生日',
-  `empPhone` varchar(255) DEFAULT NULL COMMENT '员工电话',
-  `empQQ` varchar(255) DEFAULT NULL COMMENT '员工QQ',
-  `empAddress` varchar(255) DEFAULT NULL COMMENT '员工住址',
+  `empPhone` varchar(255) DEFAULT '' COMMENT '员工电话',
+  `empQQ` varchar(255) DEFAULT '' COMMENT '员工QQ',
+  `empAddress` varchar(255) DEFAULT '' COMMENT '员工住址',
   `empHealth` varchar(255) DEFAULT '' COMMENT '员工健康状况',
   `empMarriage` varchar(255) DEFAULT '' COMMENT '员工婚姻情况',
-  `empPasswd` varchar(255) DEFAULT NULL COMMENT '员工系统密码',
-  `empRemark` varchar(255) DEFAULT NULL COMMENT '备注',
+  `empPasswd` varchar(255) DEFAULT '' COMMENT '员工系统密码',
+  `empRemark` varchar(255) DEFAULT '' COMMENT '备注',
   PRIMARY KEY (`empId`),
   UNIQUE KEY `empNum` (`empNum`)
 ) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8;
@@ -83,12 +83,12 @@ INSERT INTO `emp` VALUES ('26', 'BS03002', '张根生', '销售部', '经理', '
 -- ----------------------------
 DROP TABLE IF EXISTS `emp_role`;
 CREATE TABLE `emp_role` (
-  `roleId` int(11) NOT NULL COMMENT '角色Id，主键',
-  `empId` int(11) NOT NULL COMMENT '员工Id，主键',
+  `roleId` int(11) unsigned NOT NULL COMMENT '角色Id，主键',
+  `empId` int(11) unsigned NOT NULL COMMENT '员工Id，主键',
   PRIMARY KEY (`roleId`,`empId`),
-  KEY `emp_role_ibfk_2` (`empId`),
-  CONSTRAINT `emp_role_ibfk_1` FOREIGN KEY (`roleId`) REFERENCES `role` (`roleId`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `emp_role_ibfk_2` FOREIGN KEY (`empId`) REFERENCES `emp` (`empId`) ON DELETE CASCADE ON UPDATE CASCADE
+  KEY `empId` (`empId`),
+  CONSTRAINT `emp_role_ibfk_1` FOREIGN KEY (`roleId`) REFERENCES `role` (`roleId`),
+  CONSTRAINT `emp_role_ibfk_2` FOREIGN KEY (`empId`) REFERENCES `emp` (`empId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -101,15 +101,14 @@ INSERT INTO `emp_role` VALUES ('1', '1');
 -- ----------------------------
 DROP TABLE IF EXISTS `expent`;
 CREATE TABLE `expent` (
-  `expId` int(11) NOT NULL AUTO_INCREMENT COMMENT '支出Id，主键',
-  `expFunction` varchar(255) DEFAULT NULL COMMENT '支出用途',
-  `expMoney` double(10,2) DEFAULT NULL COMMENT '支出金额',
+  `expId` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '支出Id，主键',
+  `expEmpNum` varchar(255) DEFAULT '' COMMENT '职工号',
+  `expEmpName` varchar(255) DEFAULT '' COMMENT '员工姓名',
+  `expFunction` varchar(255) DEFAULT '' COMMENT '支出用途',
+  `expMoney` double(10,2) unsigned DEFAULT NULL COMMENT '支出金额',
   `expDate` date DEFAULT NULL COMMENT '支出日期',
-  `expRemark` varchar(255) DEFAULT NULL COMMENT '备注',
-  `empId` int(11) DEFAULT NULL COMMENT '员工Id,外键',
-  PRIMARY KEY (`expId`),
-  KEY `expent_ibfk_1` (`empId`),
-  CONSTRAINT `expent_ibfk_1` FOREIGN KEY (`empId`) REFERENCES `emp` (`empId`) ON DELETE CASCADE ON UPDATE CASCADE
+  `expRemark` varchar(255) DEFAULT '' COMMENT '备注',
+  PRIMARY KEY (`expId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -121,13 +120,13 @@ CREATE TABLE `expent` (
 -- ----------------------------
 DROP TABLE IF EXISTS `fun`;
 CREATE TABLE `fun` (
-  `funId` int(11) NOT NULL AUTO_INCREMENT COMMENT '功能Id',
-  `funURI` varchar(255) DEFAULT NULL COMMENT '功能URI',
-  `funName` varchar(255) DEFAULT NULL COMMENT '功能名字',
-  `menuId` int(11) DEFAULT NULL COMMENT '菜单Id',
+  `funId` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '功能Id',
+  `funURI` varchar(255) DEFAULT '' COMMENT '功能URI',
+  `funName` varchar(255) DEFAULT '' COMMENT '功能名字',
+  `menuId` int(11) unsigned DEFAULT NULL COMMENT '菜单Id',
   PRIMARY KEY (`funId`),
-  KEY `fun_ibfk_1` (`menuId`),
-  CONSTRAINT `fun_ibfk_1` FOREIGN KEY (`menuId`) REFERENCES `menu` (`menuId`) ON DELETE CASCADE ON UPDATE CASCADE
+  KEY `menuId` (`menuId`),
+  CONSTRAINT `fun_ibfk_1` FOREIGN KEY (`menuId`) REFERENCES `menu` (`menuId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -136,7 +135,7 @@ CREATE TABLE `fun` (
 INSERT INTO `fun` VALUES ('1', 'empInfor.jsp', '员工管理', '1');
 INSERT INTO `fun` VALUES ('2', 'attentInfor.jsp', '考勤管理', '1');
 INSERT INTO `fun` VALUES ('3', 'deliverGoods.jsp', '发货管理', '2');
-INSERT INTO `fun` VALUES ('4', 'arriveGoods.jsp', '到货管理', '2');
+INSERT INTO `fun` VALUES ('4', 'arrival.jsp', '到货管理', '2');
 INSERT INTO `fun` VALUES ('5', 'jurisdiction.jsp', '授予权限', '4');
 INSERT INTO `fun` VALUES ('6', 'expend.jsp', '支出管理', '3');
 INSERT INTO `fun` VALUES ('7', 'profit.jsp', '利润查询', '3');
@@ -147,80 +146,58 @@ INSERT INTO `fun` VALUES ('8', 'person.jsp', '个人查询', '5');
 -- ----------------------------
 DROP TABLE IF EXISTS `goods`;
 CREATE TABLE `goods` (
-  `goId` int(11) NOT NULL AUTO_INCREMENT COMMENT '物流ID',
+  `goId` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '物流ID',
   `goBank` varchar(255) DEFAULT '' COMMENT '货号',
   `goName` varchar(255) DEFAULT '' COMMENT '货品名称',
   `goPack` varchar(255) DEFAULT '' COMMENT '包装样式',
-  `goNum` int(11) DEFAULT NULL COMMENT '货品数量',
-  `goWeight` double(10,2) DEFAULT NULL COMMENT '货品重量',
-  `goVolume` double(10,2) DEFAULT NULL COMMENT '货品体积',
-  `goSendMan` varchar(255) DEFAULT NULL COMMENT '发货人',
-  `goSendPhone` varchar(255) DEFAULT NULL COMMENT '发货人电话',
-  `goSendAddress` varchar(255) DEFAULT NULL,
-  `goForMan` varchar(255) DEFAULT NULL COMMENT '收货人',
-  `goForPhone` varchar(255) DEFAULT NULL COMMENT '收货人姓名',
-  `goForAddress` varchar(255) DEFAULT NULL,
-  `goGetWay` varchar(255) DEFAULT NULL COMMENT '提货方式',
-  `goPayWay` varchar(255) DEFAULT NULL COMMENT '支付方式',
-  `goPay` double(10,2) DEFAULT NULL COMMENT '支付金额',
-  `goInsurancePay` double(10,2) DEFAULT NULL COMMENT '保价费',
-  `goReplacePay` double(10,2) DEFAULT NULL COMMENT '代收货款',
-  `goCommission` double(10,2) DEFAULT NULL COMMENT '回扣',
-  `goDamagePay` double(10,2) DEFAULT NULL COMMENT '货款扣',
-  `goTransitPay` double(10,2) DEFAULT NULL COMMENT '中转费',
-  `goSiteEnd` varchar(255) DEFAULT NULL COMMENT '货物终点站',
-  `goRemark` varchar(255) DEFAULT NULL COMMENT '备注信息',
-  `houseId` int(11) DEFAULT NULL,
-  `logId` int(11) DEFAULT NULL,
+  `goNum` int(11) unsigned DEFAULT NULL COMMENT '货品数量',
+  `goWeight` double(10,2) unsigned DEFAULT NULL COMMENT '货品重量',
+  `goVolume` double(10,2) unsigned DEFAULT NULL COMMENT '货品体积',
+  `goSendMan` varchar(255) DEFAULT '' COMMENT '发货人',
+  `goSendPhone` varchar(255) DEFAULT '' COMMENT '发货人电话',
+  `goSendAddress` varchar(255) DEFAULT '' COMMENT '发货人地址',
+  `goForMan` varchar(255) DEFAULT '' COMMENT '收货人',
+  `goForPhone` varchar(255) DEFAULT '' COMMENT '收货人电话',
+  `goForAddress` varchar(255) DEFAULT '' COMMENT '收货人地址',
+  `goGetWay` varchar(255) DEFAULT '' COMMENT '提货方式',
+  `goPayWay` varchar(255) DEFAULT '' COMMENT '支付方式',
+  `goPay` double(10,2) unsigned DEFAULT NULL COMMENT '支付金额',
+  `goInsurancePay` double(10,2) unsigned DEFAULT NULL COMMENT '保价费',
+  `goReplacePay` double(10,2) unsigned DEFAULT NULL COMMENT '代收货款',
+  `goCommission` double(10,2) unsigned DEFAULT NULL COMMENT '回扣',
+  `goDamagePay` double(10,2) unsigned DEFAULT NULL COMMENT '货款扣',
+  `goTransitPay` double(10,2) unsigned DEFAULT NULL COMMENT '中转费',
+  `goSiteEnd` varchar(255) DEFAULT '' COMMENT '货物终点站',
+  `goRemark` varchar(255) DEFAULT '' COMMENT '备注信息',
+  `goType` int(11) unsigned NOT NULL COMMENT '发到货类型，发：0；到：1',
+  `logId` int(11) unsigned DEFAULT NULL COMMENT '物流ID',
   PRIMARY KEY (`goId`),
-  KEY `goNum` (`goNum`),
-  KEY `goods_ibfk_3` (`houseId`),
   KEY `logId` (`logId`),
-  CONSTRAINT `goods_ibfk_3` FOREIGN KEY (`houseId`) REFERENCES `house` (`houseId`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `goods_ibfk_4` FOREIGN KEY (`logId`) REFERENCES `logistics` (`logId`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `goods_ibfk_1` FOREIGN KEY (`logId`) REFERENCES `logistics` (`logId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of goods
 -- ----------------------------
-INSERT INTO `goods` VALUES ('1', 'HYC2105', '桌面等', null, '58', null, '2.50', null, '13793895796', null, null, '18577358707', null, '自提', '到付', '440.00', null, null, null, null, null, '桂林', null, null, '1');
-INSERT INTO `goods` VALUES ('2', 'HYC2060', '厨具', null, '104', null, '8.50', '王兴明', '15762156741', null, '刘雄杰', '13307733339', null, '送货', '到付', '1190.00', null, null, null, null, null, '桂林', null, null, '2');
-INSERT INTO `goods` VALUES ('3', 'HYC3', '电脑', null, '56', null, null, '六六', '15762156741', null, '张三', '13307733339', null, '送货', '到付', '1150.00', null, null, null, null, null, null, null, null, '1');
-
--- ----------------------------
--- Table structure for house
--- ----------------------------
-DROP TABLE IF EXISTS `house`;
-CREATE TABLE `house` (
-  `houseId` int(15) NOT NULL AUTO_INCREMENT COMMENT '仓库Id',
-  `houseNum` varchar(255) DEFAULT NULL COMMENT '仓库数量',
-  `houseArrDate` date DEFAULT NULL COMMENT '登记入库时间',
-  `houseRemark` varchar(255) DEFAULT NULL COMMENT '仓库备注',
-  `goId` int(11) DEFAULT NULL COMMENT '货品Id',
-  PRIMARY KEY (`houseId`),
-  KEY `house_ibfk_2` (`goId`),
-  CONSTRAINT `house_ibfk_2` FOREIGN KEY (`goId`) REFERENCES `goods` (`goId`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of house
--- ----------------------------
+INSERT INTO `goods` VALUES ('1', 'HYC2105', '桌面等', '', '58', null, '2.50', '', '13793895796', '', null, '18577358707', null, '自提', '到付', '440.00', null, null, null, null, null, '桂林', null, '1', '1');
+INSERT INTO `goods` VALUES ('2', 'HYC2060', '厨具', '', '104', null, '8.50', '王兴明', '15762156741', '', '刘雄杰', '13307733339', null, '送货', '到付', '1190.00', null, null, null, null, null, '桂林', null, '1', '2');
+INSERT INTO `goods` VALUES ('3', 'HYC3', '电脑', '', '56', null, '5.60', '六六', '15762156741', '', '张三', '13307733339', null, '送货', '到付', '1150.00', null, null, null, null, null, null, null, '0', '1');
 
 -- ----------------------------
 -- Table structure for logistics
 -- ----------------------------
 DROP TABLE IF EXISTS `logistics`;
 CREATE TABLE `logistics` (
-  `logId` int(11) NOT NULL AUTO_INCREMENT COMMENT '物流Id',
-  `logContractNum` varchar(255) DEFAULT NULL COMMENT '合同编号',
+  `logId` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '物流ID',
+  `logContractNum` varchar(255) DEFAULT '' COMMENT '合同编号',
   `logSendDate` date DEFAULT NULL COMMENT '车辆发车日期',
-  `logSiteStart` varchar(255) DEFAULT NULL COMMENT '初始站',
-  `logSiteEnd` varchar(255) DEFAULT NULL COMMENT '到站',
-  `logCarLicence` varchar(255) DEFAULT NULL COMMENT '车牌号',
-  `logCarDriver` varchar(255) DEFAULT NULL COMMENT '随车司机姓名',
-  `logCarPhone` varchar(255) DEFAULT NULL COMMENT '司机电话',
-  `logCarPay` double DEFAULT NULL COMMENT '货车费用',
-  `logPartner` varchar(255) DEFAULT NULL COMMENT '客户公司名',
+  `logSiteStart` varchar(255) DEFAULT '' COMMENT '始发站',
+  `logSiteEnd` varchar(255) DEFAULT '' COMMENT '终点站',
+  `logCarLicence` varchar(255) DEFAULT '' COMMENT '车牌号',
+  `logCarDriver` varchar(255) DEFAULT '' COMMENT '随车司机姓名',
+  `logCarPhone` varchar(255) DEFAULT '' COMMENT '司机电话',
+  `logCarPay` double unsigned DEFAULT NULL COMMENT '货车费用',
+  `logPartner` varchar(255) DEFAULT '' COMMENT '客户公司名',
   PRIMARY KEY (`logId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
@@ -235,12 +212,12 @@ INSERT INTO `logistics` VALUES ('2', 'GZ201607-0019', '2016-07-05', '桂林', '�
 -- ----------------------------
 DROP TABLE IF EXISTS `menu`;
 CREATE TABLE `menu` (
-  `menuId` int(10) NOT NULL AUTO_INCREMENT COMMENT '菜单Id',
-  `menuFather` int(10) DEFAULT NULL COMMENT '菜单父Id',
-  `menuName` varchar(255) DEFAULT NULL COMMENT '菜单名字',
+  `menuId` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '菜单Id',
+  `menuFather` int(11) unsigned DEFAULT NULL COMMENT '菜单父Id',
+  `menuName` varchar(255) DEFAULT '' COMMENT '菜单名字',
   PRIMARY KEY (`menuId`),
-  KEY `menu_ibfk_1` (`menuFather`),
-  CONSTRAINT `menu_ibfk_1` FOREIGN KEY (`menuFather`) REFERENCES `menu` (`menuId`) ON DELETE CASCADE ON UPDATE CASCADE
+  KEY `menuFather` (`menuFather`),
+  CONSTRAINT `menu_ibfk_1` FOREIGN KEY (`menuFather`) REFERENCES `menu` (`menuId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -257,8 +234,8 @@ INSERT INTO `menu` VALUES ('5', null, '个人信息管理');
 -- ----------------------------
 DROP TABLE IF EXISTS `role`;
 CREATE TABLE `role` (
-  `roleId` int(11) NOT NULL AUTO_INCREMENT COMMENT '角色Id',
-  `roleName` varchar(255) DEFAULT NULL COMMENT '角色名字',
+  `roleId` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '角色Id',
+  `roleName` varchar(255) DEFAULT '' COMMENT '角色名字',
   PRIMARY KEY (`roleId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
@@ -272,12 +249,12 @@ INSERT INTO `role` VALUES ('1', '管理员');
 -- ----------------------------
 DROP TABLE IF EXISTS `role_menu`;
 CREATE TABLE `role_menu` (
-  `roleId` int(11) NOT NULL COMMENT '角色Id',
-  `menuId` int(11) NOT NULL COMMENT '菜单Id',
+  `roleId` int(11) unsigned NOT NULL COMMENT '角色Id',
+  `menuId` int(11) unsigned NOT NULL COMMENT '菜单Id',
   PRIMARY KEY (`roleId`,`menuId`),
-  KEY `role_menu_ibfk_2` (`menuId`),
-  CONSTRAINT `role_menu_ibfk_2` FOREIGN KEY (`menuId`) REFERENCES `menu` (`menuId`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `role_menu_ibfk_3` FOREIGN KEY (`roleId`) REFERENCES `role` (`roleId`) ON DELETE CASCADE ON UPDATE CASCADE
+  KEY `menuId` (`menuId`),
+  CONSTRAINT `role_menu_ibfk_1` FOREIGN KEY (`roleId`) REFERENCES `role` (`roleId`),
+  CONSTRAINT `role_menu_ibfk_2` FOREIGN KEY (`menuId`) REFERENCES `menu` (`menuId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
