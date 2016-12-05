@@ -1,3 +1,6 @@
+@CHARSET "UTF-8";
+
+/*
 * {
 	margin: 0px;
 	padding: 0px;
@@ -40,6 +43,7 @@ a {
 .easyui-accordion ul li div:HOVER a {
 	color: #416AA3;
 }
+*/
 
 /* 标题文字样式 */
 .zooqi-head-text {
@@ -66,4 +70,27 @@ a {
 /* frame文字样式 */
 .zooqi-frame-text {
 	font-size: 13px;
+}
+
+#fm {
+	margin: 0;
+	padding: 10px 30px;
+}
+
+.ftitle {
+	font-size: 14px;
+	font-weight: bold;
+	color: #666;
+	padding: 5px 0;
+	margin-bottom: 10px;
+	border-bottom: 1px solid #ccc;
+}
+
+.fitem {
+	margin-bottom: 5px;
+}
+
+.fitem label {
+	display: inline-block;
+	width: 80px;
 }
