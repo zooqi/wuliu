@@ -16,11 +16,12 @@
 				data-options="iconCls:'icon-reload',plain:true">显示所有</a> <a
 				id="arvgs_edit" href="javascript:void(0)" class="easyui-linkbutton"
 				data-options="iconCls:'icon-edit',plain:true">编辑</a><a
-				id="arvgs_search" href="javascript:void(0)"
-				class="easyui-linkbutton"
+				id="arvgs_search" href="javascript:void(0)" class="easyui-linkbutton"
 				data-options="iconCls:'icon-search',plain:true">搜索</a> <a
 				id="arvgs_input" href="javascript:void(0)" class="easyui-linkbutton"
 				data-options="iconCls:'icon-undo',plain:true">数据导入</a>
+				<a id="arvgs_tip" href="javascript:void(0)" class="easyui-linkbutton"
+				data-options="iconCls:'icon-tip',plain:true">短信通知</a>
 		</div>
 
 		<!-- 对话框 -->
