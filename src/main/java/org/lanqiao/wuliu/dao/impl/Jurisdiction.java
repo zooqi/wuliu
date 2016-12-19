@@ -5,9 +5,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import org.lanqiao.wuliu.bean.Emp;
-import org.lanqiao.wuliu.bean.Expent;
-import org.lanqiao.wuliu.bean.Fun;
-import org.lanqiao.wuliu.bean.Menu;
 
 /**
  * 权限管理的数据库层
@@ -30,7 +27,7 @@ public class Jurisdiction extends BaseDaoImpl {
 		Object[] params = new Object[] { empId, funId };
 		return cud(sql, params);
 	}
-
+	
 	/**
 	 * 查找权限信息
 	 * 
@@ -42,6 +39,10 @@ public class Jurisdiction extends BaseDaoImpl {
 		ArrayList<Object[]> list = new ArrayList<Object[]>();
 		StringBuffer sql = new StringBuffer(
 				"SELECT m.menuId,menuName,funId,funName FROM fun f RIGHT JOIN menu m ON f.menuId=m.menuId ");
+		if (empReach.getEmpId() != null && !empReach.getEmpId().equals("")) {
+			sql.append("AND expEmpId like '%").append(empReach.getEmpId())
+					.append("%' ");
+		}
 		if (empReach.getEmpNum() != null && !empReach.getEmpNum().equals("")) {
 			sql.append("AND expEmpNum like '%").append(empReach.getEmpNum())
 					.append("%' ");
@@ -52,7 +53,7 @@ public class Jurisdiction extends BaseDaoImpl {
 		}
 		if (empReach.getEmpDepart() != null
 				&& !empReach.getEmpDepart().equals("")) {
-			sql.append("AND expFunction like '%")
+			sql.append("AND empDepart like '%")
 					.append(empReach.getEmpDepart()).append("%' ");
 		}
 		ResultSet rs = select(sql.toString(), new Object[] { empReach });

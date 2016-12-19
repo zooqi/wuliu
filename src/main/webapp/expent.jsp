@@ -78,12 +78,12 @@
 
 	<!-- 搜索表单 -->
 	<div id="expent_search_dlg" class="easyui-dialog"
-		style="padding: 0px 0px; width: 250px; height: 230px;"
+		style="padding: 0px 0px; width: 260px; height: 235px;"
 		data-options="closed:true,buttons:'#expent_search_dlg-buttons'">
 		<form id="expent_search_fm">
 			<table class="zooqi-frame-text" style="border-spacing: 10px;">
 				<tr>
-					<td width="70px">职 &nbsp;工 &nbsp;号 ：</td>
+					<td width="70px">职 &nbsp;工 &nbsp;号：</td>
 					<td><input id="expent_expEmpNum" name="expEmpNum"
 						style="width: 114px"></td>
 				</tr>

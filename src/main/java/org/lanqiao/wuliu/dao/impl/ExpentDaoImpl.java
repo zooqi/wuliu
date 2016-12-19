@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import org.lanqiao.wuliu.bean.Expent;
 import org.lanqiao.wuliu.bean.Goods;
+import org.lanqiao.wuliu.bean.Logistics;
 
 /**
  * 财务管理
@@ -135,5 +136,44 @@ public class ExpentDaoImpl extends BaseDaoImpl {
 			e.printStackTrace();
 		}
 		return count;
+	}
+	
+	/**
+	 * 收入查询
+	 * @param log logistics表
+	 * @return 返回一个ArrayList集合
+	 */
+	public ArrayList<Object[]> getIncome(String logSendDate,String logCarLicence){
+		ArrayList<Object[]> list = new ArrayList<Object[]>();
+
+		StringBuffer sql = new StringBuffer(
+				"SELECT logSendDate,logCarLicence,SUM(goPay)总收入,SUM(goTransitPay)中转费,SUM(goDamagePay)货款扣,SUM(goCommission)回扣,l.logId FROM goods g,logistics l WHERE g.logId=l.logId AND goPayWay='已付' ");
+		if (logSendDate!= null
+				&& !logSendDate.equals("")) {
+			sql.append("AND logSendDate like '%").append(logSendDate)
+					.append("%' ");
+		}
+		if (logCarLicence != null
+				&& !logCarLicence.equals("")) {
+			sql.append("AND logCarLicence like '%")
+					.append(logCarLicence).append("%' ");
+		}
+		ResultSet rs = select(sql.toString());
+		try {
+			while (rs.next()) {
+				Object[] object=new Object[7];
+				object[0]=rs.getDate(1);
+				object[1]=rs.getString(2);
+				object[2]=rs.getDouble(3);
+				object[3]=rs.getDouble(4);
+				object[4]=rs.getDouble(5);
+				object[5]=rs.getDouble(6);
+				object[6]=rs.getInt(7);
+				list.add(object);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return list;
 	}
 }

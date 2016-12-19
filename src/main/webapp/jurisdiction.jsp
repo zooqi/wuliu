@@ -19,7 +19,7 @@
 		</div>
 		<!-- 对话框 -->
 		<div id="jur_edit_dlg" class="easyui-dialog"
-			style="padding: 0px 0px; width: 500px; height: 230px;"
+			style="padding: 0px 0px; width: 680px; height: 330px;"
 			data-options="closed:true,buttons:'#jur_edit_dlg-buttons'">
 			<form id="jur_edit_fm">
 				<div id="jur_edit_tabs" class="easyui-tabs">
@@ -31,9 +31,15 @@
 								<td style="width: 93px; text-align: center;">职&nbsp;工&nbsp;号：</td>
 								<td><input id="jur_empNum1" name="empNum"
 									style="width: 120px"></td>
-								<td style="width: 93px; text-align: center;">姓&emsp;&emsp;名：</td>
+								<td style="width: 93px; text-align: center;">姓&emsp;&emsp;名</td>
 								<td><input id="jur_empName1" name="empName"
 									style="width: 113px"></td>
+							</tr>
+							<tr>
+								<td style="width: 93px; text-align: center" id="checkbox1"><input type="checkbox"></td>
+								<td style="width: 93px; text-align: center" id="menuName">菜单名称</td>
+								<td style="width: 93px; text-align: center" id="checkbox2"><input type="checkbox"></td>
+								<td style="width: 93px; text-align: center" id="funName">功能名称</td>
 							</tr>
 						</table>
 					</div>
@@ -54,7 +60,7 @@
 
 	<!-- 搜索表单 -->
 	<div id="jur_search_dlg" class="easyui-dialog"
-		style="padding: 0px 0px; width: 250px; height: 165px;"
+		style="padding: 0px 0px; width: 250px; height: 200px;"
 		data-options="closed:true,buttons:'#jur_search_dlg-buttons'">
 		<form id="jur_search_fm">
 			<table class="zooqi-frame-text" style="border-spacing: 10px;">
@@ -66,6 +72,11 @@
 				<tr>
 					<td width="70px">员工姓名：</td>
 					<td><input id="jur_empName" name="empName"
+						style="width: 114px"></td>
+				</tr>
+				<tr>
+					<td width="70px">所在部门：</td>
+					<td><input id="jur_empDepart" name="empDepart"
 						style="width: 114px"></td>
 				</tr>
 			</table>
@@ -123,14 +134,28 @@
 		$('#jur_reload').click(function() {
 			$("#jur_datagrid").datagrid("load", {});
 		});
-
+		
+		/* 加载菜单 */
+		$('#jur_edit').click(
+				function() {
+					var row = $('#jur_datagrid').datagrid('getSelected');
+					if (row) {
+						url = 'jurReach?empId'+row.empId;
+						$('#jur_edit_dlg').dialog('open').dialog('setTitle',
+								'编辑信息');
+						$('#jur_edit_fm').form('load', row);
+					} else {
+						$.messager.alert('提示', '请选择数据！');
+					}
+				});
+		
 		var url;
 		/* 弹出编辑窗口 */
 		$('#jur_edit').click(
 				function() {
 					var row = $('#jur_datagrid').datagrid('getSelected');
 					if (row) {
-						url = 'expUpdate?expId=' + row.expId;
+						url = 'jurReach';
 						$('#jur_edit_dlg').dialog('open').dialog('setTitle',
 								'编辑信息');
 						$('#jur_edit_fm').form('load', row);
