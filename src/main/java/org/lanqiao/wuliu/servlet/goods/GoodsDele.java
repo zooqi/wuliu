@@ -17,7 +17,7 @@ import org.lanqiao.wuliu.service.impl.BusinessManageServiceImpl;
  * @author 杨明静
  *
  */
-@WebServlet(name = "goodsDele", urlPatterns = { "/goodsDele" })
+@WebServlet(name = "goodsDelete", urlPatterns = { "/goodsDelete" })
 public class GoodsDele extends HttpServlet {
 
 	private static final long serialVersionUID = 348991134876831692L;

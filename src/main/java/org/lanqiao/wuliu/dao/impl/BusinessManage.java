@@ -79,15 +79,15 @@ public class BusinessManage extends BaseDaoImpl {
 	 */
 	public int goUpda(Goods goods, int goId) {
 		String sql = "UPDATE goods SET goBank=?,goName=?,goNum=?,goPack=?,goWeight=?,goVolume=?,"
-				+ "goSendMan=?,goSendPhone=?,goSendSddress=?,goForMan=?,goForPhone=?,goForAddress=?,goGetWay=?,"
+				+ "goSendMan=?,goSendPhone=?,goSendAddress=?,goForMan=?,goForPhone=?,goForAddress=?,goGetWay=?,"
 				+ "goPayWay=?,goPay=?,goInsurancePay=?,goReplacePay=?,goCommission=?,goDamagePay=?,"
-				+ "goTransitPay=?,goSiteEnd=?,goRemark=?,logId=? WHERE goId=?";
+				+ "goTransitPay=?,goSiteEnd=?,goRemark=? WHERE goId=?";
 		Object[] params = new Object[] { goods.getGoBank(), goods.getGoName(), goods.getGoNum(), goods.getGoBank(),
 				goods.getGoWeight(), goods.getGoVolume(), goods.getGoSendMan(), goods.getGoSendPhone(),
 				goods.getGoSendAddress(), goods.getGoForMan(), goods.getGoForPhone(), goods.getGoForAddress(),
 				goods.getGoGetWay(), goods.getGoPayWay(), goods.getGoPay(), goods.getGoInsurancePay(),
 				goods.getGoReplacePay(), goods.getGoCommission(), goods.getGoDamagePay(), goods.getGoTransitPay(),
-				goods.getGoSiteEnd(), goods.getGoRemark(), goods.getLogistics().getLogId(), goId };
+				goods.getGoSiteEnd(), goods.getGoRemark(), goId };
 		return cud(sql, params);
 	}
 
@@ -110,7 +110,7 @@ public class BusinessManage extends BaseDaoImpl {
 			String srhDateStr) {
 		ArrayList<Goods> ar = new ArrayList<Goods>();
 		StringBuffer sql = new StringBuffer(
-				"SELECT goBank,goName,goNum,goPack,goWeight,goVolume,goSendMan,goSendPhone,goSendAddress,goForMan,goForPhone,goForAddress,goGetWay,goPayWay,goPay,goInsurancePay,goReplacePay,goCommission,goDamagePay,goTransitPay,goSiteEnd,goRemark,goId,goType,g.logId,l.logSendDate,l.logCarLicence,l.logCarDriver FROM logistics l RIGHT JOIN goods g ON l.logId = g.logId WHERE goType = ? ");
+				"SELECT goBank,goName,goNum,goPack,goWeight,goVolume,goSendMan,goSendPhone,goSendAddress,goForMan,goForPhone,goForAddress,goGetWay,goPayWay,goPay,goInsurancePay,goReplacePay,goCommission,goDamagePay,goTransitPay,goSiteEnd,goRemark,goId,goType,g.logId,l.logSendDate,l.logCarLicence,l.logCarDriver,l.logContractNum,l.logSiteStart,l.logSiteEnd FROM logistics l RIGHT JOIN goods g ON l.logId = g.logId WHERE goType = ? ");
 
 		if (srhLicence != null && !srhLicence.equals("")) {
 			sql.append("AND l.logCarLicence like '%").append(srhLicence).append("%' ");
@@ -153,6 +153,9 @@ public class BusinessManage extends BaseDaoImpl {
 				logistics.setLogSendDate(rs.getDate(26));
 				logistics.setLogCarLicence(rs.getString(27));
 				logistics.setLogCarDriver(rs.getString(28));
+				logistics.setLogContractNum(rs.getString(29));
+				logistics.setLogSiteStart(rs.getString(30));
+				logistics.setLogSiteEnd(rs.getString(31));
 
 				goods.setLogistics(logistics);
 				ar.add(goods);

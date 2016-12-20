@@ -93,6 +93,9 @@ public class GoodsReach extends HttpServlet {
 			row.put("logSendDate", (date == null) ? "" : new SimpleDateFormat("yyyy-MM-dd").format(date));
 			row.put("logCarLicense", good.getLogistics().getLogCarLicence());
 			row.put("logCarDriver", good.getLogistics().getLogCarDriver());
+			row.put("logContractNum", good.getLogistics().getLogContractNum());
+			row.put("logSiteStart", good.getLogistics().getLogSiteStart());
+			row.put("logSiteEnd", good.getLogistics().getLogSiteEnd());
 			array.put(row);
 		}
 		json.put("rows", array);
