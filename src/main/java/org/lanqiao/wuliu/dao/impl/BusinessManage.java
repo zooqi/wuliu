@@ -82,7 +82,7 @@ public class BusinessManage extends BaseDaoImpl {
 				+ "goSendMan=?,goSendPhone=?,goSendAddress=?,goForMan=?,goForPhone=?,goForAddress=?,goGetWay=?,"
 				+ "goPayWay=?,goPay=?,goInsurancePay=?,goReplacePay=?,goCommission=?,goDamagePay=?,"
 				+ "goTransitPay=?,goSiteEnd=?,goRemark=? WHERE goId=?";
-		Object[] params = new Object[] { goods.getGoBank(), goods.getGoName(), goods.getGoNum(), goods.getGoBank(),
+		Object[] params = new Object[] { goods.getGoBank(), goods.getGoName(), goods.getGoNum(), goods.getGoPack(),
 				goods.getGoWeight(), goods.getGoVolume(), goods.getGoSendMan(), goods.getGoSendPhone(),
 				goods.getGoSendAddress(), goods.getGoForMan(), goods.getGoForPhone(), goods.getGoForAddress(),
 				goods.getGoGetWay(), goods.getGoPayWay(), goods.getGoPay(), goods.getGoInsurancePay(),

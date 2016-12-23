@@ -78,7 +78,8 @@
 				</colgroup>
 				<tr>
 					<td class="tg-031e" colspan="3">到货日期：<input
-						class="easyui-datebox" data-options="validType:'length[0,32]'"></td>
+						class="easyui-datebox" data-options="validType:'length[0,32]'"
+						style="width: 150px;"></td>
 					<td class="tg-031e" colspan="3">货号：<input
 						class="easyui-validatebox" name="goBank"
 						data-options="validType:'length[0,64]'" style="width: 170px;"></td>
@@ -127,7 +128,7 @@
 				<tr style="text-align: center;">
 					<td class="tg-031e" colspan="2"><input
 						class="easyui-validatebox" name="goName"
-						data-options="validType:'length[0,64]'"></td>
+						data-options="validType:'length[0,64]'" style="width: 140px;"></td>
 					<td class="tg-031e"><input class="easyui-validatebox"
 						name="goNum" data-options="validType:'length[0,32]'"
 						style="width: 60px;"></td>
@@ -173,7 +174,8 @@
 				</tr>
 				<tr>
 					<td class="tg-031e" colspan="3">发车日期：<input
-						class="easyui-datebox" name="logSendDate" disabled="disabled"></td>
+						class="easyui-datebox" name="logSendDate" style="width: 150px;"
+						disabled="disabled"></td>
 					<td class="tg-031e" colspan="4">起点：<input
 						class="easyui-validatebox" name="logSiteStart" disabled="disabled"
 						style="width: 250px;"></td>
