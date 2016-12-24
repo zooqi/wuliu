@@ -5,156 +5,142 @@
 
 	</div>
 	<div style="margin: 20px 30px auto 30px;">
-		<table id="expent_datagrid"></table>
+		<table id="money_datagrid"></table>
 		<!-- 工具栏按钮 -->
-		<div id="expent_toolbar">
-			<a id="expent_reload" href="javascript:void(0)"
+		<div id="money_toolbar">
+			<a id="money_reload" href="javascript:void(0)"
 				class="easyui-linkbutton"
 				data-options="iconCls:'icon-reload',plain:true">显示所有</a> <a
-				id="expent_search" href="javascript:void(0)"
+				id="money_search" href="javascript:void(0)"
 				class="easyui-linkbutton"
 				data-options="iconCls:'icon-search',plain:true">搜索</a>
 		</div>
 
 	<!-- 搜索表单 -->
-	<div id="expent_search_dlg" class="easyui-dialog"
-		style="padding: 0px 0px; width: 260px; height: 235px;"
-		data-options="closed:true,buttons:'#expent_search_dlg-buttons'">
-		<form id="expent_search_fm">
+	<div id="money_search_dlg" class="easyui-dialog"
+		style="padding: 0px 0px; width: 250px; height: 120px;"
+		data-options="closed:true,buttons:'#money_search_dlg-buttons'">
+		<form id="money_search_fm">
 			<table class="zooqi-frame-text" style="border-spacing: 10px;">
-				<tr>
-					<td width="70px">职 &nbsp;工 &nbsp;号：</td>
-					<td><input id="expent_expEmpNum" name="expEmpNum"
-						style="width: 114px"></td>
-				</tr>
-				<tr>
-					<td width="70px">员工姓名：</td>
-					<td><input id="expent_expEmpName" name="expEmpName"
-						style="width: 114px"></td>
-				</tr>
-				<tr>
-					<td width="70px">用&emsp;&emsp;途 ：</td>
-					<td><input id="expent_expFunction" name="expFunction"
-						style="width: 114px"></td>
-				</tr>
-				<tr>
-					<td width="70px">日&emsp;&emsp;期 ：</td>
-					<td><input class="easyui-datebox" name="expDate"
-						id="expent_expDate" style="width: 116px"></td>
-
+			<tr>
+					<td width="70px">日&emsp;期 ：</td>
+					<td><input id=datetime1 name="moneyDate" style="width: 116px"></td>
 				</tr>
 			</table>
 		</form>
 	</div>
-	<div id="expent_search_dlg-buttons">
-		<a id="expent_search_button" href="javascript:void(0)"
+	<div id="money_search_dlg-buttons">
+		<a id="money_search_button" href="javascript:void(0)"
 			class="easyui-linkbutton c6" data-options="iconCls:'icon-ok'"
 			style="width: 90px">搜索</a> <a href="javascript:void(0)"
 			class="easyui-linkbutton" data-options="iconCls:'icon-cancel'"
-			onclick="javascript:$('#expent_search_dlg').dialog('close')"
+			onclick="javascript:$('#money_search_dlg').dialog('close')"
 			style="width: 90px">取消</a>
 	</div>
 
 	<script type="text/javascript">
-		$('#expent_datagrid').datagrid({
-			url : 'expReach',
+		$('#money_datagrid').datagrid({
+			url : 'reachMoney',
 			fitColumns : true,
 			singleSelect : true,
 			pagination : true,
 			rownumbers : true,
-			toolbar : '#expent_toolbar',
+			toolbar : '#money_toolbar',
 			remoteSort : false,
 			columns : [ [ {
 				field : 'expId',
 				hidden : true
-			}, {
-				title : '职工号',
-				field : 'expEmpNum',
+			},{
+				title : '时间',
+				field : 'date',
 				align : 'center',
 				sortable : true,
 				width : 150,
-				formatter : function(value, row, index) {
-					if (row.expId) {
-						return row.expEmpNum;
-					} else {
-						return value;
-					}
-				}
+			},  {
+				title : '总支出',
+				field : 'sumExpent',
+				align : 'center',
+				sortable : true,
+				width : 150,
 			}, {
-				title : '姓名',
-				field : 'expEmpName',
+				title : '总收入',
+				field : 'sumIncome',
 				align : 'center',
 				sortable : true,
 				width : 100,
-				formatter : function(value, row, index) {
-					if (row.expId) {
-						return row.expEmpName;
-					} else {
-						return value;
-					}
-				}
 			}, {
-				title : '用途',
-				field : 'expFunction',
+				title : '结余',
+				field : 'sumMoney',
 				align : 'center',
 				sortable : true,
 				width : 100,
-				formatter : function(value, row, index) {
-					if (row.expId) {
-						return row.expFunction;
-					} else {
-						return value;
-					}
-				}
-			}, {
-				title : '金额',
-				field : 'expMoney',
-				align : 'center',
-				sortable : true,
-				width : 140,
-			}, {
-				title : '时间',
-				field : 'expDate',
-				align : 'center',
-				sortable : true,
-				width : 100
-			}, {
-				title : '备注',
-				field : 'expRemark',
-				align : 'center',
-				sortable : true,
-				width : 100
 			} ] ]
 		});
+		
+		/*把datebox改为只显示年月*/
+		$(function() {      
+		      $('#datetime1').datebox({    
+		            onShowPanel : function() {// 显示日趋选择对象后再触发弹出月份层的事件，初始化时没有生成月份层    
+		                span.trigger('click'); // 触发click事件弹出月份层    
+		                if (!tds)    
+		                    setTimeout(function() {// 延时触发获取月份对象，因为上面的事件触发和对象生成有时间间隔    
+		                        tds = p.find('div.calendar-menu-month-inner td');    
+		                        tds.click(function(e) {    
+		                            e.stopPropagation(); // 禁止冒泡执行easyui给月份绑定的事件    
+		                            var year = /\d{4}/.exec(span.html())[0]// 得到年份    
+		                            , month = parseInt($(this).attr('abbr'), 10) + 1; // 月份    
+		                            $('#datetime1').datebox('hidePanel')// 隐藏日期对象    
+		                            .datebox('setValue', year + '-' + month); // 设置日期的值    
+		                        });    
+		                    }, 0);    
+		            },    
+		            parser : function(s) {// 配置parser，返回选择的日期    
+		                if (!s)    
+		                    return new Date();    
+		                var arr = s.split('-');    
+		                return new Date(parseInt(arr[0], 10), parseInt(arr[1], 10) - 1, 1);    
+		            },    
+		            formatter : function(d) {    
+		                var month = d.getMonth();  
+		                if(month<=10){  
+		                    month = "0"+month;  
+		                }  
+		                if (d.getMonth() == 0) {    
+		                    return d.getFullYear()-1 + '-' + 12;    
+		                } else {    
+		                    return d.getFullYear() + '-' + month;    
+		                }    
+		            }// 配置formatter，只返回年月    
+		        });    
+		        var p = $('#datetime1').datebox('panel'), // 日期选择对象    
+		        tds = false, // 日期选择对象中月份    
+		        span = p.find('span.calendar-text'); // 显示月份层的触发控件    
+		        
+		    });    
 
 		/* 显示所有 */
-		$('#expent_reload').click(function() {
-			$("#expent_datagrid").datagrid("load", {});
+		$('#money_reload').click(function() {
+			$("#money_datagrid").datagrid("load", {});
 		});
 
 		/*弹出搜索窗口*/
-		$('#expent_search').click(
+		$('#money_search').click(
 				function() {
-					$('#expent_search_dlg').dialog('open').dialog('setTitle',
+					$('#money_search_dlg').dialog('open').dialog('setTitle',
 							'搜索支出信息');
 				});
 		/* 搜索 */
-		$('#expent_search_button').click(function() {
-			if (!$('#expent_search_fm').form('validate')) {
+		$('#money_search_button').click(function() {
+			if (!$('#money_search_fm').form('validate')) {
 				$.messager.alert('提示', '请正确填写信息！');
 				return;
 			}
-			$('#expent_datagrid').datagrid('load', {
-				expEmpNum : $('#expent_expEmpNum').val(),
-				expEmpName : $('#expent_expEmpName').val(),
-				expDate : $('#expent_expDate').datebox('getValue'),
-				expFunction : $('#expent_expFunction').val()
+			$('#money_datagrid').datagrid('load', {
+				moneyDate : $('#datetime1').datebox('getValue'),
 			});
-			//console.log($('expDate').datebox('getValue'));
-			$('#expent_search_dlg').dialog('close');
-			$('#expent_search_fm').form('clear');
+			$('#money_search_dlg').dialog('close');
+			$('#money_search_fm').form('clear');
 		});
-
 	</script>
 
 </div>
