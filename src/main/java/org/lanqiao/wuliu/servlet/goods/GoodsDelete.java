@@ -9,7 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.lanqiao.wuliu.service.impl.BusinessManageServiceImpl;
+import org.lanqiao.wuliu.dao.impl.BusinessManage;
+import org.lanqiao.wuliu.util.FormUtils;
 
 /**
  * 删除物流记录
@@ -18,7 +19,7 @@ import org.lanqiao.wuliu.service.impl.BusinessManageServiceImpl;
  *
  */
 @WebServlet(name = "goodsDelete", urlPatterns = { "/goodsDelete" })
-public class GoodsDele extends HttpServlet {
+public class GoodsDelete extends HttpServlet {
 
 	private static final long serialVersionUID = 348991134876831692L;
 
@@ -27,11 +28,11 @@ public class GoodsDele extends HttpServlet {
 		response.setContentType("application/json;charset=UTF-8");
 		PrintWriter out = response.getWriter();
 
-		int goId = Integer.parseInt(request.getParameter("goId"));
+		int goId = FormUtils.parseInt(request.getParameter("goId"));
 
-		BusinessManageServiceImpl bms = new BusinessManageServiceImpl();
+		BusinessManage dao = new BusinessManage();
 
-		if (bms.goDele(goId) == 1) {
+		if (dao.goDelete(goId) == 1) {
 			out.println("{\"success\":true}");
 		} else {
 			out.println("{\"success\":false}");

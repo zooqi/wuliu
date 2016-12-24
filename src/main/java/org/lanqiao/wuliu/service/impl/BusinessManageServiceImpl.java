@@ -33,25 +33,12 @@ public class BusinessManageServiceImpl {
 	}
 
 	/**
-	 * 统计goods表的记录数
-	 * 
-	 * @return 返回int
+	 * 物流总数
+	 * @param goType 物流类型(发货、到货)
+	 * @return
 	 */
-	public int goCount() {
-		return bm.goCount();
-	}
-
-	/**
-	 * 更新物品清单数据
-	 * 
-	 * @param goods
-	 *            物品清单对象
-	 * @param goId
-	 *            物品清单Id
-	 * @return 返回int
-	 */
-	public int goUpda(Goods goods, int goId) {
-		return bm.goUpda(goods, goId);
+	public int goCount(int goType) {
+		return bm.goCount(goType);
 	}
 
 	/**
@@ -80,7 +67,7 @@ public class BusinessManageServiceImpl {
 	 * @return 返回int
 	 */
 	public int goDele(int goId) {
-		return bm.goDele(goId);
+		return bm.goDelete(goId);
 	}
 
 	public int goInput(Goods goods) {

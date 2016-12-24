@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.lanqiao.wuliu.bean.Goods;
-import org.lanqiao.wuliu.service.impl.BusinessManageServiceImpl;
+import org.lanqiao.wuliu.dao.impl.BusinessManage;
 import org.lanqiao.wuliu.util.FormUtils;
 
 /**
@@ -20,7 +20,7 @@ import org.lanqiao.wuliu.util.FormUtils;
  *
  */
 @WebServlet(name = "goodsUpdate", urlPatterns = { "/goodsUpdate" })
-public class GoodsUpda extends HttpServlet {
+public class GoodsUpdate extends HttpServlet {
 
 	private static final long serialVersionUID = -9154204721194366236L;
 
@@ -55,7 +55,7 @@ public class GoodsUpda extends HttpServlet {
 		String goPayWay = request.getParameter("goPayWay");
 		String goRemark = request.getParameter("goRemark");
 
-		int goId = Integer.parseInt(request.getParameter("goId"));
+		int goId = FormUtils.parseInt(request.getParameter("goId"));
 
 		Goods goods = new Goods();
 		goods.setGoId(goId);
@@ -82,9 +82,9 @@ public class GoodsUpda extends HttpServlet {
 		goods.setGoPayWay(goPayWay);
 		goods.setGoRemark(goRemark);
 
-		BusinessManageServiceImpl bms = new BusinessManageServiceImpl();
-		int num = bms.goUpda(goods, goId);
-		if (num == 1) {
+		BusinessManage dao = new BusinessManage();
+		int count = dao.goUpdate(goods);
+		if (count == 1) {
 			out.println("{\"success\":true}");
 		} else {
 			out.println("{\"success\":false}");

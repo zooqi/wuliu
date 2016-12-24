@@ -99,7 +99,7 @@ public class GoodsReach extends HttpServlet {
 			array.put(row);
 		}
 		json.put("rows", array);
-		json.put("total", goods.size());
+		json.put("total", bms.goCount(goType));
 		out.println(json);
 	}
 

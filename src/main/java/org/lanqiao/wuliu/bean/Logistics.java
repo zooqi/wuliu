@@ -9,6 +9,10 @@ import java.util.Date;
  * @author 杨明静
  *
  */
+/**
+ * @author zooqi
+ *
+ */
 public class Logistics implements Serializable {
 
 	private Integer logId;
@@ -21,6 +25,7 @@ public class Logistics implements Serializable {
 	private String logCarPhone;
 	private Double logCarPay;
 	private String logPartner;
+	private Integer logType;
 	private static final long serialVersionUID = 988100447712821205L;
 
 	public Integer getLogId() {
@@ -101,6 +106,14 @@ public class Logistics implements Serializable {
 
 	public void setLogPartner(String logPartner) {
 		this.logPartner = logPartner;
+	}
+
+	public Integer getLogType() {
+		return logType;
+	}
+
+	public void setLogType(Integer logType) {
+		this.logType = logType;
 	}
 
 }

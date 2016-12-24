@@ -54,6 +54,27 @@ public class BaseDaoImpl implements IBaseDao {
 	}
 
 	/**
+	 * 处理含占位符的SQL语句
+	 * 
+	 * @param preparedStatement
+	 * @param sql
+	 * @param params
+	 */
+	protected void setParameter(final PreparedStatement preparedStatement, String sql, Object[] params) {
+		if (preparedStatement == null) {
+			return;
+		}
+
+		try {
+			for (int i = 0; i < params.length; i++) {
+				preparedStatement.setObject((i + 1), params[i]);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
 	 * 处理含占位符的查询的sql语句
 	 * 
 	 * @param sql

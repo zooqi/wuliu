@@ -1,11 +1,14 @@
 package org.lanqiao.wuliu.dao.impl;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 import org.lanqiao.wuliu.bean.Goods;
 import org.lanqiao.wuliu.bean.Logistics;
+import org.lanqiao.wuliu.util.DBUtils;
 
 /**
  * 业务管理
@@ -51,33 +54,46 @@ public class BusinessManage extends BaseDaoImpl {
 	}
 
 	/**
-	 * 物流记录数
+	 * 物流总数
 	 * 
-	 * @return 物流记录数
+	 * @param goType
+	 *            物流类型(发货、到货)
+	 * @return
 	 */
-	public int goCount() {
-		ResultSet rs = select("SELECT COUNT(*) FROM goods");
+	public int goCount(int goType) {
 		int count = 0;
+		String sql = "SELECT COUNT(*) FROM goods WHERE goType = ?";
+
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
 		try {
-			if (rs.next()) {
-				count = rs.getInt(1);
+			connection = DBUtils.getConnection();
+			preparedStatement = connection.prepareStatement(sql);
+			setParameter(preparedStatement, sql, new Object[] { goType });
+			resultSet = preparedStatement.executeQuery();
+
+			if (resultSet.next()) {
+				count = resultSet.getInt(1);
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			return 0;
+		} finally {
+			DBUtils.closeConnection(connection);
+			DBUtils.closePreparedStatement(preparedStatement);
+			DBUtils.closeResultSet(resultSet);
 		}
 		return count;
 	}
 
 	/**
-	 * 更新物品清单数据
+	 * 更新物流记录
 	 * 
 	 * @param goods
-	 *            物品清单对象
-	 * @param goId
-	 *            物品清单Id
-	 * @return 返回int
+	 * @return
 	 */
-	public int goUpda(Goods goods, int goId) {
+	public int goUpdate(Goods goods) {
+		int count = 0;
 		String sql = "UPDATE goods SET goBank=?,goName=?,goNum=?,goPack=?,goWeight=?,goVolume=?,"
 				+ "goSendMan=?,goSendPhone=?,goSendAddress=?,goForMan=?,goForPhone=?,goForAddress=?,goGetWay=?,"
 				+ "goPayWay=?,goPay=?,goInsurancePay=?,goReplacePay=?,goCommission=?,goDamagePay=?,"
@@ -87,8 +103,58 @@ public class BusinessManage extends BaseDaoImpl {
 				goods.getGoSendAddress(), goods.getGoForMan(), goods.getGoForPhone(), goods.getGoForAddress(),
 				goods.getGoGetWay(), goods.getGoPayWay(), goods.getGoPay(), goods.getGoInsurancePay(),
 				goods.getGoReplacePay(), goods.getGoCommission(), goods.getGoDamagePay(), goods.getGoTransitPay(),
-				goods.getGoSiteEnd(), goods.getGoRemark(), goId };
-		return cud(sql, params);
+				goods.getGoSiteEnd(), goods.getGoRemark(), goods.getGoId() };
+
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		try {
+			connection = DBUtils.getConnection();
+			preparedStatement = connection.prepareStatement(sql);
+			setParameter(preparedStatement, sql, params);
+			count = preparedStatement.executeUpdate();
+		} catch (SQLException e) {
+			return 0;
+		} finally {
+			DBUtils.closeConnection(connection);
+			DBUtils.closePreparedStatement(preparedStatement);
+		}
+		return count;
+	}
+
+	/**
+	 * 添加物流记录
+	 * 
+	 * @param goods
+	 * @param goId
+	 * @return
+	 */
+	public int goAdd(Goods goods, int logId) {
+		int count = 0;
+		String sql = "INSERT INTO goods(goBank,goName,goPack,goNum,goWeight,goVolume,goSendMan,"
+				+ "goSendPhone,goSendAddress,goForMan,goForPhone,goForAddress,goGetWay,goPayWay,"
+				+ "goPay,goInsurancePay,goReplacePay,goCommission,goDamagePay,goTransitPay,"
+				+ "goSiteEnd,goRemark,goType,logId) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+		Object[] params = new Object[] { goods.getGoBank(), goods.getGoName(), goods.getGoPack(), goods.getGoNum(),
+				goods.getGoWeight(), goods.getGoVolume(), goods.getGoSendMan(), goods.getGoSendPhone(),
+				goods.getGoSendAddress(), goods.getGoForMan(), goods.getGoForPhone(), goods.getGoForAddress(),
+				goods.getGoGetWay(), goods.getGoPayWay(), goods.getGoPay(), goods.getGoInsurancePay(),
+				goods.getGoReplacePay(), goods.getGoCommission(), goods.getGoDamagePay(), goods.getGoTransitPay(),
+				goods.getGoSiteEnd(), goods.getGoRemark(), goods.getGoType(), logId };
+
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		try {
+			connection = DBUtils.getConnection();
+			preparedStatement = connection.prepareStatement(sql);
+			setParameter(preparedStatement, sql, params);
+			count = preparedStatement.executeUpdate();
+		} catch (SQLException e) {
+			return 0;
+		} finally {
+			DBUtils.closeConnection(connection);
+			DBUtils.closePreparedStatement(preparedStatement);
+		}
+		return count;
 	}
 
 	/**
@@ -167,15 +233,29 @@ public class BusinessManage extends BaseDaoImpl {
 	}
 
 	/**
-	 * 删除物流单
+	 * 删除物流记录
 	 * 
 	 * @param goId
-	 *            物流Id
-	 * @return 返回int
+	 * @return
 	 */
-	public int goDele(int goId) {
+	public int goDelete(int goId) {
+		int count = 0;
 		String sql = "DELETE FROM goods WHERE goId=?";
-		return cud(sql, new Object[] { goId });
+
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		try {
+			connection = DBUtils.getConnection();
+			preparedStatement = connection.prepareStatement(sql);
+			setParameter(preparedStatement, sql, new Object[] { goId });
+			count = preparedStatement.executeUpdate();
+		} catch (SQLException e) {
+			return 0;
+		} finally {
+			DBUtils.closeConnection(connection);
+			DBUtils.closePreparedStatement(preparedStatement);
+		}
+		return count;
 	}
 
 }
