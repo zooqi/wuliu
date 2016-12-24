@@ -85,6 +85,12 @@
 				align : 'center',
 				sortable : true,
 				width : 100
+			}, {
+				title : '结余',
+				field : 'sumMoney',
+				align : 'center',
+				sortable : true,
+				width : 100
 			}] ]
 		});
 
@@ -195,26 +201,36 @@
 				align : 'center',
 				sortable : true,
 				width : 100,
+				
 			},{
 				title : '总中转费',
 				field : 'sumGoTransitPay',
 				align : 'center',
 				sortable : true,
+				width : 100,
+				
+			},{
+				title : '结余',
+				field : 'sumMoney',
+				align : 'center',
+				sortable : true,
 				width : 100
-			} ] ]
+				
+			}] ]
 		});
+		
 
 		/* 显示所有 */
 		$('#income1_reload').click(function() {
 			$("#income1_datagrid").datagrid("load", {});
 		});
-		
+
 		/*弹出搜索窗口*/
 		$('#income1_search').click(
-			function() {
-				$('#income1_search_dlg').dialog('open').dialog('setTitle',
-						'搜索收入信息');
-			});
+				function() {
+					$('#income1_search_dlg').dialog('open').dialog('setTitle',
+							'搜索收入信息');
+				});
 		/* 搜索 */
 		$('#income1_search_button').click(function() {
 			if (!$('#income1_search_fm').form('validate')) {

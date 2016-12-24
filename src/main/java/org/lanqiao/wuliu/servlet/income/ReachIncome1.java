@@ -39,6 +39,7 @@ public class ReachIncome1 extends HttpServlet{
 		JSONArray array = new JSONArray();
 		for(Object[] object:list){
 			JSONObject row = new JSONObject();
+			double sumMoney=(Double)object[2]-(Double)object[3]-(Double)object[4]-(Double)object[6];
 			row.put("logSendDate", object[0]);
 			row.put("logCarLicence", object[1]);
 			row.put("sumGoPay", object[2]);
@@ -46,6 +47,7 @@ public class ReachIncome1 extends HttpServlet{
 			row.put("sumGoCommission", object[4]);
 			row.put("logId", object[5]);
 			row.put("sumLogCarPay", object[6]);
+			row.put("sumMoney", sumMoney);
 			array.put(row);
 		}
 		json.put("rows", array);
