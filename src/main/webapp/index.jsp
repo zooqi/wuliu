@@ -45,10 +45,6 @@
 		</script>
 	</div>
 
-	<div
-		data-options="region:'south',title:'友情链接',border:false,collapsible:false"
-		style="height: 60px;"></div>
-
 	<div data-options="region:'west',title:'导航菜单',split:true"
 		style="width: 180px;">
 		<div class="easyui-accordion" data-options="fit:true">

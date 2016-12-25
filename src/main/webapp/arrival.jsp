@@ -255,7 +255,7 @@
 				sortable : true,
 				width : 100
 			}, {
-				title : '车牌号',
+				title : '车牌',
 				field : 'logCarLicense',
 				align : 'center',
 				sortable : true,
@@ -375,7 +375,7 @@
 				sortable : true,
 				width : 80
 			}, {
-				title : '到站',
+				title : '终点',
 				field : 'goSiteEnd',
 				align : 'center',
 				sortable : true,
