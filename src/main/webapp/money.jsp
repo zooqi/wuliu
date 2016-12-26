@@ -47,24 +47,21 @@
 			rownumbers : true,
 			toolbar : '#money_toolbar',
 			remoteSort : false,
-			columns : [ [ {
-				field : 'expId',
-				hidden : true
-			},{
+			columns : [ [  {
 				title : '时间',
 				field : 'date',
 				align : 'center',
 				sortable : true,
-				width : 150,
-			},  {
-				title : '总支出',
-				field : 'sumExpent',
-				align : 'center',
-				sortable : true,
-				width : 150,
+				width : 100,
 			}, {
 				title : '总收入',
 				field : 'sumIncome',
+				align : 'center',
+				sortable : true,
+				width : 100,
+			}, {
+				title : '总支出',
+				field : 'sumExpent',
 				align : 'center',
 				sortable : true,
 				width : 100,

@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import org.lanqiao.wuliu.bean.Expent;
+
 /**
  * 财务管理
  * 
@@ -135,7 +136,7 @@ public class ExpentDaoImpl extends BaseDaoImpl {
 	}
 
 	/**
-	 * 发货收支查询
+	 * 发货收支查询(根据某个时间某辆车)
 	 * 
 	 * @param log
 	 *            logistics表
@@ -175,7 +176,7 @@ public class ExpentDaoImpl extends BaseDaoImpl {
 	}
 
 	/**
-	 * 发货收支查询
+	 * 到货收支查询(根据某个时间某辆车)
 	 * 
 	 * @param log
 	 *            logistics表
@@ -211,32 +212,108 @@ public class ExpentDaoImpl extends BaseDaoImpl {
 		}
 		return list;
 	}
-	
+
 	/**
+	 * 发货收支查询(根据某个月份)
 	 * 
-	 * @param date
-	 * @return
+	 * @param log
+	 *            logistics表
+	 * @return 返回一个ArrayList集合
 	 */
-	public ArrayList<Object[]> getMoney(String date) {
+	public ArrayList<Object[]> getIncome1Date(int pageCurrentFirst,
+			int pageRows, String date) {
 		ArrayList<Object[]> list = new ArrayList<Object[]>();
-		StringBuffer sql = new StringBuffer(
-				"SELECT SUM(expMoney),expId,date_format(expDate,'%Y-%m') AS a FROM expent WHERE 1=1 ");
-		if (date != null && !date.equals("")) {
-			sql.append("AND expDate like '%").append(date)
-					.append("%' ");
-		}
-		sql.append(" GROUP BY a");
-		ResultSet rs = select(sql.toString());
-		System.out.println(sql.toString());
+
+		String sql = "SELECT  date_format(logSendDate,'%Y-%m') AS a,SUM(goPay),SUM(goDamagePay),SUM(goCommission),SUM(logCarPay) FROM goods g,logistics l WHERE g.logId=l.logId AND goPayWay='已付' AND goType=0 AND logSendDate LIKE ? GROUP BY a LIMIT ?, ?";
+
+		ResultSet rs = select(sql, new Object[] { "%" + date + "%",pageCurrentFirst,
+				pageRows });
 		try {
 			while (rs.next()) {
-				Object[] object = new Object[3];
-				object[0] = rs.getDouble(1);
-				object[1] = rs.getInt(2);
-				object[2] = rs.getString(3);
+				Object[] object = new Object[5];
+				object[0] = rs.getString(1);
+				object[1] = rs.getDouble(2);
+				object[2] = rs.getDouble(3);
+				object[3] = rs.getDouble(4);
+				object[4] = rs.getDouble(5);
 				list.add(object);
 			}
 		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	/**
+	 * 到货收支查询(根据某个月份)
+	 * 
+	 * @param log
+	 *            logistics表
+	 * @return 返回一个ArrayList集合
+	 */
+	public ArrayList<Object[]> getIncome2Date(int pageCurrentFirst,
+			int pageRows, String date) {
+		ArrayList<Object[]> list = new ArrayList<Object[]>();
+		String sql = "SELECT  date_format(logSendDate,'%Y-%m') AS a,SUM(goPay),SUM(goTransitPay),SUM(goDamagePay) FROM goods g,logistics l WHERE g.logId=l.logId AND goPayWay='到付' AND goType=1  AND logSendDate LIKE ? GROUP BY a LIMIT ?,?";
+		ResultSet rs = select(sql, new Object[] { "%" + date + "%", pageCurrentFirst,
+				pageRows, });
+		try {
+			while (rs.next()) {
+				Object[] object = new Object[4];
+				object[0] = rs.getString(1);
+				object[1] = rs.getDouble(2);
+				object[2] = rs.getDouble(3);
+				object[3] = rs.getDouble(4);
+				list.add(object);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	/**
+	 * 计算总的日常支出
+	 * 
+	 * @param date
+	 *            日常支出时间
+	 * @return ArrayList
+	 */
+	public ArrayList<Object[]> getMoney(int pageCurrentFirst, int pageRows,
+			String date) {
+		ArrayList<Object[]> list = new ArrayList<Object[]>();
+		String sql = "SELECT SUM(expMoney),date_format(expDate,'%Y-%m') AS a FROM expent WHERE expDate LIKE ? GROUP BY a LIMIT ?,?";
+		ResultSet rs = select(sql, new Object[] { "%" + date + "%", pageCurrentFirst,
+				pageRows });
+		try {
+			while (rs.next()) {
+				Object[] object = new Object[2];
+				object[0] = rs.getDouble(1);
+				object[1] = rs.getString(2);
+				list.add(object);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	/**
+	 * 得到支出表，物流表的时间的并集
+	 * 
+	 * @return 返回ArrayList<Object[]>
+	 */
+	public ArrayList<String> getDate() {
+		ArrayList<String> list = new ArrayList<String>();
+		String sql = "SELECT date_format(expDate,'%Y-%m') FROM expent UNION SELECT date_format(logSendDate,'%Y-%m') FROM logistics";
+		ResultSet rs = select(sql);
+		try {
+			while (rs.next()) {
+				String date = rs.getString(1);
+				list.add(date);
+			}
+		} catch (SQLException e) {
+
 			e.printStackTrace();
 		}
 		return list;
