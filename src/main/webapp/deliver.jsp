@@ -178,11 +178,10 @@
 				</tr>
 				<tr>
 					<td class="tg-031e" colspan="11" style="text-align: center;">车流：<select
-						name="logId" class="easyui-combobox"
+						id="dlvgs_add_fm_selector" name="logId" class="easyui-combobox"
 						data-options="{
 							url : 'availableDepart',
 							onSelect : function(record){
-								console.log(record);
 								$('#dlvgs_add_fm_lsd').datebox('setValue', record.logSendDate);
 								$('#dlvgs_add_fm_lss').val(record.logSiteStart);
 								$('#dlvgs_add_fm_lcn').val(record.logContractNum);
@@ -564,6 +563,7 @@
 		$('#dlvgs_add').click(function() {
 			$('#dlvgs_add_dlg').dialog('open').dialog('setTitle', '添加');
 			$('#dlvgs_add_fm').form('clear');
+			$('#dlvgs_add_fm_selector').combobox('reload');
 		});
 		/* 保存 */
 		$('#dlvgs_add_button').click(function() {
