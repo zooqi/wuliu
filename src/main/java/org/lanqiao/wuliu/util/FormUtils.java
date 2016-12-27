@@ -1,5 +1,9 @@
 package org.lanqiao.wuliu.util;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * 
  * @author zooqi
@@ -8,7 +12,7 @@ package org.lanqiao.wuliu.util;
 public class FormUtils {
 
 	/**
-	 * 将来自表单的输入转化为{@code java.lang.Integer}类型, 如attribute不合法(为null或为""或为非整数字符串),
+	 * 将来自表单的输入转化为{@link java.lang.Integer}类型, 如attribute不合法(为null或为""或为非整数字符串),
 	 * 一律返回整数0.
 	 * 
 	 * @param attribute
@@ -30,7 +34,7 @@ public class FormUtils {
 	}
 
 	/**
-	 * 将来自表单的输入转化为{@code java.lang.Double}类型, 如attribute不合法(为null或为""或为非浮点数字符串),
+	 * 将来自表单的输入转化为{@link java.lang.Double}类型, 如attribute不合法(为null或为""或为非浮点数字符串),
 	 * 一律返回浮点数0.0.
 	 * 
 	 * @param attribute
@@ -50,4 +54,27 @@ public class FormUtils {
 		}
 		return value;
 	}
+
+	/**
+	 * 将符合yyyy-MM-dd格式的日期字符串dateStr解析为{@link java.util.Date}对象,
+	 * 如果dateStr不合法，则返回null
+	 * 
+	 * @param dateStr
+	 * @return
+	 */
+	public static Date parseDate(String dateStr) {
+		if (dateStr == null || dateStr.equals("")) {
+			return null;
+		}
+
+		Date date;
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		try {
+			date = format.parse(dateStr);
+		} catch (ParseException e) {
+			return null;
+		}
+		return date;
+	}
+
 }

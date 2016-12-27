@@ -79,105 +79,93 @@
 					<col style="width: 81px">
 				</colgroup>
 				<tr>
-					<td class="tg-031e" colspan="3">发货日期：<input
-						id="dlvgs_add_fm_lsd" class="easyui-datebox"
-						data-options="validType:'length[0,32]'" style="width: 150px;"
-						disabled="disabled"></td>
-					<td class="tg-031e" colspan="3">货号：<input
-						class="easyui-validatebox" name="goBank"
+					<td colspan="3">发货日期：<input id="dlvgs_add_fm_lsd"
+						class="easyui-datebox" data-options="validType:'length[0,32]'"
+						style="width: 150px;" disabled="disabled"></td>
+					<td colspan="3">货号：<input class="easyui-validatebox"
+						name="goBank" data-options="validType:'length[0,64]'"
+						style="width: 170px;"></td>
+					<td colspan="3">起点：<input id="dlvgs_add_fm_lss"
+						class="easyui-validatebox" name="logSiteStart" disabled="disabled"
 						data-options="validType:'length[0,64]'" style="width: 170px;"></td>
-					<td class="tg-031e" colspan="3">起点：<input
-						id="dlvgs_add_fm_lss" class="easyui-validatebox"
-						name="logSiteStart" disabled="disabled"
-						data-options="validType:'length[0,64]'" style="width: 170px;"></td>
-					<td class="tg-031e" colspan="3">终点：<input
-						class="easyui-validatebox" name="goSiteEnd"
-						data-options="validType:'length[0,64]'" style="width: 170px;"></td>
+					<td colspan="3">终点：<input class="easyui-validatebox"
+						name="goSiteEnd" data-options="validType:'length[0,64]'"
+						style="width: 170px;"></td>
 				</tr>
 				<tr>
-					<td class="tg-031e" colspan="4">收货人：<input name="goForMan"
+					<td colspan="4">发货人：<input name="goSendMan"
 						class="easyui-validatebox" data-options="validType:'length[0,64]'"
 						style="width: 235px;"></td>
-					<td class="tg-031e" colspan="3">电话：<input name="goForPhone"
+					<td colspan="3">电话：<input name="goSendPhone"
 						class="easyui-validatebox" data-options="validType:'length[0,64]'"
 						style="width: 170px;"></td>
-					<td class="tg-031e" colspan="5">地址：<input name="goForAddress"
+					<td colspan="5">地址：<input name="goSendAddress"
 						class="easyui-validatebox" data-options="validType:'length[0,64]'"
 						style="width: 330px;"></td>
 				</tr>
 				<tr>
-					<td class="tg-031e" colspan="4">发货人：<input name="goSendMan"
+					<td colspan="4">收货人：<input name="goForMan"
 						class="easyui-validatebox" data-options="validType:'length[0,64]'"
 						style="width: 235px;"></td>
-					<td class="tg-031e" colspan="3">电话：<input name="goSendPhone"
+					<td colspan="3">电话：<input name="goForPhone"
 						class="easyui-validatebox" data-options="validType:'length[0,64]'"
 						style="width: 170px;"></td>
-					<td class="tg-031e" colspan="5">地址：<input name="goSendAddress"
+					<td colspan="5">地址：<input name="goForAddress"
 						class="easyui-validatebox" data-options="validType:'length[0,64]'"
 						style="width: 330px;"></td>
 				</tr>
 				<tr style="text-align: center;">
-					<td class="tg-031e" colspan="2">货品名称</td>
-					<td class="tg-031e">数量</td>
-					<td class="tg-031e">包装样式</td>
-					<td class="tg-031e">重量</td>
-					<td class="tg-031e">体积</td>
-					<td class="tg-031e">运费</td>
-					<td class="tg-031e">保价费</td>
-					<td class="tg-031e">代收货款</td>
-					<td class="tg-031e">回扣</td>
-					<td class="tg-031e">货款扣</td>
-					<td class="tg-031e">中转费</td>
+					<td colspan="2">货品名称</td>
+					<td>数量</td>
+					<td>包装样式</td>
+					<td>重量</td>
+					<td>体积</td>
+					<td>运费</td>
+					<td>保价费</td>
+					<td>代收货款</td>
+					<td>回扣</td>
+					<td>货款扣</td>
+					<td>中转费</td>
 				</tr>
 				<tr style="text-align: center;">
-					<td class="tg-031e" colspan="2"><input
-						class="easyui-validatebox" name="goName"
-						data-options="validType:'length[0,64]'" style="width: 140px;"></td>
-					<td class="tg-031e"><input class="easyui-validatebox"
-						name="goNum" data-options="validType:'length[0,32]'"
-						style="width: 60px;"></td>
-					<td class="tg-031e"><input class="easyui-validatebox"
-						name="goPack" data-options="validType:'length[0,32]'"
-						style="width: 60px;"></td>
-					<td class="tg-031e"><input class="easyui-validatebox"
-						name="goWeight" data-options="validType:'length[0,32]'"
-						style="width: 60px;"></td>
-					<td class="tg-031e"><input class="easyui-validatebox"
-						name="goVolume" data-options="validType:'length[0,32]'"
-						style="width: 60px;"></td>
-					<td class="tg-031e"><input class="easyui-validatebox"
-						name="goPay" data-options="validType:'length[0,32]'"
-						style="width: 60px;"></td>
-					<td class="tg-031e"><input class="easyui-validatebox"
-						name="goInsurancePay" data-options="validType:'length[0,32]'"
-						style="width: 60px;"></td>
-					<td class="tg-031e"><input class="easyui-validatebox"
-						name="goReplacePay" data-options="validType:'length[0,32]'"
-						style="width: 60px;"></td>
-					<td class="tg-031e"><input class="easyui-validatebox"
-						name="goCommission" data-options="validType:'length[0,32]'"
-						style="width: 60px;"></td>
-					<td class="tg-031e"><input class="easyui-validatebox"
-						name="goDamagePay" data-options="validType:'length[0,32]'"
-						style="width: 60px;"></td>
-					<td class="tg-031e"><input class="easyui-validatebox"
-						name="goTransitPay" data-options="validType:'length[0,32]'"
-						style="width: 60px;"></td>
+					<td colspan="2"><input class="easyui-validatebox"
+						name="goName" data-options="validType:'length[0,64]'"
+						style="width: 140px;"></td>
+					<td><input class="easyui-validatebox" name="goNum"
+						data-options="validType:'length[0,32]'" style="width: 60px;"></td>
+					<td><input class="easyui-validatebox" name="goPack"
+						data-options="validType:'length[0,32]'" style="width: 60px;"></td>
+					<td><input class="easyui-validatebox" name="goWeight"
+						data-options="validType:'length[0,32]'" style="width: 60px;"></td>
+					<td><input class="easyui-validatebox" name="goVolume"
+						data-options="validType:'length[0,32]'" style="width: 60px;"></td>
+					<td><input class="easyui-validatebox" name="goPay"
+						data-options="validType:'length[0,32]'" style="width: 60px;"></td>
+					<td><input class="easyui-validatebox" name="goInsurancePay"
+						data-options="validType:'length[0,32]'" style="width: 60px;"></td>
+					<td><input class="easyui-validatebox" name="goReplacePay"
+						data-options="validType:'length[0,32]'" style="width: 60px;"></td>
+					<td><input class="easyui-validatebox" name="goCommission"
+						data-options="validType:'length[0,32]'" style="width: 60px;"></td>
+					<td><input class="easyui-validatebox" name="goDamagePay"
+						data-options="validType:'length[0,32]'" style="width: 60px;"></td>
+					<td><input class="easyui-validatebox" name="goTransitPay"
+						data-options="validType:'length[0,32]'" style="width: 60px;"></td>
 				</tr>
 				<tr>
-					<td class="tg-031e" colspan="2">提货方式：<input
-						class="easyui-validatebox" name="goGetWay"
-						data-options="validType:'length[0,32]'" style="width: 65px;"></td>
-					<td class="tg-031e" colspan="2">付款方式：<input
-						class="easyui-validatebox" name="goPayWay"
-						data-options="validType:'length[0,32]'" style="width: 65px;"></td>
-					<td class="tg-031e" colspan="7">备注：<input
-						class="easyui-validatebox" name="goRemark"
-						data-options="validType:'length[0,32]'" style="width: 490px;"></td>
-					<td class="tg-031e" style="text-align: center;">总计</td>
+					<td colspan="2">提货方式：<input class="easyui-validatebox"
+						name="goGetWay" data-options="validType:'length[0,32]'"
+						style="width: 65px;"></td>
+					<td colspan="2">付款方式：<input class="easyui-validatebox"
+						name="goPayWay" data-options="validType:'length[0,32]'"
+						style="width: 65px;"></td>
+					<td colspan="7">备注：<input class="easyui-validatebox"
+						name="goRemark" data-options="validType:'length[0,32]'"
+						style="width: 490px;"></td>
+					<td style="text-align: center;">总计</td>
 				</tr>
 				<tr>
-					<td class="tg-031e" colspan="11" style="text-align: center;">车流：<select
+					<td colspan="11" style="text-align: center;">车流：<select
 						id="dlvgs_add_fm_selector" name="logId" class="easyui-combobox"
 						data-options="{
 							url : 'availableDepart',
@@ -191,20 +179,20 @@
 						}"
 						style="width: 650px;">
 					</select></td>
-					<td class="tg-031e" rowspan="2" style="text-align: center;"><input
+					<td rowspan="2" style="text-align: center;"><input
 						class="easyui-validatebox" name="goName" disabled="disabled"
 						style="width: 60px;"></td>
 				</tr>
 				<tr>
-					<td class="tg-031e" colspan="4">合同编号：<input
-						id="dlvgs_add_fm_lcn" class="easyui-validatebox"
-						name="logContractNum" disabled="disabled" style="width: 220px;"></td>
-					<td class="tg-031e" colspan="4">车牌：<input
-						id="dlvgs_add_fm_lcl" class="easyui-validatebox"
-						name="logCarLicense" disabled="disabled" style="width: 250px;"></td>
-					<td class="tg-031e" colspan="3">司机：<input
-						id="dlvgs_add_fm_lcd" class="easyui-validatebox"
-						name="logCarDriver" disabled="disabled" style="width: 170px;"></td>
+					<td colspan="4">合同编号：<input id="dlvgs_add_fm_lcn"
+						class="easyui-validatebox" name="logContractNum"
+						disabled="disabled" style="width: 220px;"></td>
+					<td colspan="4">车牌：<input id="dlvgs_add_fm_lcl"
+						class="easyui-validatebox" name="logCarLicense"
+						disabled="disabled" style="width: 250px;"></td>
+					<td colspan="3">司机：<input id="dlvgs_add_fm_lcd"
+						class="easyui-validatebox" name="logCarDriver" disabled="disabled"
+						style="width: 170px;"></td>
 				</tr>
 			</table>
 		</form>
@@ -238,125 +226,109 @@
 					<col style="width: 81px">
 				</colgroup>
 				<tr>
-					<td class="tg-031e" colspan="3">发货日期：<input name="logSendDate"
+					<td colspan="3">发货日期：<input name="logSendDate"
 						class="easyui-datebox" data-options="validType:'length[0,32]'"
 						style="width: 150px;" disabled="disabled"></td>
-					<td class="tg-031e" colspan="3">货号：<input
-						class="easyui-validatebox" name="goBank"
+					<td colspan="3">货号：<input class="easyui-validatebox"
+						name="goBank" data-options="validType:'length[0,64]'"
+						style="width: 170px;"></td>
+					<td colspan="3">起点：<input class="easyui-validatebox"
+						name="logSiteStart" disabled="disabled"
 						data-options="validType:'length[0,64]'" style="width: 170px;"></td>
-					<td class="tg-031e" colspan="3">起点：<input
-						class="easyui-validatebox" name="logSiteStart" disabled="disabled"
-						data-options="validType:'length[0,64]'" style="width: 170px;"></td>
-					<td class="tg-031e" colspan="3">终点：<input
-						class="easyui-validatebox" name="goSiteEnd"
-						data-options="validType:'length[0,64]'" style="width: 170px;"></td>
+					<td colspan="3">终点：<input class="easyui-validatebox"
+						name="goSiteEnd" data-options="validType:'length[0,64]'"
+						style="width: 170px;"></td>
 				</tr>
 				<tr>
-					<td class="tg-031e" colspan="4">收货人：<input name="goForMan"
+					<td colspan="4">发货人：<input name="goSendMan"
 						class="easyui-validatebox" data-options="validType:'length[0,64]'"
 						style="width: 235px;"></td>
-					<td class="tg-031e" colspan="3">电话：<input name="goForPhone"
+					<td colspan="3">电话：<input name="goSendPhone"
 						class="easyui-validatebox" data-options="validType:'length[0,64]'"
 						style="width: 170px;"></td>
-					<td class="tg-031e" colspan="5">地址：<input name="goForAddress"
+					<td colspan="5">地址：<input name="goSendAddress"
 						class="easyui-validatebox" data-options="validType:'length[0,64]'"
 						style="width: 330px;"></td>
 				</tr>
 				<tr>
-					<td class="tg-031e" colspan="4">发货人：<input name="goSendMan"
+					<td colspan="4">收货人：<input name="goForMan"
 						class="easyui-validatebox" data-options="validType:'length[0,64]'"
 						style="width: 235px;"></td>
-					<td class="tg-031e" colspan="3">电话：<input name="goSendPhone"
+					<td colspan="3">电话：<input name="goForPhone"
 						class="easyui-validatebox" data-options="validType:'length[0,64]'"
 						style="width: 170px;"></td>
-					<td class="tg-031e" colspan="5">地址：<input name="goSendAddress"
+					<td colspan="5">地址：<input name="goForAddress"
 						class="easyui-validatebox" data-options="validType:'length[0,64]'"
 						style="width: 330px;"></td>
 				</tr>
 				<tr style="text-align: center;">
-					<td class="tg-031e" colspan="2">货品名称</td>
-					<td class="tg-031e">数量</td>
-					<td class="tg-031e">包装样式</td>
-					<td class="tg-031e">重量</td>
-					<td class="tg-031e">体积</td>
-					<td class="tg-031e">运费</td>
-					<td class="tg-031e">保价费</td>
-					<td class="tg-031e">代收货款</td>
-					<td class="tg-031e">回扣</td>
-					<td class="tg-031e">货款扣</td>
-					<td class="tg-031e">中转费</td>
+					<td colspan="2">货品名称</td>
+					<td>数量</td>
+					<td>包装样式</td>
+					<td>重量</td>
+					<td>体积</td>
+					<td>运费</td>
+					<td>保价费</td>
+					<td>代收货款</td>
+					<td>回扣</td>
+					<td>货款扣</td>
+					<td>中转费</td>
 				</tr>
 				<tr style="text-align: center;">
-					<td class="tg-031e" colspan="2"><input
-						class="easyui-validatebox" name="goName"
-						data-options="validType:'length[0,64]'" style="width: 140px;"></td>
-					<td class="tg-031e"><input class="easyui-validatebox"
-						name="goNum" data-options="validType:'length[0,32]'"
-						style="width: 60px;"></td>
-					<td class="tg-031e"><input class="easyui-validatebox"
-						name="goPack" data-options="validType:'length[0,32]'"
-						style="width: 60px;"></td>
-					<td class="tg-031e"><input class="easyui-validatebox"
-						name="goWeight" data-options="validType:'length[0,32]'"
-						style="width: 60px;"></td>
-					<td class="tg-031e"><input class="easyui-validatebox"
-						name="goVolume" data-options="validType:'length[0,32]'"
-						style="width: 60px;"></td>
-					<td class="tg-031e"><input class="easyui-validatebox"
-						name="goPay" data-options="validType:'length[0,32]'"
-						style="width: 60px;"></td>
-					<td class="tg-031e"><input class="easyui-validatebox"
-						name="goInsurancePay" data-options="validType:'length[0,32]'"
-						style="width: 60px;"></td>
-					<td class="tg-031e"><input class="easyui-validatebox"
-						name="goReplacePay" data-options="validType:'length[0,32]'"
-						style="width: 60px;"></td>
-					<td class="tg-031e"><input class="easyui-validatebox"
-						name="goCommission" data-options="validType:'length[0,32]'"
-						style="width: 60px;"></td>
-					<td class="tg-031e"><input class="easyui-validatebox"
-						name="goDamagePay" data-options="validType:'length[0,32]'"
-						style="width: 60px;"></td>
-					<td class="tg-031e"><input class="easyui-validatebox"
-						name="goTransitPay" data-options="validType:'length[0,32]'"
-						style="width: 60px;"></td>
+					<td colspan="2"><input class="easyui-validatebox"
+						name="goName" data-options="validType:'length[0,64]'"
+						style="width: 140px;"></td>
+					<td><input class="easyui-validatebox" name="goNum"
+						data-options="validType:'length[0,32]'" style="width: 60px;"></td>
+					<td><input class="easyui-validatebox" name="goPack"
+						data-options="validType:'length[0,32]'" style="width: 60px;"></td>
+					<td><input class="easyui-validatebox" name="goWeight"
+						data-options="validType:'length[0,32]'" style="width: 60px;"></td>
+					<td><input class="easyui-validatebox" name="goVolume"
+						data-options="validType:'length[0,32]'" style="width: 60px;"></td>
+					<td><input class="easyui-validatebox" name="goPay"
+						data-options="validType:'length[0,32]'" style="width: 60px;"></td>
+					<td><input class="easyui-validatebox" name="goInsurancePay"
+						data-options="validType:'length[0,32]'" style="width: 60px;"></td>
+					<td><input class="easyui-validatebox" name="goReplacePay"
+						data-options="validType:'length[0,32]'" style="width: 60px;"></td>
+					<td><input class="easyui-validatebox" name="goCommission"
+						data-options="validType:'length[0,32]'" style="width: 60px;"></td>
+					<td><input class="easyui-validatebox" name="goDamagePay"
+						data-options="validType:'length[0,32]'" style="width: 60px;"></td>
+					<td><input class="easyui-validatebox" name="goTransitPay"
+						data-options="validType:'length[0,32]'" style="width: 60px;"></td>
 				</tr>
 				<tr>
-					<td class="tg-031e" colspan="2">提货方式：<input
-						class="easyui-validatebox" name="goGetWay"
-						data-options="validType:'length[0,32]'" style="width: 65px;"></td>
-					<td class="tg-031e" colspan="2">付款方式：<input
-						class="easyui-validatebox" name="goPayWay"
-						data-options="validType:'length[0,32]'" style="width: 65px;"></td>
-					<td class="tg-031e" colspan="7">备注：<input
-						class="easyui-validatebox" name="goRemark"
-						data-options="validType:'length[0,32]'" style="width: 490px;"></td>
-					<td class="tg-031e" style="text-align: center;">总计</td>
+					<td colspan="2">提货方式：<input class="easyui-validatebox"
+						name="goGetWay" data-options="validType:'length[0,32]'"
+						style="width: 65px;"></td>
+					<td colspan="2">付款方式：<input class="easyui-validatebox"
+						name="goPayWay" data-options="validType:'length[0,32]'"
+						style="width: 65px;"></td>
+					<td colspan="7">备注：<input class="easyui-validatebox"
+						name="goRemark" data-options="validType:'length[0,32]'"
+						style="width: 490px;"></td>
+					<td style="text-align: center;">总计</td>
 				</tr>
 				<tr>
-					<td class="tg-031e" colspan="3">发车日期：<input
-						class="easyui-datebox" name="logSendDate" style="width: 150px;"
-						disabled="disabled"></td>
-					<td class="tg-031e" colspan="4">起点：<input
-						class="easyui-validatebox" name="logSiteStart" disabled="disabled"
-						style="width: 250px;"></td>
-					<td class="tg-031e" colspan="4">终点：<input
-						class="easyui-validatebox" name="logSiteEnd" disabled="disabled"
-						style="width: 250px;"></td>
-					<td class="tg-031e" rowspan="2" style="text-align: center;"><input
+					<td colspan="3">发车日期：<input class="easyui-datebox"
+						name="logSendDate" style="width: 150px;" disabled="disabled"></td>
+					<td colspan="4">起点：<input class="easyui-validatebox"
+						name="logSiteStart" disabled="disabled" style="width: 250px;"></td>
+					<td colspan="4">终点：<input class="easyui-validatebox"
+						name="logSiteEnd" disabled="disabled" style="width: 250px;"></td>
+					<td rowspan="2" style="text-align: center;"><input
 						class="easyui-validatebox" name="goName" disabled="disabled"
 						style="width: 60px;"></td>
 				</tr>
 				<tr>
-					<td class="tg-031e" colspan="4">合同编号：<input
-						class="easyui-validatebox" name="logContractNum"
-						disabled="disabled" style="width: 220px;"></td>
-					<td class="tg-031e" colspan="4">车牌：<input
-						class="easyui-validatebox" name="logCarLicense"
-						disabled="disabled" style="width: 250px;"></td>
-					<td class="tg-031e" colspan="3">司机：<input
-						class="easyui-validatebox" name="logCarDriver" disabled="disabled"
-						style="width: 170px;"></td>
+					<td colspan="4">合同编号：<input class="easyui-validatebox"
+						name="logContractNum" disabled="disabled" style="width: 220px;"></td>
+					<td colspan="4">车牌：<input class="easyui-validatebox"
+						name="logCarLicense" disabled="disabled" style="width: 250px;"></td>
+					<td colspan="3">司机：<input class="easyui-validatebox"
+						name="logCarDriver" disabled="disabled" style="width: 170px;"></td>
 				</tr>
 			</table>
 		</form>

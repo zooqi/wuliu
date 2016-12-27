@@ -43,6 +43,8 @@
 			<a id="traffic_reload" href="javascript:void(0)"
 				class="easyui-linkbutton"
 				data-options="iconCls:'icon-reload',plain:true">显示所有</a> <a
+				id="traffic_add" href="javascript:void(0)" class="easyui-linkbutton"
+				data-options="iconCls:'icon-add',plain:true">添加</a> <a
 				id="traffic_edit" href="javascript:void(0)"
 				class="easyui-linkbutton"
 				data-options="iconCls:'icon-edit',plain:true">编辑</a> <a
@@ -55,10 +57,61 @@
 		</div>
 	</div>
 
-	<!-- Dialog -->
 	<div id="traffic_dlg" class="easyui-dialog"
 		data-options="closed:true,buttons:'#traffic_dlg-buttons'">
-		<form id="traffic_fm"></form>
+		<form id="traffic_fm">
+			<table class="tg" style="table-layout: fixed; width: 729px">
+				<colgroup>
+					<col style="width: 81px">
+					<col style="width: 81px">
+					<col style="width: 81px">
+					<col style="width: 81px">
+					<col style="width: 81px">
+					<col style="width: 81px">
+					<col style="width: 81px">
+					<col style="width: 81px">
+					<col style="width: 81px">
+				</colgroup>
+				<tr>
+					<td colspan="3">发/到车日期：<input class="easyui-datebox"
+						name="logSendDate" style="width: 140px;"></td>
+					<td colspan="3">起点：<input class="easyui-validatebox"
+						name="logSiteStart" style="width: 170px;"></td>
+					<td colspan="3">终点：<input class="easyui-validatebox"
+						name="logSiteEnd" style="width: 170px;"></td>
+				</tr>
+				<tr>
+					<td colspan="4">合同编号：<input class="easyui-validatebox"
+						name="logContractNum" style="width: 220px;"></td>
+					<td colspan="5">客户：<input class="easyui-validatebox"
+						name="logPartner" style="width: 330px;"></td>
+				</tr>
+				<tr>
+					<td colspan="3">车流类型：<select name="logType"
+						class="easyui-combobox"
+						data-options="required:true,validType:'logType'"
+						style="width: 150px;">
+							<option value="0">发车</option>
+							<option value="1">到车</option>
+					</select></td>
+					<td colspan="3">货品总数：<input class="easyui-validatebox"
+						name="goodsCount" data-options="validType:'length[0,32]'"
+						style="width: 140px;" disabled="disabled"></td>
+					<td colspan="3">车费：<input class="easyui-validatebox"
+						name="logCarPay" data-options="validType:'length[0,32]'"
+						style="width: 170px;"></td>
+				</tr>
+				<tr>
+					<td colspan="3">车牌：<input class="easyui-validatebox"
+						name="logCarLicence" style="width: 170px;"></td>
+					<td colspan="3">司机：<input class="easyui-validatebox"
+						name="logCarDriver" style="width: 170px;"></td>
+					<td colspan="3">司机电话：<input class="easyui-validatebox"
+						name="logCarPhone" style="width: 140px;"></td>
+				</tr>
+			</table>
+
+		</form>
 	</div>
 	<div id="traffic_dlg-buttons">
 		<a id="traffic_update_button" href="javascript:void(0)"
@@ -105,7 +158,7 @@
 					}
 				}
 			}, {
-				title : '发车日期',
+				title : '发/到车日期',
 				field : 'logSendDate',
 				align : 'center',
 				sortable : true,
@@ -123,8 +176,14 @@
 				sortable : true,
 				width : 100
 			}, {
+				title : '货品总数',
+				field : 'goodsCount',
+				align : 'center',
+				sortable : true,
+				width : 100
+			}, {
 				title : '车牌号',
-				field : 'logCarLicense',
+				field : 'logCarLicence',
 				align : 'center',
 				sortable : true,
 				width : 100
@@ -161,6 +220,12 @@
 		});
 
 		var url;
+		/* 弹出添加对话框 */
+		$('#traffic_add').click(function() {
+			$('#traffic_dlg').dialog('open').dialog('setTitle', '添加');
+			$('#traffic_fm').form('clear');
+			url = 'trafficSave';
+		});
 		/* 弹出编辑对话框 */
 		$('#traffic_edit').click(function() {
 			var row = $('#traffic_datagrid').datagrid('getSelected');
@@ -168,7 +233,7 @@
 				$('#traffic_dlg').dialog('open').dialog('setTitle', '编辑');
 				$('#traffic_fm').form('clear');
 				$('#traffic_fm').form('load', row);
-				url = 'trafficUpdate?logId=' + row.logId;
+				url = 'trafficSave?logId=' + row.logId;
 			} else {
 				$.messager.alert('提示', '请选择数据！');
 			}
@@ -212,9 +277,9 @@
 					if (r) {
 						$.ajax({
 							type : 'POST',
-							url : 'goodsDelete',
+							url : 'trafficDelete',
 							data : {
-								goId : row.goId
+								logId : row.logId
 							},
 							success : function(data) {
 								if (data.success) {
@@ -230,6 +295,10 @@
 						});
 					}
 				});
+				if (row.goodsCount != 0) {
+					$.messager.confirm('警告', '当前车流还有货品与其绑定，如果删除，将同时删除相应的货品信息，请谨慎操作！', function(r) {
+					});
+				}
 			} else {
 				$.messager.alert('提示', '请选择数据！');
 			}
@@ -247,6 +316,16 @@
 			}
 			$('#traffic_datagrid').datagrid('load', {});
 			$('#traffic_search_dlg').dialog('close');
+		});
+
+		/* 验证 */
+		$.extend($.fn.validatebox.defaults.rules, {
+			logType : {
+				validator : function(value) {
+					return value == '发车' || value == '到车';
+				},
+				message : '请选择正确的"车流类型"'
+			}
 		});
 	</script>
 </div>

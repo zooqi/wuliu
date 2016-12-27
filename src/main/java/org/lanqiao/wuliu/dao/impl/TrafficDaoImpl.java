@@ -23,7 +23,7 @@ public class TrafficDaoImpl extends BaseDaoImpl {
 	public List<Logistics> trafficReach(int currentPage, int rowsPerPage) {
 		List<Logistics> list = new LinkedList<Logistics>();
 
-		String sql = "SELECT * FROM logistics ORDER BY logSendDate LIMIT ?, ?";
+		String sql = "SELECT * FROM logistics ORDER BY logSendDate DESC LIMIT ?, ?";
 		Object[] params = new Object[] { DBUtils.getOffset(currentPage, rowsPerPage), rowsPerPage };
 
 		Connection connection = null;
@@ -57,6 +57,60 @@ public class TrafficDaoImpl extends BaseDaoImpl {
 			DBUtils.closeResultSet(resultSet);
 		}
 		return list;
+	}
+
+	public int trafficSave(Logistics traffic) {
+		int count = 0;
+		String sql = "INSERT INTO logistics(logContractNum, logSendDate, logSiteStart, logSiteEnd, logCarLicence, logCarDriver, logCarPhone, logCarPay, logPartner, logType) VALUES(?,?,?,?,?,?,?,?,?,?)";
+		Object[] params = new Object[] { traffic.getLogContractNum(), traffic.getLogSendDate(),
+				traffic.getLogSiteStart(), traffic.getLogSiteEnd(), traffic.getLogCarLicence(),
+				traffic.getLogCarDriver(), traffic.getLogCarPhone(), traffic.getLogCarPay(), traffic.getLogPartner(),
+				traffic.getLogType() };
+		if (traffic.getLogId() != 0) {
+			sql = "UPDATE logistics set logContractNum=?,logSendDate=?,logSiteStart=?,logSiteEnd=?,logCarLicence=?,logCarDriver=?,logCarPhone=?,logCarPay=?,logPartner=?,logType=? WHERE logId=?";
+			params = new Object[] { traffic.getLogContractNum(), traffic.getLogSendDate(), traffic.getLogSiteStart(),
+					traffic.getLogSiteEnd(), traffic.getLogCarLicence(), traffic.getLogCarDriver(),
+					traffic.getLogCarPhone(), traffic.getLogCarPay(), traffic.getLogPartner(), traffic.getLogType(),
+					traffic.getLogId() };
+		}
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		try {
+			connection = DBUtils.getConnection();
+			preparedStatement = connection.prepareStatement(sql);
+			setParameter(preparedStatement, sql, params);
+			count = preparedStatement.executeUpdate();
+		} catch (SQLException e) {
+			return 0;
+		} finally {
+			DBUtils.closeConnection(connection);
+			DBUtils.closePreparedStatement(preparedStatement);
+			DBUtils.closeResultSet(resultSet);
+		}
+		return count;
+	}
+
+	public int trafficDelete(int logId) {
+		int count = 0;
+		String sql = "DELETE FROM logistics WHERE logId = ?";
+
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		try {
+			connection = DBUtils.getConnection();
+			preparedStatement = connection.prepareStatement(sql);
+			setParameter(preparedStatement, sql, new Object[] { logId });
+			count = preparedStatement.executeUpdate();
+		} catch (SQLException e) {
+			return 0;
+		} finally {
+			DBUtils.closeConnection(connection);
+			DBUtils.closePreparedStatement(preparedStatement);
+			DBUtils.closeResultSet(resultSet);
+		}
+		return count;
 	}
 
 	/**
@@ -120,6 +174,37 @@ public class TrafficDaoImpl extends BaseDaoImpl {
 		} finally {
 			DBUtils.closeConnection(connection);
 			DBUtils.closeStatement(statement);
+			DBUtils.closeResultSet(resultSet);
+		}
+		return count;
+	}
+
+	/**
+	 * 获取特定车流中货品总数
+	 * 
+	 * @param logId
+	 * @return
+	 */
+	public int goodsCount(int logId) {
+		int count = 0;
+		String sql = "SELECT COUNT(*) FROM goods WHERE logId = ?";
+
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		try {
+			connection = DBUtils.getConnection();
+			preparedStatement = connection.prepareStatement(sql);
+			setParameter(preparedStatement, sql, new Object[] { logId });
+			resultSet = preparedStatement.executeQuery();
+			if (resultSet.next()) {
+				count = resultSet.getInt(1);
+			}
+		} catch (SQLException e) {
+			return 0;
+		} finally {
+			DBUtils.closeConnection(connection);
+			DBUtils.closePreparedStatement(preparedStatement);
 			DBUtils.closeResultSet(resultSet);
 		}
 		return count;

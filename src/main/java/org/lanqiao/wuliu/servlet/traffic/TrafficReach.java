@@ -48,12 +48,13 @@ public class TrafficReach extends HttpServlet {
 			row.put("logSendDate", (date == null) ? "" : new SimpleDateFormat("yyyy-MM-dd").format(date));
 			row.put("logSiteStart", logistics.getLogSiteStart());
 			row.put("logSiteEnd", logistics.getLogSiteEnd());
-			row.put("logCarLicense", logistics.getLogCarLicence());
+			row.put("logCarLicence", logistics.getLogCarLicence());
 			row.put("logCarDriver", logistics.getLogCarDriver());
 			row.put("logCarPhone", logistics.getLogCarPhone());
 			row.put("logCarPay", logistics.getLogCarPay());
 			row.put("logPartner", logistics.getLogPartner());
 			row.put("logType", logistics.getLogType());
+			row.put("goodsCount", dao.goodsCount(logistics.getLogId()));
 			array.put(row);
 		}
 		json.put("rows", array);
