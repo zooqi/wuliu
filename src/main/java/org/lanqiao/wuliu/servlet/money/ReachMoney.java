@@ -32,7 +32,7 @@ public class ReachMoney extends HttpServlet {
 		
 		Object[] object1 = new Object[5];
 		Object[] object2 = new Object[4];
-		Object[] object3 = new Object[2];
+		Object[] object3 = new Object[3];
 		ArrayList<String> lists = new ExpentDaoImpl().getDate();
 		for (String list : lists) {
 			if (moneyDate != null && !moneyDate.equals("")
@@ -71,9 +71,11 @@ public class ReachMoney extends HttpServlet {
 					* rowsPerPage, rowsPerPage, list);
 			double sumMoney = 0;
 			double sumExpent = 0;
+			int expId=0;
 			for (int i = 0; i < list3.size(); i++) {
 				object3 = list3.get(i);
 				sumExpent = (Double) object3[0];
+				expId=(Integer)object3[2];
 			}
 
 			if (sumIncome != 0 && sumExpent != 0) {
@@ -87,6 +89,7 @@ public class ReachMoney extends HttpServlet {
 			row.put("sumIncome", sumIncome);
 			row.put("sumExpent", sumExpent);
 			row.put("sumMoney", sumMoney);
+			row.put("expId", expId);
 			array.put(row);
 			if (moneyDate != null && !moneyDate.equals("")
 					&& !moneyDate.equals(null)) {

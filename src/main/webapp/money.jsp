@@ -41,13 +41,16 @@
 	<script type="text/javascript">
 		$('#money_datagrid').datagrid({
 			url : 'reachMoney',
-			fitColumns : false,
+			fitColumns : true,
 			singleSelect : true,
 			pagination : true,
 			rownumbers : true,
 			toolbar : '#money_toolbar',
 			remoteSort : false,
 			columns : [ [ {
+				field : 'expId',
+				hidden : true
+			},{
 				title : '日期',
 				field : 'date',
 				align : 'center',

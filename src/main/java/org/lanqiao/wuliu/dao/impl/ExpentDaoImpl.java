@@ -282,14 +282,15 @@ public class ExpentDaoImpl extends BaseDaoImpl {
 	public ArrayList<Object[]> getMoney(int pageCurrentFirst, int pageRows,
 			String date) {
 		ArrayList<Object[]> list = new ArrayList<Object[]>();
-		String sql = "SELECT SUM(expMoney),date_format(expDate,'%Y-%m') AS a FROM expent WHERE expDate LIKE ? GROUP BY a LIMIT ?,?";
+		String sql = "SELECT SUM(expMoney),date_format(expDate,'%Y-%m') AS a,expId FROM expent WHERE expDate LIKE ? GROUP BY a LIMIT ?,?";
 		ResultSet rs = select(sql, new Object[] { "%" + date + "%", pageCurrentFirst,
 				pageRows });
 		try {
 			while (rs.next()) {
-				Object[] object = new Object[2];
+				Object[] object = new Object[3];
 				object[0] = rs.getDouble(1);
 				object[1] = rs.getString(2);
+				object[2] = rs.getInt(3);
 				list.add(object);
 			}
 		} catch (SQLException e) {
