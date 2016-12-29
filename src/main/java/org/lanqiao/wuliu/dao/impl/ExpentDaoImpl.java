@@ -3,11 +3,14 @@
  */
 package org.lanqiao.wuliu.dao.impl;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 import org.lanqiao.wuliu.bean.Expent;
+import org.lanqiao.wuliu.util.DBUtils;
 
 /**
  * 财务管理
@@ -69,7 +72,7 @@ public class ExpentDaoImpl extends BaseDaoImpl {
 	 * @param pageRows
 	 *            一页记录数
 	 * @param expentReach
-	 * @return 返回一个arraylist集合
+	 * @return 返回一个ArrayList集合
 	 */
 	public ArrayList<Expent> expSelect(int pageCurrentFirst, int pageRows,
 			Expent expReach) {
@@ -142,12 +145,11 @@ public class ExpentDaoImpl extends BaseDaoImpl {
 	 *            logistics表
 	 * @return 返回一个ArrayList集合
 	 */
-	public ArrayList<Object[]> getIncome1(String logSendDate,
-			String logCarLicence) {
+	public ArrayList<Object[]> getIncome1(int currentPage, int rowsPerPage,
+			String logSendDate, String logCarLicence) {
 		ArrayList<Object[]> list = new ArrayList<Object[]>();
-
 		StringBuffer sql = new StringBuffer(
-				"SELECT logSendDate,logCarLicence,SUM(goPay),SUM(goDamagePay),SUM(goCommission),l.logId,SUM(logCarPay) FROM goods g,logistics l WHERE g.logId=l.logId AND goPayWay='已付' AND goType=0 ");
+				"SELECT logSendDate,logCarLicence,SUM(goPay),SUM(goDamagePay),SUM(goCommission),l.logId,SUM(logCarPay),SUM(goInsurancePay),SUM(logUnloadPay) FROM goods g,logistics l WHERE g.logId=l.logId AND goType=0 AND logType=0 ");
 		if (logSendDate != null && !logSendDate.equals("")) {
 			sql.append("AND logSendDate like '%").append(logSendDate)
 					.append("%' ");
@@ -156,10 +158,12 @@ public class ExpentDaoImpl extends BaseDaoImpl {
 			sql.append("AND logCarLicence like '%").append(logCarLicence)
 					.append("%' ");
 		}
-		ResultSet rs = select(sql.toString());
+		sql.append(" GROUP BY logSendDate,logCarLicence LIMIT ?, ?");
+		ResultSet rs = select(sql.toString(), new Object[] { currentPage,
+				rowsPerPage });
 		try {
 			while (rs.next()) {
-				Object[] object = new Object[7];
+				Object[] object = new Object[9];
 				object[0] = rs.getDate(1);
 				object[1] = rs.getString(2);
 				object[2] = rs.getDouble(3);
@@ -167,6 +171,8 @@ public class ExpentDaoImpl extends BaseDaoImpl {
 				object[4] = rs.getDouble(5);
 				object[5] = rs.getInt(6);
 				object[6] = rs.getDouble(7);
+				object[7] = rs.getDouble(8);
+				object[8] = rs.getDouble(9);
 				list.add(object);
 			}
 		} catch (SQLException e) {
@@ -182,11 +188,11 @@ public class ExpentDaoImpl extends BaseDaoImpl {
 	 *            logistics表
 	 * @return 返回一个ArrayList集合
 	 */
-	public ArrayList<Object[]> getIncome2(String logSendDate,
-			String logCarLicence) {
+	public ArrayList<Object[]> getIncome2(int pageCurrentFirst, int pageRows,
+			String logSendDate, String logCarLicence) {
 		ArrayList<Object[]> list = new ArrayList<Object[]>();
 		StringBuffer sql = new StringBuffer(
-				"SELECT logSendDate,logCarLicence,SUM(goPay),SUM(goTransitPay),SUM(goDamagePay),l.logId FROM goods g,logistics l WHERE g.logId=l.logId AND goPayWay='到付' AND goType=1 ");
+				"SELECT logSendDate,logCarLicence,SUM(goTransitPay),SUM(goDamagePay),l.logId,SUM(logUnloadPay) FROM goods g,logistics l WHERE g.logId=l.logId AND logType=1 AND goType=1 ");
 		if (logSendDate != null && !logSendDate.equals("")) {
 			sql.append("AND logSendDate like '%").append(logSendDate)
 					.append("%' ");
@@ -195,7 +201,9 @@ public class ExpentDaoImpl extends BaseDaoImpl {
 			sql.append("AND logCarLicence like '%").append(logCarLicence)
 					.append("%' ");
 		}
-		ResultSet rs = select(sql.toString());
+		sql.append(" GROUP BY logSendDate,logCarLicence LIMIT ?, ?");
+		ResultSet rs = select(sql.toString(), new Object[] { pageCurrentFirst,
+				pageRows });
 		try {
 			while (rs.next()) {
 				Object[] object = new Object[6];
@@ -203,8 +211,8 @@ public class ExpentDaoImpl extends BaseDaoImpl {
 				object[1] = rs.getString(2);
 				object[2] = rs.getDouble(3);
 				object[3] = rs.getDouble(4);
-				object[4] = rs.getDouble(5);
-				object[5] = rs.getInt(6);
+				object[4] = rs.getInt(5);
+				object[5] = rs.getDouble(6);
 				list.add(object);
 			}
 		} catch (SQLException e) {
@@ -226,8 +234,8 @@ public class ExpentDaoImpl extends BaseDaoImpl {
 
 		String sql = "SELECT  date_format(logSendDate,'%Y-%m') AS a,SUM(goPay),SUM(goDamagePay),SUM(goCommission),SUM(logCarPay) FROM goods g,logistics l WHERE g.logId=l.logId AND goPayWay='已付' AND goType=0 AND logSendDate LIKE ? GROUP BY a LIMIT ?, ?";
 
-		ResultSet rs = select(sql, new Object[] { "%" + date + "%",pageCurrentFirst,
-				pageRows });
+		ResultSet rs = select(sql, new Object[] { "%" + date + "%",
+				pageCurrentFirst, pageRows });
 		try {
 			while (rs.next()) {
 				Object[] object = new Object[5];
@@ -255,8 +263,8 @@ public class ExpentDaoImpl extends BaseDaoImpl {
 			int pageRows, String date) {
 		ArrayList<Object[]> list = new ArrayList<Object[]>();
 		String sql = "SELECT  date_format(logSendDate,'%Y-%m') AS a,SUM(goPay),SUM(goTransitPay),SUM(goDamagePay) FROM goods g,logistics l WHERE g.logId=l.logId AND goPayWay='到付' AND goType=1  AND logSendDate LIKE ? GROUP BY a LIMIT ?,?";
-		ResultSet rs = select(sql, new Object[] { "%" + date + "%", pageCurrentFirst,
-				pageRows, });
+		ResultSet rs = select(sql, new Object[] { "%" + date + "%",
+				pageCurrentFirst, pageRows, });
 		try {
 			while (rs.next()) {
 				Object[] object = new Object[4];
@@ -283,8 +291,8 @@ public class ExpentDaoImpl extends BaseDaoImpl {
 			String date) {
 		ArrayList<Object[]> list = new ArrayList<Object[]>();
 		String sql = "SELECT SUM(expMoney),date_format(expDate,'%Y-%m') AS a,expId FROM expent WHERE expDate LIKE ? GROUP BY a LIMIT ?,?";
-		ResultSet rs = select(sql, new Object[] { "%" + date + "%", pageCurrentFirst,
-				pageRows });
+		ResultSet rs = select(sql, new Object[] { "%" + date + "%",
+				pageCurrentFirst, pageRows });
 		try {
 			while (rs.next()) {
 				Object[] object = new Object[3];

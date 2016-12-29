@@ -74,6 +74,12 @@
 				sortable : true,
 				width : 100,
 			}, {
+				title : '总保价费',
+				field : 'sumGoInsurancePay',
+				align : 'center',
+				sortable : true,
+				width : 100,
+			}, {
 				title : '总货款扣',
 				field : 'sumGoDamagePay',
 				align : 'center',
@@ -82,6 +88,12 @@
 			}, {
 				title : '总回扣',
 				field : 'sumGoCommission',
+				align : 'center',
+				sortable : true,
+				width : 100
+			}, {
+				title : '卸车费',
+				field : 'logUnloadPay',
 				align : 'center',
 				sortable : true,
 				width : 100
@@ -215,7 +227,6 @@
 				align : 'center',
 				sortable : true,
 				width : 100
-				
 			}] ]
 		});
 		
