@@ -1,10 +1,11 @@
 package org.lanqiao.wuliu.dao.impl;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-
-import org.lanqiao.wuliu.bean.Emp;
+import org.lanqiao.wuliu.util.DBUtils;
 
 /**
  * 权限管理的数据库层
@@ -13,6 +14,41 @@ import org.lanqiao.wuliu.bean.Emp;
  *
  */
 public class Jurisdiction extends BaseDaoImpl {
+	/**
+	 * 根据empId查找funId及funName
+	 * 
+	 * @param empId
+	 * @return 返回ArrayList<Object[]>
+	 */
+	public ArrayList<Object[]> getfun(int empId) {
+		ArrayList<Object[]> list = new ArrayList<Object[]>();
+		String sql = "SELECT empId=?,f.funId,funName FROM fun f LEFT JOIN emp_fun ef ON f.funId=ef.funId";
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		try {
+			connection = DBUtils.getConnection();
+			preparedStatement = connection.prepareStatement(sql);
+			Object[] params = new Object[] { empId };
+			setParameter(preparedStatement, sql, params);
+			resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()) {
+				Object[] object = new Object[3];
+				object[0] = resultSet.getInt(1);
+				object[1] = resultSet.getInt(2);
+				object[2] = resultSet.getString(3);
+				list.add(object);
+			}
+		} catch (SQLException e) {
+			return null;
+		} finally {
+			DBUtils.closeConnection(connection);
+			DBUtils.closePreparedStatement(preparedStatement);
+			DBUtils.closeResultSet(resultSet);
+		}
+		return list;
+	}
+
 	/**
 	 * 更新权限信息
 	 * 
@@ -23,52 +59,25 @@ public class Jurisdiction extends BaseDaoImpl {
 	 * @return 返回更新成功的记录数
 	 */
 	public int updateJur(int empId, int funId) {
-		String sql = "UPDATE emp_funId  SET funId=? WHERE empId=?";
+		String sql = "INSERT INTO emp_fun(empId, funId) VALUES (?,?)";
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		int count = 0;
 		Object[] params = new Object[] { empId, funId };
-		return cud(sql, params);
-	}
-	
-	/**
-	 * 查找权限信息
-	 * 
-	 * @param empReach
-	 *            职工表
-	 * @return 返回一个ArrayList对象数组
-	 */
-	public ArrayList<Object[]> selectJur(Emp empReach) {
-		ArrayList<Object[]> list = new ArrayList<Object[]>();
-		StringBuffer sql = new StringBuffer(
-				"SELECT m.menuId,menuName,funId,funName FROM fun f RIGHT JOIN menu m ON f.menuId=m.menuId ");
-		if (empReach.getEmpId() != null && !empReach.getEmpId().equals("")) {
-			sql.append("AND expEmpId like '%").append(empReach.getEmpId())
-					.append("%' ");
-		}
-		if (empReach.getEmpNum() != null && !empReach.getEmpNum().equals("")) {
-			sql.append("AND expEmpNum like '%").append(empReach.getEmpNum())
-					.append("%' ");
-		}
-		if (empReach.getEmpName() != null && !empReach.getEmpName().equals("")) {
-			sql.append("AND empName like '%").append(empReach.getEmpName())
-					.append("%' ");
-		}
-		if (empReach.getEmpDepart() != null
-				&& !empReach.getEmpDepart().equals("")) {
-			sql.append("AND empDepart like '%")
-					.append(empReach.getEmpDepart()).append("%' ");
-		}
-		ResultSet rs = select(sql.toString(), new Object[] { empReach });
 		try {
-			while (rs.next()) {
-				Object[] object = new Object[4];
-				object[0] = rs.getInt(1);
-				object[1] = rs.getString(2);
-				object[2] = rs.getInt(3);
-				object[3] = rs.getString(4);
-				list.add(object);
-			}
+			connection = DBUtils.getConnection();
+			preparedStatement = connection.prepareStatement(sql);
+			setParameter(preparedStatement, sql, params);
+			count=preparedStatement.executeUpdate(sql);
 		} catch (SQLException e) {
-			e.printStackTrace();
+			return 0;
+		} finally {
+			DBUtils.closeConnection(connection);
+			DBUtils.closePreparedStatement(preparedStatement);
+			DBUtils.closeResultSet(resultSet);
 		}
-		return list;
+		return count;
 	}
+
 }
