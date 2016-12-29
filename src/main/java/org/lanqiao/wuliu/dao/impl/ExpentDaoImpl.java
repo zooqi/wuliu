@@ -3,14 +3,12 @@
  */
 package org.lanqiao.wuliu.dao.impl;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 import org.lanqiao.wuliu.bean.Expent;
-import org.lanqiao.wuliu.util.DBUtils;
+
 
 /**
  * 财务管理
@@ -232,18 +230,20 @@ public class ExpentDaoImpl extends BaseDaoImpl {
 			int pageRows, String date) {
 		ArrayList<Object[]> list = new ArrayList<Object[]>();
 
-		String sql = "SELECT  date_format(logSendDate,'%Y-%m') AS a,SUM(goPay),SUM(goDamagePay),SUM(goCommission),SUM(logCarPay) FROM goods g,logistics l WHERE g.logId=l.logId AND goPayWay='已付' AND goType=0 AND logSendDate LIKE ? GROUP BY a LIMIT ?, ?";
+		String sql = "SELECT  date_format(logSendDate,'%Y-%m') AS a,SUM(goPay),SUM(goDamagePay),SUM(goCommission),SUM(logCarPay),SUM(goInsurancePay),SUM(logUnloadPay) FROM goods g,logistics l WHERE g.logId=l.logId AND goType=0 AND logType=0 AND logSendDate LIKE ? GROUP BY a LIMIT ?, ?";
 
 		ResultSet rs = select(sql, new Object[] { "%" + date + "%",
 				pageCurrentFirst, pageRows });
 		try {
 			while (rs.next()) {
-				Object[] object = new Object[5];
+				Object[] object = new Object[7];
 				object[0] = rs.getString(1);
 				object[1] = rs.getDouble(2);
 				object[2] = rs.getDouble(3);
 				object[3] = rs.getDouble(4);
 				object[4] = rs.getDouble(5);
+				object[5] = rs.getDouble(6);
+				object[6] = rs.getDouble(7);
 				list.add(object);
 			}
 		} catch (SQLException e) {
@@ -262,7 +262,7 @@ public class ExpentDaoImpl extends BaseDaoImpl {
 	public ArrayList<Object[]> getIncome2Date(int pageCurrentFirst,
 			int pageRows, String date) {
 		ArrayList<Object[]> list = new ArrayList<Object[]>();
-		String sql = "SELECT  date_format(logSendDate,'%Y-%m') AS a,SUM(goPay),SUM(goTransitPay),SUM(goDamagePay) FROM goods g,logistics l WHERE g.logId=l.logId AND goPayWay='到付' AND goType=1  AND logSendDate LIKE ? GROUP BY a LIMIT ?,?";
+		String sql = "SELECT  date_format(logSendDate,'%Y-%m') AS a,SUM(goTransitPay),SUM(goDamagePay),SUM(logUnloadPay) FROM goods g,logistics l WHERE g.logId=l.logId AND goPayWay='到付' AND goType=1 AND logType=1 AND logSendDate LIKE ? GROUP BY a LIMIT ?,?";
 		ResultSet rs = select(sql, new Object[] { "%" + date + "%",
 				pageCurrentFirst, pageRows, });
 		try {

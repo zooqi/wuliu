@@ -45,8 +45,8 @@ public class ReachMoney extends HttpServlet {
 			double sumIncome1 = 0;
 			for (int i = 0; i < list1.size(); i++) {
 				object1 = list1.get(i);
-				sumIncome1 = (Double) object1[1] - ((Double) object1[2])
-						- ((Double) object1[3]) - ((Double) object1[4]);
+				sumIncome1 = (Double) object1[1]+(Double) object1[5] - ((Double) object1[2])
+						- ((Double) object1[3]) - ((Double) object1[4])-(Double) object1[6];
 			}
 
 			ArrayList<Object[]> list2 = new ExpentDaoImpl().getIncome2Date(
@@ -54,8 +54,8 @@ public class ReachMoney extends HttpServlet {
 			double sumIncome2 = 0;
 			for (int i = 0; i < list2.size(); i++) {
 				object2 = list2.get(i);
-				sumIncome2 = (Double) object2[1] - ((Double) object2[2])
-						- ((Double) object2[3]);
+				sumIncome2 = (Double) object2[3] - ((Double) object2[1])
+						- ((Double) object2[2]);
 			}
 
 			double sumIncome = 0;
