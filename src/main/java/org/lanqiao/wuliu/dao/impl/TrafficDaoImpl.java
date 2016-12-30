@@ -46,12 +46,14 @@ public class TrafficDaoImpl extends BaseDaoImpl {
 				logistics.setLogCarDriver(resultSet.getString(7));
 				logistics.setLogCarPhone(resultSet.getString(8));
 				logistics.setLogCarPay(resultSet.getDouble(9));
-				logistics.setLogPartner(resultSet.getString(10));
-				logistics.setLogType(resultSet.getInt(11));
+				logistics.setLogUnloadPay(resultSet.getDouble(10));
+				logistics.setLogPartner(resultSet.getString(11));
+				logistics.setLogType(resultSet.getInt(12));
 				list.add(logistics);
 			}
 		} catch (SQLException e) {
-			return null;
+			e.printStackTrace();
+			return list;
 		} finally {
 			DBUtils.closeConnection(connection);
 			DBUtils.closePreparedStatement(preparedStatement);
@@ -62,17 +64,17 @@ public class TrafficDaoImpl extends BaseDaoImpl {
 
 	public int trafficSave(Logistics traffic) {
 		int count = 0;
-		String sql = "INSERT INTO logistics(logContractNum, logSendDate, logSiteStart, logSiteEnd, logCarLicence, logCarDriver, logCarPhone, logCarPay, logPartner, logType) VALUES(?,?,?,?,?,?,?,?,?,?)";
+		String sql = "INSERT INTO logistics(logContractNum, logSendDate, logSiteStart, logSiteEnd, logCarLicence, logCarDriver, logCarPhone, logCarPay, logUnloadPay, logPartner, logType) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
 		Object[] params = new Object[] { traffic.getLogContractNum(), traffic.getLogSendDate(),
 				traffic.getLogSiteStart(), traffic.getLogSiteEnd(), traffic.getLogCarLicence(),
-				traffic.getLogCarDriver(), traffic.getLogCarPhone(), traffic.getLogCarPay(), traffic.getLogPartner(),
-				traffic.getLogType() };
+				traffic.getLogCarDriver(), traffic.getLogCarPhone(), traffic.getLogCarPay(), traffic.getLogUnloadPay(),
+				traffic.getLogPartner(), traffic.getLogType() };
 		if (traffic.getLogId() != 0) {
-			sql = "UPDATE logistics set logContractNum=?,logSendDate=?,logSiteStart=?,logSiteEnd=?,logCarLicence=?,logCarDriver=?,logCarPhone=?,logCarPay=?,logPartner=?,logType=? WHERE logId=?";
+			sql = "UPDATE logistics set logContractNum=?,logSendDate=?,logSiteStart=?,logSiteEnd=?,logCarLicence=?,logCarDriver=?,logCarPhone=?,logCarPay=?,logUnloadPay=?,logPartner=?,logType=? WHERE logId=?";
 			params = new Object[] { traffic.getLogContractNum(), traffic.getLogSendDate(), traffic.getLogSiteStart(),
 					traffic.getLogSiteEnd(), traffic.getLogCarLicence(), traffic.getLogCarDriver(),
-					traffic.getLogCarPhone(), traffic.getLogCarPay(), traffic.getLogPartner(), traffic.getLogType(),
-					traffic.getLogId() };
+					traffic.getLogCarPhone(), traffic.getLogCarPay(), traffic.getLogUnloadPay(),
+					traffic.getLogPartner(), traffic.getLogType(), traffic.getLogId() };
 		}
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
@@ -213,11 +215,11 @@ public class TrafficDaoImpl extends BaseDaoImpl {
 
 	public int importArrival(Logistics traffic, List<Goods> list) {
 		int count = 0;
-		String logSql = "INSERT INTO logistics(logContractNum, logSendDate, logSiteStart, logSiteEnd, logCarLicence, logCarDriver, logCarPhone, logCarPay, logPartner, logType) VALUES(?,?,?,?,?,?,?,?,?,?)";
+		String logSql = "INSERT INTO logistics(logContractNum, logSendDate, logSiteStart, logSiteEnd, logCarLicence, logCarDriver, logCarPhone, logCarPay, logUnloadPay, logPartner, logType) VALUES(?,?,?,?,?,?,?,?,?,?)";
 		Object[] logParams = new Object[] { traffic.getLogContractNum(), traffic.getLogSendDate(),
 				traffic.getLogSiteStart(), traffic.getLogSiteEnd(), traffic.getLogCarLicence(),
-				traffic.getLogCarDriver(), traffic.getLogCarPhone(), traffic.getLogCarPay(), traffic.getLogPartner(),
-				traffic.getLogType() };
+				traffic.getLogCarDriver(), traffic.getLogCarPhone(), traffic.getLogCarPay(), traffic.getLogUnloadPay(),
+				traffic.getLogPartner(), traffic.getLogType() };
 		String idSql = "SELECT LAST_INSERT_ID()";
 
 		Connection connection = null;

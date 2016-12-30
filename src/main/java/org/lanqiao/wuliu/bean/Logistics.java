@@ -24,6 +24,7 @@ public class Logistics implements Serializable {
 	private String logCarDriver;
 	private String logCarPhone;
 	private Double logCarPay;
+	private Double logUnloadPay;
 	private String logPartner;
 	private Integer logType;
 	private static final long serialVersionUID = 988100447712821205L;
@@ -98,6 +99,14 @@ public class Logistics implements Serializable {
 
 	public void setLogCarPay(Double logCarPay) {
 		this.logCarPay = logCarPay;
+	}
+
+	public Double getLogUnloadPay() {
+		return logUnloadPay;
+	}
+
+	public void setLogUnloadPay(Double logUnloadPay) {
+		this.logUnloadPay = logUnloadPay;
 	}
 
 	public String getLogPartner() {

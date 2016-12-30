@@ -81,10 +81,13 @@
 						name="logSiteEnd" style="width: 170px;"></td>
 				</tr>
 				<tr>
-					<td colspan="4">合同编号：<input class="easyui-validatebox"
-						name="logContractNum" style="width: 220px;"></td>
-					<td colspan="5">客户：<input class="easyui-validatebox"
-						name="logPartner" style="width: 330px;"></td>
+					<td colspan="3">合同编号：<input class="easyui-validatebox"
+						name="logContractNum" style="width: 150px;"></td>
+					<td colspan="3">客户：<input class="easyui-validatebox"
+						name="logPartner" style="width: 170px;"></td>
+					<td colspan="3">车费：<input class="easyui-validatebox"
+						name="logCarPay" data-options="validType:'length[0,32]'"
+						style="width: 170px;"></td>
 				</tr>
 				<tr>
 					<td colspan="3">车流类型：<select name="logType"
@@ -97,9 +100,9 @@
 					<td colspan="3">货品总数：<input class="easyui-validatebox"
 						name="goodsCount" data-options="validType:'length[0,32]'"
 						style="width: 140px;" disabled="disabled"></td>
-					<td colspan="3">车费：<input class="easyui-validatebox"
-						name="logCarPay" data-options="validType:'length[0,32]'"
-						style="width: 170px;"></td>
+					<td colspan="3">卸车费：<input class="easyui-validatebox"
+						name="logUnloadPay" data-options="validType:'length[0,32]'"
+						style="width: 155px;"></td>
 				</tr>
 				<tr>
 					<td colspan="3">车牌：<input class="easyui-validatebox"
@@ -206,6 +209,12 @@
 				sortable : true,
 				width : 100
 			}, {
+				title : '卸车费',
+				field : 'logUnloadPay',
+				align : 'center',
+				sortable : true,
+				width : 100
+			}, {
 				title : '客户',
 				field : 'logPartner',
 				align : 'center',
@@ -270,39 +279,44 @@
 		});
 
 		/* 删除 */
-		$('#traffic_delete').click(function() {
-			var row = $('#traffic_datagrid').datagrid('getSelected');
-			if (row) {
-				$.messager.confirm('确认', '确认删除吗？', function(r) {
-					if (r) {
-						$.ajax({
-							type : 'POST',
-							url : 'trafficDelete',
-							data : {
-								logId : row.logId
-							},
-							success : function(data) {
-								if (data.success) {
-									$.messager.alert('提示', '删除成功！');
-									$("#traffic_datagrid").datagrid("reload");
-								} else {
-									$.messager.alert('提示', '删除失败，请稍后再试！');
-								}
-							},
-							error : function(request, error) {
-								$.messager.alert('提示', '删除失败，请稍后再试！');
+		$('#traffic_delete').click(
+				function() {
+					var row = $('#traffic_datagrid').datagrid('getSelected');
+					if (row) {
+						$.messager.confirm('确认', '确认删除吗？', function(r) {
+							if (r) {
+								$.ajax({
+									type : 'POST',
+									url : 'trafficDelete',
+									data : {
+										logId : row.logId
+									},
+									success : function(data) {
+										if (data.success) {
+											$.messager.alert('提示', '删除成功！');
+											$("#traffic_datagrid").datagrid(
+													"reload");
+										} else {
+											$.messager.alert('提示',
+													'删除失败，请稍后再试！');
+										}
+									},
+									error : function(request, error) {
+										$.messager.alert('提示', '删除失败，请稍后再试！');
+									}
+								});
 							}
 						});
+						if (row.goodsCount != 0) {
+							$.messager.confirm('警告',
+									'当前车流还有货品与其绑定，如果删除，将同时删除相应的货品信息，请谨慎操作！',
+									function(r) {
+									});
+						}
+					} else {
+						$.messager.alert('提示', '请选择数据！');
 					}
 				});
-				if (row.goodsCount != 0) {
-					$.messager.confirm('警告', '当前车流还有货品与其绑定，如果删除，将同时删除相应的货品信息，请谨慎操作！', function(r) {
-					});
-				}
-			} else {
-				$.messager.alert('提示', '请选择数据！');
-			}
-		});
 
 		/* 搜索功能按钮 */
 		$('#traffic_search').click(function() {

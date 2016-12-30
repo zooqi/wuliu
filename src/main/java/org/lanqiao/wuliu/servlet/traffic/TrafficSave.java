@@ -39,6 +39,7 @@ public class TrafficSave extends HttpServlet {
 		String logCarDriver = request.getParameter("logCarDriver");
 		String logCarPhone = request.getParameter("logCarPhone");
 		double logCarPay = ParseUtils.parseDouble(request.getParameter("logCarPay"));
+		double logUnloadPay = ParseUtils.parseDouble(request.getParameter("logUnloadPay"));
 		String logPartner = request.getParameter("logPartner");
 		int logType = ParseUtils.parseInt(request.getParameter("logType"));
 
@@ -52,6 +53,7 @@ public class TrafficSave extends HttpServlet {
 		traffic.setLogCarDriver(logCarDriver);
 		traffic.setLogCarPhone(logCarPhone);
 		traffic.setLogCarPay(logCarPay);
+		traffic.setLogUnloadPay(logUnloadPay);
 		traffic.setLogPartner(logPartner);
 		traffic.setLogType(logType);
 

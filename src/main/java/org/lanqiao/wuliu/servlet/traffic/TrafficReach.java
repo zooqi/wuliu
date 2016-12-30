@@ -52,6 +52,7 @@ public class TrafficReach extends HttpServlet {
 			row.put("logCarDriver", logistics.getLogCarDriver());
 			row.put("logCarPhone", logistics.getLogCarPhone());
 			row.put("logCarPay", logistics.getLogCarPay());
+			row.put("logUnloadPay", logistics.getLogUnloadPay());
 			row.put("logPartner", logistics.getLogPartner());
 			row.put("logType", logistics.getLogType());
 			row.put("goodsCount", dao.goodsCount(logistics.getLogId()));
