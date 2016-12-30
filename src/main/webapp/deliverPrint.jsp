@@ -57,10 +57,10 @@
 					value="<%=json.has("logSendDate") ? json.get("logSendDate") : ""%>" />
 				</td>
 				<td  width="90" style="text-align: center;">起始地</td>
-				<td id="goSiteStart" width="150"><input 
+				<td id="logSiteStart" width="150"><input 
 					type="text" style="width: 150px; font-size: 18px; border: 0px;"
 					class="print"
-					value="<%=json.has("goSiteStart") ? json.get("goSiteStart") : ""%>" />
+					value="<%=json.has("logSiteStart") ? json.get("logSiteStart") : ""%>" />
 				</td>
 				<td  width="60" style="text-align: center;">到达地</td>
 				<td colspan="5" id="goSiteEnd" width="150"><input type="text"
@@ -187,15 +187,7 @@
 					value="<%=json.has("goRemark") ? json.get("goRemark") : ""%>" /></td>
 			</tr>
 		</table>
-		<br> <br> <input class="noprint" type="button"
-			value="打&nbsp;&nbsp;印" onclick="pagesetup_null()"
-			style='font-size: 18px; width: 100px; height: 30px; background-color: #F0F0F0' />
-		&nbsp;&nbsp;&nbsp;&nbsp; <input class="noprint" type="button"
-			value="返&nbsp;&nbsp;回" onclick="returnBefore()"
-			style='font-size: 18px; width: 100px; height: 30px; background-color: #F0F0F0' />
-		<br>
-		 
-		<table width="800" class="noprint" cellspacing="0"align="center" style="font-family:'宋体'; font-size:18px;">
+		<table width="800" cellspacing="0"align="center" style="font-family:'宋体'; font-size:18px;">
 			<tr>
 				<td width="90">公司地址：</td>
 				<td id="" width="300">桂林市叠彩区76号小麻雀物流基地</td> 
@@ -215,7 +207,7 @@
 				<td>手机：13169663456</td>
 			</tr>
 		</table>
-		<table width="800" class="noprint" cellspacing="0" align="center" style="font-family:'宋体'; font-size:18px;">
+		<table width="800" cellspacing="0" align="center" style="font-family:'宋体'; font-size:18px;">
 			<tr>
 				<td>收货人签章：</td>
 				<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
@@ -225,6 +217,13 @@
 				<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 			</tr>
 		</table>
+		<br> <br> <input type="button" class="noprint"
+			value="打&nbsp;&nbsp;印" onclick="pagesetup_null()"
+			style='font-size: 18px; width: 100px; height: 30px; background-color: #F0F0F0' />
+		&nbsp;&nbsp;&nbsp;&nbsp; <input class="noprint" type="button"
+			value="返&nbsp;&nbsp;回" onclick="returnBefore()"
+			style='font-size: 18px; width: 100px; height: 30px; background-color: #F0F0F0' />
+		<br>
 		<script type="text/javascript">
 			function returnBefore() {
 				window.history.go(-1);

@@ -55,7 +55,14 @@
 				data-options="iconCls:'icon-search',plain:true">搜索</a> <a
 				id="dlvgs_export" href="javascript:void(0)"
 				class="easyui-linkbutton"
-				data-options="iconCls:'icon-undo',plain:true">导入</a>
+				data-options="iconCls:'icon-undo',plain:true">导出</a><a
+				id="dlvgs_print" href="javascript:void(0)"
+				class="easyui-linkbutton"
+				data-options="iconCls:'icon-print',plain:true">打印货物单</a>
+				<a
+				id="dlvgs_printl" href="javascript:void(0)"
+				class="easyui-linkbutton"
+				data-options="iconCls:'icon-print',plain:true">打印标签</a>
 		</div>
 	</div>
 
@@ -642,6 +649,51 @@
 				$.messager.alert('提示', '请选择数据！');
 			}
 		});
+		
+		/*打印货物单*/
+		$('#dlvgs_print').click(function() {
+			var row = $('#dlvgs_datagrid').datagrid('getSelected');
+			if (row) {
+				$.ajax({
+					type : 'POST',
+					url : 'goodsPrint',
+					data : {
+						row : JSON.stringify(row)
+					},
+					success : function(data) {
+						window.location.href = 'deliverPrint.jsp'
+					},
+					error : function(request, error) {
+						$.messager.alert('提示', '预览失败，请稍后再试！');
+					}
+				});
+			} else {
+				$.messager.alert('提示', '请选择数据！');
+			}
+		});
+		
+		/*打印标签*/
+		$('#dlvgs_printl').click(function() {
+			var row = $('#dlvgs_datagrid').datagrid('getSelected');
+			if (row) {
+				$.ajax({
+					type : 'POST',
+					url : 'goodsPrintl',
+					data : {
+						row : JSON.stringify(row)
+					},
+					success : function(data) {
+						window.location.href = 'deliverPrintlable.jsp'
+					},
+					error : function(request, error) {
+						$.messager.alert('提示', '预览失败，请稍后再试！');
+					}
+				});
+			} else {
+				$.messager.alert('提示', '请选择数据！');
+			}
+		});
+
 
 		/* 搜索功能按钮 */
 		$('#dlvgs_search').click(function() {

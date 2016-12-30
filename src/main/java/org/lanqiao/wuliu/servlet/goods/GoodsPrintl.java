@@ -9,8 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@WebServlet(name = "goodsPrint", urlPatterns = { "/goodsPrint" })
-public class GoodsPrint extends HttpServlet {
+@WebServlet(name = "goodsPrintl", urlPatterns = { "/goodsPrintl" })
+public class GoodsPrintl extends HttpServlet {
 
 	private static final long serialVersionUID = 8671828661913193151L;
 
