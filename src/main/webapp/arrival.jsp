@@ -51,7 +51,7 @@
 				id="arvgs_search" href="javascript:void(0)"
 				class="easyui-linkbutton"
 				data-options="iconCls:'icon-search',plain:true">搜索</a> <a
-				id="arvgs_export" href="javascript:void(0)"
+				id="arvgs_import" href="javascript:void(0)"
 				class="easyui-linkbutton"
 				data-options="iconCls:'icon-undo',plain:true">导入</a>
 		</div>
@@ -189,6 +189,23 @@
 			style="width: 90px">保存</a> <a href="javascript:void(0)"
 			class="easyui-linkbutton" data-options="iconCls:'icon-cancel'"
 			onclick="javascript:$('#arvgs_dlg').dialog('close');"
+			style="width: 90px">取消</a>
+	</div>
+
+	<!-- Import -->
+	<div id="arvgs_import_dlg" class="easyui-dialog"
+		data-options="closed:true,buttons:'#arvgs_import_dlg-buttons'">
+		<form id="arvgs_import_fm" method="post" enctype="multipart/form-data">
+			<input name="import" style="width: 250px" class="easyui-filebox"
+				data-options="required:true,validType:'length[0,255]',buttonText:'请选择文件',accept:['application/vnd.ms-excel','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet']">
+		</form>
+	</div>
+	<div id="arvgs_import_dlg-buttons">
+		<a id="arvgs_import_button" href="javascript:void(0)"
+			class="easyui-linkbutton c6" data-options="iconCls:'icon-ok'"
+			style="width: 90px">导入</a> <a href="javascript:void(0)"
+			class="easyui-linkbutton" data-options="iconCls:'icon-cancel'"
+			onclick="javascript:$('#arvgs_import_dlg').dialog('close');"
 			style="width: 90px">取消</a>
 	</div>
 
@@ -468,6 +485,37 @@
 			}
 			$('#arvgs_datagrid').datagrid('load', {});
 			$('#arvgs_search_dlg').dialog('close');
+		});
+
+		/* 导入 */
+		$('#arvgs_import').click(function() {
+			$('#arvgs_import_dlg').dialog('open').dialog('setTitle', '导入');
+			$('#arvgs_import_fm').form('clear');
+		});
+		$('#arvgs_import_button').click(function() {
+			if (!$('#arvgs_import_fm').form('validate')) {
+				$.messager.alert('提示', '请正确填写信息！');
+				return;
+			}
+			$.messager.confirm('确认', '确认保存吗？', function(r) {
+				if (r) {
+					$('#arvgs_import_fm').form('submit', {
+						url : 'arrivalImport',
+						success : function(result) {
+							var data = eval('(' + result + ')');
+							if (data.success) {
+								$.messager.alert('提示', '保存成功！');
+								$('#arvgs_import_dlg').dialog('close');
+								$("#arvgs_datagrid").datagrid("reload");
+							} else {
+								$.messager.alert('提示', '保存失败，请稍后再试！');
+							}
+						}
+					});
+				} else {
+					$('#arvgs_import_dlg').dialog('close');
+				}
+			});
 		});
 	</script>
 </div>

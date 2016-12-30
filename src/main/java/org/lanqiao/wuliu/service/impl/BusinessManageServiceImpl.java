@@ -11,17 +11,6 @@ public class BusinessManageServiceImpl {
 	BusinessManage bm = new BusinessManage();
 
 	/**
-	 * 添加货物信息
-	 * 
-	 * @param goods
-	 *            货物对象
-	 * @return 返回int
-	 */
-	public int goInsert(Goods goods) {
-		return bm.goInsert(goods);
-	}
-
-	/**
 	 * 添加物流信息
 	 * 
 	 * @param logistics

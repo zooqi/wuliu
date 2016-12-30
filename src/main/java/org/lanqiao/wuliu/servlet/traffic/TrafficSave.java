@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.lanqiao.wuliu.bean.Logistics;
 import org.lanqiao.wuliu.dao.impl.TrafficDaoImpl;
-import org.lanqiao.wuliu.util.FormUtils;
+import org.lanqiao.wuliu.util.ParseUtils;
 
 /**
  * 
@@ -30,17 +30,17 @@ public class TrafficSave extends HttpServlet {
 		response.setContentType("application/json;charset=UTF-8");
 		PrintWriter out = response.getWriter();
 
-		int logId = FormUtils.parseInt(request.getParameter("logId"));
+		int logId = ParseUtils.parseInt(request.getParameter("logId"));
 		String logContractNum = request.getParameter("logContractNum");
-		Date logSendDate = FormUtils.parseDate(request.getParameter("logSendDate"));
+		Date logSendDate = ParseUtils.parseDate(request.getParameter("logSendDate"));
 		String logSiteStart = request.getParameter("logSiteStart");
 		String logSiteEnd = request.getParameter("logSiteEnd");
 		String logCarLicence = request.getParameter("logCarLicence");
 		String logCarDriver = request.getParameter("logCarDriver");
 		String logCarPhone = request.getParameter("logCarPhone");
-		double logCarPay = FormUtils.parseDouble(request.getParameter("logCarPay"));
+		double logCarPay = ParseUtils.parseDouble(request.getParameter("logCarPay"));
 		String logPartner = request.getParameter("logPartner");
-		int logType = FormUtils.parseInt(request.getParameter("logType"));
+		int logType = ParseUtils.parseInt(request.getParameter("logType"));
 
 		Logistics traffic = new Logistics();
 		traffic.setLogId(logId);

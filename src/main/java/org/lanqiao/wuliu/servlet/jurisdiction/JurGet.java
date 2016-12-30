@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.lanqiao.wuliu.dao.impl.Jurisdiction;
-import org.lanqiao.wuliu.util.FormUtils;
+import org.lanqiao.wuliu.util.ParseUtils;
 
 @WebServlet(name = "jurGet", urlPatterns = { "/jurGet" })
 public class JurGet extends HttpServlet{
@@ -23,7 +23,7 @@ public class JurGet extends HttpServlet{
 			HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("application/json;charset=UTF-8");
 		PrintWriter out = response.getWriter();
-		int empId = FormUtils.parseInt(request.getParameter("empId"));
+		int empId = ParseUtils.parseInt(request.getParameter("empId"));
 		ArrayList<Object[]> lists=new Jurisdiction().getfun(empId);
 		JSONArray array = new JSONArray();
 		for(Object[] list:lists){

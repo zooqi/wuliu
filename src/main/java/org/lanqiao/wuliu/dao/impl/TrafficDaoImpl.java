@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.lanqiao.wuliu.bean.Goods;
 import org.lanqiao.wuliu.bean.Logistics;
 import org.lanqiao.wuliu.util.DBUtils;
 
@@ -204,6 +205,62 @@ public class TrafficDaoImpl extends BaseDaoImpl {
 			return 0;
 		} finally {
 			DBUtils.closeConnection(connection);
+			DBUtils.closePreparedStatement(preparedStatement);
+			DBUtils.closeResultSet(resultSet);
+		}
+		return count;
+	}
+
+	public int importArrival(Logistics traffic, List<Goods> list) {
+		int count = 0;
+		String logSql = "INSERT INTO logistics(logContractNum, logSendDate, logSiteStart, logSiteEnd, logCarLicence, logCarDriver, logCarPhone, logCarPay, logPartner, logType) VALUES(?,?,?,?,?,?,?,?,?,?)";
+		Object[] logParams = new Object[] { traffic.getLogContractNum(), traffic.getLogSendDate(),
+				traffic.getLogSiteStart(), traffic.getLogSiteEnd(), traffic.getLogCarLicence(),
+				traffic.getLogCarDriver(), traffic.getLogCarPhone(), traffic.getLogCarPay(), traffic.getLogPartner(),
+				traffic.getLogType() };
+		String idSql = "SELECT LAST_INSERT_ID()";
+
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+
+		Statement statement = null;
+		ResultSet resultSet = null;
+		try {
+			connection = DBUtils.getConnection();
+			preparedStatement = connection.prepareStatement(logSql);
+			setParameter(preparedStatement, logSql, logParams);
+			int logCount = preparedStatement.executeUpdate();
+			if (logCount != 1) {
+				return 0;
+			}
+
+			statement = connection.createStatement();
+			resultSet = statement.executeQuery(idSql);
+			resultSet.next();
+			int logId = resultSet.getInt(1);
+
+			for (Goods goods : list) {
+				String sql = "INSERT INTO goods(goBank,goName,goPack,goNum,goWeight,goVolume,goSendMan,"
+						+ "goSendPhone,goSendAddress,goForMan,goForPhone,goForAddress,goGetWay,goPayWay,"
+						+ "goPay,goInsurancePay,goReplacePay,goCommission,goDamagePay,goTransitPay,"
+						+ "goSiteEnd,goRemark,goType,logId) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+				Object[] params = new Object[] { goods.getGoBank(), goods.getGoName(), goods.getGoPack(),
+						goods.getGoNum(), goods.getGoWeight(), goods.getGoVolume(), goods.getGoSendMan(),
+						goods.getGoSendPhone(), goods.getGoSendAddress(), goods.getGoForMan(), goods.getGoForPhone(),
+						goods.getGoForAddress(), goods.getGoGetWay(), goods.getGoPayWay(), goods.getGoPay(),
+						goods.getGoInsurancePay(), goods.getGoReplacePay(), goods.getGoCommission(),
+						goods.getGoDamagePay(), goods.getGoTransitPay(), goods.getGoSiteEnd(), goods.getGoRemark(), 1,
+						logId };
+				preparedStatement = connection.prepareStatement(sql);
+				setParameter(preparedStatement, sql, params);
+				count = preparedStatement.executeUpdate();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return 0;
+		} finally {
+			DBUtils.closeConnection(connection);
+			DBUtils.closeStatement(statement);
 			DBUtils.closePreparedStatement(preparedStatement);
 			DBUtils.closeResultSet(resultSet);
 		}

@@ -16,27 +16,6 @@ import org.lanqiao.wuliu.util.DBUtils;
  * @author 杨明静
  */
 public class BusinessManage extends BaseDaoImpl {
-	/**
-	 * 添加货物信息
-	 * 
-	 * @param goods
-	 *            货物对象
-	 * @return 返回int
-	 */
-	public int goInsert(Goods goods) {
-		String sql = "INSERT INTO goods(goBank=?,goName=?,goNum=?,goPack=?,goWeight=?,goVolume=?,"
-				+ "goSendMan=?,goSendPhone=?,goSendSddress=?,goForMan=?,goForPhone=?,goForAddress=?,goGetWay=?,"
-				+ "goPayWay=?,goPay=?,goInsurancePay=?,goReplacePay=?,goCommission=?,goDamagePay=?,goMessage=?,"
-				+ "goTransitPay=?,goSiteEnd=?,goRemark=?,logId=?) "
-				+ "VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-		Object[] params = new Object[] { goods.getGoBank(), goods.getGoName(), goods.getGoNum(), goods.getGoPack(),
-				goods.getGoWeight(), goods.getGoVolume(), goods.getGoSendMan(), goods.getGoSendPhone(),
-				goods.getGoSendAddress(), goods.getGoForMan(), goods.getGoForPhone(), goods.getGoForAddress(),
-				goods.getGoGetWay(), goods.getGoPayWay(), goods.getGoPay(), goods.getGoInsurancePay(),
-				goods.getGoReplacePay(), goods.getGoCommission(), goods.getGoDamagePay(), goods.getGoTransitPay(),
-				goods.getGoSiteEnd(), goods.getGoRemark(), goods.getLogistics().getLogId() };
-		return cud(sql, params);
-	}
 
 	/**
 	 * 添加物流信息

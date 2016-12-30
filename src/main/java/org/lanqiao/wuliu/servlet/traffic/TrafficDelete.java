@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.lanqiao.wuliu.dao.impl.TrafficDaoImpl;
-import org.lanqiao.wuliu.util.FormUtils;
+import org.lanqiao.wuliu.util.ParseUtils;
 
 /**
  * 
@@ -28,7 +28,7 @@ public class TrafficDelete extends HttpServlet {
 		response.setContentType("application/json;charset=UTF-8");
 		PrintWriter out = response.getWriter();
 
-		int logId = FormUtils.parseInt(request.getParameter("logId"));
+		int logId = ParseUtils.parseInt(request.getParameter("logId"));
 		TrafficDaoImpl dao = new TrafficDaoImpl();
 		int count = dao.trafficDelete(logId);
 		if (count == 1) {

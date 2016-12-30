@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50552
 File Encoding         : 65001
 
-Date: 2016-12-27 16:21:00
+Date: 2016-12-30 14:19:08
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -229,18 +229,19 @@ CREATE TABLE `logistics` (
   `logCarDriver` varchar(255) DEFAULT '' COMMENT '随车司机姓名',
   `logCarPhone` varchar(255) DEFAULT '' COMMENT '司机电话',
   `logCarPay` double unsigned DEFAULT NULL COMMENT '货车费用',
+  `logUnloadPay` double(10,2) unsigned DEFAULT NULL COMMENT '卸车费',
   `logPartner` varchar(255) DEFAULT '' COMMENT '客户公司名',
   `logType` int(11) unsigned NOT NULL COMMENT '车流类型，发：0；到：1',
   PRIMARY KEY (`logId`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of logistics
 -- ----------------------------
-INSERT INTO `logistics` VALUES ('1', 'DYC182', '2016-07-11', '山东', '桂林', '鲁', '侯怀学', '15864839998', null, '淄博永昶物流有限公司', '1');
-INSERT INTO `logistics` VALUES ('2', 'GZ201607-0019', '2016-07-05', '桂林', '桂林', '桂', '罗欢', '13597135772', null, '广州明联嘉源公司', '0');
-INSERT INTO `logistics` VALUES ('3', 'BMW', '2016-12-24', '桂林', '赣州', '赣B 4827', '朱启晖', '13138384833', '6.5', '养猪场', '0');
-INSERT INTO `logistics` VALUES ('4', 'UWP', '2016-12-25', '桂林', '南康', '赣B 4827', '朱爷', '13138384833', '6.5', '肥佬', '0');
+INSERT INTO `logistics` VALUES ('1', 'DYC182', '2016-07-11', '山东', '桂林', '鲁', '侯怀学', '15864839998', null, null, '淄博永昶物流有限公司', '1');
+INSERT INTO `logistics` VALUES ('2', 'GZ201607-0019', '2016-07-05', '桂林', '桂林', '桂', '罗欢', '13597135772', null, null, '广州明联嘉源公司', '0');
+INSERT INTO `logistics` VALUES ('3', 'BMW', '2016-12-24', '桂林', '赣州', '赣B 4827', '朱启晖', '13138384833', '6.5', null, '养猪场', '0');
+INSERT INTO `logistics` VALUES ('4', 'UWP', '2016-12-25', '桂林', '南康', '赣B 4827', '朱爷', '13138384833', '6.5', null, '肥佬', '0');
 
 -- ----------------------------
 -- Table structure for menu

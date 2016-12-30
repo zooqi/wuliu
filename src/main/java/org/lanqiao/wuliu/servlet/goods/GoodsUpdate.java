@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.lanqiao.wuliu.bean.Goods;
 import org.lanqiao.wuliu.dao.impl.BusinessManage;
-import org.lanqiao.wuliu.util.FormUtils;
+import org.lanqiao.wuliu.util.ParseUtils;
 
 /**
  * 更新物流记录
@@ -39,23 +39,23 @@ public class GoodsUpdate extends HttpServlet {
 		String goSendAddress = request.getParameter("goSendAddress");
 
 		String goName = request.getParameter("goName");
-		int goNum = FormUtils.parseInt(request.getParameter("goNum"));
+		int goNum = ParseUtils.parseInt(request.getParameter("goNum"));
 		String goPack = request.getParameter("goPack");
-		double goWeight = FormUtils.parseDouble(request.getParameter("goWeight"));
-		double goVolume = FormUtils.parseDouble(request.getParameter("goVolume"));
+		double goWeight = ParseUtils.parseDouble(request.getParameter("goWeight"));
+		double goVolume = ParseUtils.parseDouble(request.getParameter("goVolume"));
 
-		double goPay = FormUtils.parseDouble(request.getParameter("goPay"));
-		double goInsurancePay = FormUtils.parseDouble(request.getParameter("goInsurancePay"));
-		double goReplacePay = FormUtils.parseDouble(request.getParameter("goReplacePay"));
-		double goCommission = FormUtils.parseDouble(request.getParameter("goCommission"));
-		double goDamagePay = FormUtils.parseDouble(request.getParameter("goDamagePay"));
-		double goTransitPay = FormUtils.parseDouble(request.getParameter("goTransitPay"));
+		double goPay = ParseUtils.parseDouble(request.getParameter("goPay"));
+		double goInsurancePay = ParseUtils.parseDouble(request.getParameter("goInsurancePay"));
+		double goReplacePay = ParseUtils.parseDouble(request.getParameter("goReplacePay"));
+		double goCommission = ParseUtils.parseDouble(request.getParameter("goCommission"));
+		double goDamagePay = ParseUtils.parseDouble(request.getParameter("goDamagePay"));
+		double goTransitPay = ParseUtils.parseDouble(request.getParameter("goTransitPay"));
 
 		String goGetWay = request.getParameter("goGetWay");
 		String goPayWay = request.getParameter("goPayWay");
 		String goRemark = request.getParameter("goRemark");
 
-		int goId = FormUtils.parseInt(request.getParameter("goId"));
+		int goId = ParseUtils.parseInt(request.getParameter("goId"));
 
 		Goods goods = new Goods();
 		goods.setGoId(goId);

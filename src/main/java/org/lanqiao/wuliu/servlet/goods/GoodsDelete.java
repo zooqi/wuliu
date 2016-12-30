@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.lanqiao.wuliu.dao.impl.BusinessManage;
-import org.lanqiao.wuliu.util.FormUtils;
+import org.lanqiao.wuliu.util.ParseUtils;
 
 /**
  * 删除物流记录
@@ -28,7 +28,7 @@ public class GoodsDelete extends HttpServlet {
 		response.setContentType("application/json;charset=UTF-8");
 		PrintWriter out = response.getWriter();
 
-		int goId = FormUtils.parseInt(request.getParameter("goId"));
+		int goId = ParseUtils.parseInt(request.getParameter("goId"));
 
 		BusinessManage dao = new BusinessManage();
 

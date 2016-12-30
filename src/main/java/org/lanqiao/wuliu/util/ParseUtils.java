@@ -9,7 +9,7 @@ import java.util.Date;
  * @author zooqi
  *
  */
-public class FormUtils {
+public class ParseUtils {
 
 	/**
 	 * 将来自表单的输入转化为{@link java.lang.Integer}类型, 如attribute不合法(为null或为""或为非整数字符串),

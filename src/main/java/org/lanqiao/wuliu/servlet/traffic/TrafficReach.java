@@ -16,7 +16,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.lanqiao.wuliu.bean.Logistics;
 import org.lanqiao.wuliu.dao.impl.TrafficDaoImpl;
-import org.lanqiao.wuliu.util.FormUtils;
+import org.lanqiao.wuliu.util.ParseUtils;
 
 /**
  * @author zooqi
@@ -32,8 +32,8 @@ public class TrafficReach extends HttpServlet {
 		resp.setContentType("application/json;charset=UTF-8");
 		PrintWriter out = resp.getWriter();
 
-		int currentPage = FormUtils.parseInt(req.getParameter("page"));
-		int rowsPerPage = FormUtils.parseInt(req.getParameter("rows"));
+		int currentPage = ParseUtils.parseInt(req.getParameter("page"));
+		int rowsPerPage = ParseUtils.parseInt(req.getParameter("rows"));
 
 		TrafficDaoImpl dao = new TrafficDaoImpl();
 		List<Logistics> list = dao.trafficReach(currentPage, rowsPerPage);
