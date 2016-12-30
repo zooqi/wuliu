@@ -53,7 +53,7 @@
 							</tr>
 							<tr>
 								<td style="width: 93px; text-align: center;">请假理由：</td>
-								<td><input class="easyui-validatebox" name="aattentReason"
+								<td><input class="easyui-validatebox" name="attentReason"
 									data-options="validType:'length[0,32]'" style="width: 140px">
 								</td>
 								<td style="width: 93px; text-align: center;">加 &nbsp;班 &nbsp;数：</td>
@@ -72,6 +72,10 @@
 								</td>
 							</tr>
 							<tr>
+								<td style="width: 93px; text-align: center;">基本工资：</td>
+								<td><input class="easyui-validatebox" name="empWage"
+									data-options="validType:'length[0,32]'" style="width: 140px">
+								</td>
 								<td style="width: 93px; text-align: center;">备&emsp;&emsp;注：</td>
 								<td><input class="easyui-validatebox" name="attentRemark"
 									data-options="validType:'length[0,32]'" style="width: 140px">
@@ -178,7 +182,7 @@
 					}
 				}
 			}, {
-				title : '考勤时间',
+				title : '考勤次数',
 				field : 'attentDate',
 				align : 'center',
 				sortable : true,
@@ -194,13 +198,13 @@
 				field : 'attentNum',
 				align : 'center',
 				sortable : true,
-				width : 100
+				width : 80
 			}, {
 				title : '请假时间',
 				field : 'attentReasonNum',
 				align : 'center',
 				sortable : true,
-				width : 100
+				width : 150
 			}, {
 				title : '请假次数',
 				field : 'attentReasonNum',
@@ -208,11 +212,11 @@
 				sortable : true,
 				width : 150
 			}, {
-				title : '加班时间',
+				title : '加班次数',
 				field : 'attentOverTimeNum',
 				align : 'center',
 				sortable : true,
-				width : 100
+				width : 80
 			}, {
 				title : '加班费',
 				field : 'attentOverTimePay',
@@ -222,6 +226,12 @@
 			}, {
 				title : '奖金',
 				field : 'attentBonus',
+				align : 'center',
+				sortable : true,
+				width : 100
+			}, {
+				title : '基本工资',
+				field : 'empWage',
 				align : 'center',
 				sortable : true,
 				width : 100

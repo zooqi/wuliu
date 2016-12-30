@@ -9,7 +9,6 @@ import java.util.ArrayList;
 
 import org.lanqiao.wuliu.bean.Expent;
 
-
 /**
  * 财务管理
  * 
@@ -307,6 +306,27 @@ public class ExpentDaoImpl extends BaseDaoImpl {
 		return list;
 	}
 
+	public ArrayList<Object[]> getAttent(int pageCurrentFirst, int pageRows,
+			String date) {
+		ArrayList<Object[]> list = new ArrayList<Object[]>();
+		String sql = "SELECT attentDate,SUM(attentOverTimePay),SUM(attentBonus),SUM(empWage) FROM attent WHERE attentDate LIKE ? GROUP BY attentDate LIMIT ?,?";
+		ResultSet rs = select(sql, new Object[] { "%" + date + "%",
+				pageCurrentFirst, pageRows });
+		try {
+			while (rs.next()) {
+				Object[] object = new Object[4];
+				object[0] = rs.getString(1);
+				object[1] = rs.getDouble(2);
+				object[2] = rs.getDouble(3);
+				object[3] = rs.getDouble(4);
+				list.add(object);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
 	/**
 	 * 得到支出表，物流表的时间的并集
 	 * 
@@ -314,7 +334,7 @@ public class ExpentDaoImpl extends BaseDaoImpl {
 	 */
 	public ArrayList<String> getDate() {
 		ArrayList<String> list = new ArrayList<String>();
-		String sql = "SELECT date_format(expDate,'%Y-%m') FROM expent UNION SELECT date_format(logSendDate,'%Y-%m') FROM logistics";
+		String sql = "SELECT date_format(expDate,'%Y-%m') FROM expent UNION SELECT date_format(logSendDate,'%Y-%m') FROM logistics UNION SELECT attentDate FROM attent";
 		ResultSet rs = select(sql);
 		try {
 			while (rs.next()) {

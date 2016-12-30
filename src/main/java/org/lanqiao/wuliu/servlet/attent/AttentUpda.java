@@ -36,6 +36,7 @@ public class AttentUpda extends HttpServlet {
 		String attentRemark = request.getParameter("attentRemark");
 		int empId = ParseUtils.parseInt(request.getParameter("empName"));
 		int attentId=ParseUtils.parseInt(request.getParameter("attentId"));
+		double empWage = ParseUtils.parseDouble(request.getParameter("empWage"));
 		
 		Attent attent = new Attent();
 		Emp emp = new Emp();
@@ -50,7 +51,7 @@ public class AttentUpda extends HttpServlet {
 		attent.setAttentBonus(attentBonus);
 		attent.setAttentRemark(attentRemark);
 		attent.setAttentId(attentId);
-
+		attent.setEmpWage(empWage);
 		HRManageDao hd=new HRManageDao();
 		
 		if (hd.attentUpda(attent, attentId) == 1) {

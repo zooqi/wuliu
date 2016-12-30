@@ -29,10 +29,11 @@ public class ReachMoney extends HttpServlet {
 		JSONObject json = new JSONObject();
 		JSONArray array = new JSONArray();
 		String moneyDate = request.getParameter("moneyDate");
-		
+		System.out.println(moneyDate);
 		Object[] object1 = new Object[5];
 		Object[] object2 = new Object[4];
 		Object[] object3 = new Object[3];
+		Object[] object4 = new Object[4];
 		ArrayList<String> lists = new ExpentDaoImpl().getDate();
 		for (String list : lists) {
 			if (moneyDate != null && !moneyDate.equals("")
@@ -45,8 +46,9 @@ public class ReachMoney extends HttpServlet {
 			double sumIncome1 = 0;
 			for (int i = 0; i < list1.size(); i++) {
 				object1 = list1.get(i);
-				sumIncome1 = (Double) object1[1]+(Double) object1[5] - ((Double) object1[2])
-						- ((Double) object1[3]) - ((Double) object1[4])-(Double) object1[6];
+				sumIncome1 = (Double) object1[1] + (Double) object1[5]
+						- ((Double) object1[2]) - ((Double) object1[3])
+						- ((Double) object1[4]) - (Double) object1[6];
 			}
 
 			ArrayList<Object[]> list2 = new ExpentDaoImpl().getIncome2Date(
@@ -71,22 +73,41 @@ public class ReachMoney extends HttpServlet {
 					* rowsPerPage, rowsPerPage, list);
 			double sumMoney = 0;
 			double sumExpent = 0;
-			int expId=0;
+			int expId = 0;
 			for (int i = 0; i < list3.size(); i++) {
 				object3 = list3.get(i);
 				sumExpent = (Double) object3[0];
-				expId=(Integer)object3[2];
+				expId = (Integer) object3[2];
 			}
 
-			if (sumIncome != 0 && sumExpent != 0) {
-				sumMoney = sumIncome - ((Double) object3[0]);
-			} else if (sumIncome != 0 && sumExpent == 0) {
-				sumMoney = sumIncome;
-			} else if (sumIncome == 0 && sumExpent != 0) {
-				sumMoney = -sumExpent;
+			double sumEmpPay = 0;
+			ArrayList<Object[]> list4 = new ExpentDaoImpl().getAttent(
+					(page - 1) * rowsPerPage, rowsPerPage, list);
+			for (int i = 0; i < list4.size(); i++) {
+				object4 = list4.get(i);
+				sumEmpPay = (Double) object4[1] + (Double) object4[2]
+						+ (Double) object4[3];
 			}
+
+			if (sumIncome != 0 && sumExpent != 0 && sumEmpPay != 0) {
+				sumMoney = sumIncome - sumExpent;
+			} else if (sumIncome != 0 && sumExpent == 0 && sumEmpPay == 0) {
+				sumMoney = sumIncome;
+			} else if (sumIncome == 0 && sumExpent != 0 && sumEmpPay == 0) {
+				sumMoney = -sumExpent;
+			}else if (sumIncome == 0 && sumExpent == 0 && sumEmpPay != 0) {
+				sumMoney = -sumEmpPay;
+			}else if (sumIncome == 0 && sumExpent != 0 && sumEmpPay != 0) {
+				sumMoney = -(sumEmpPay+sumExpent);
+			}else if (sumIncome != 0 && sumExpent == 0 && sumEmpPay != 0) {
+				sumMoney = sumIncome-sumEmpPay;
+			}else if (sumIncome != 0 && sumExpent != 0 && sumEmpPay == 0) {
+				sumMoney = sumIncome-sumExpent;
+			}
+
 			row.put("date", list);
 			row.put("sumIncome", sumIncome);
+			row.put("sumEmpPay", sumEmpPay);
 			row.put("sumExpent", sumExpent);
 			row.put("sumMoney", sumMoney);
 			row.put("expId", expId);

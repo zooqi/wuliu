@@ -60,6 +60,7 @@ public class AttentReach extends HttpServlet {
 			row.put("empName", attent.getEmp().getEmpName());
 			row.put("empDepart", attent.getEmp().getEmpDepart());
 			row.put("attentBonus", attent.getAttentBonus());
+			row.put("empWage", attent.getEmpWage());
 			row.put("empId", attent.getEmp().getEmpId());
 			array.put(row);
 		}

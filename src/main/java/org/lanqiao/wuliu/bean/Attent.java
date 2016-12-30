@@ -16,6 +16,7 @@ public class Attent {
 	private double attentOverTimePay;
 	private double attentBonus;
 	private String attentRemark;
+	private double empWage;
 	private Emp emp;
 
 	public Integer getAttentId() {
@@ -84,6 +85,14 @@ public class Attent {
 
 	public String getAttentRemark() {
 		return attentRemark;
+	}
+
+	public double getEmpWage() {
+		return empWage;
+	}
+
+	public void setEmpWage(double empWage) {
+		this.empWage = empWage;
 	}
 
 	public void setAttentRemark(String attentRemark) {

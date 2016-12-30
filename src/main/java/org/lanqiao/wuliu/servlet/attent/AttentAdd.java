@@ -34,6 +34,7 @@ public class AttentAdd extends HttpServlet {
 		double attentBonus = ParseUtils.parseDouble(request.getParameter("attentBonus"));
 		String attentRemark = request.getParameter("attentRemark");
 		int empId = ParseUtils.parseInt(request.getParameter("empName"));
+		double empWage = ParseUtils.parseDouble(request.getParameter("empWage"));
 		
 		Attent attent = new Attent();
 		Emp emp = new Emp();
@@ -47,7 +48,8 @@ public class AttentAdd extends HttpServlet {
 		attent.setAttentOverTimePay(attentOverTimePay);
 		attent.setAttentBonus(attentBonus);
 		attent.setAttentRemark(attentRemark);
-
+		attent.setEmpWage(empWage);
+		
 		HRManageDao hd=new HRManageDao();
 
 		int num = hd.attentInsert(attent, empId);

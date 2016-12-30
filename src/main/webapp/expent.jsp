@@ -2,7 +2,7 @@
 <div class="easyui-panel" data-options="fit:true,border:false">
 	<div align="center"
 		style="margin: 20px auto auto 20px; font-weight: bold; font-size: 20px;">
-
+		支出信息管理
 	</div>
 	<div style="margin: 20px 30px auto 30px;">
 		<table id="expent_datagrid"></table>
