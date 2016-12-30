@@ -1,7 +1,5 @@
 package org.lanqiao.wuliu.bean;
 
-import java.util.Date;
-
 /**
  * 考勤表
  * 
@@ -10,7 +8,7 @@ import java.util.Date;
  */
 public class Attent {
 	private Integer attentId;
-	private Date attentDate;
+	private String attentDate;
 	private double attentNum;
 	private double attentReasonNum;
 	private String attentReason;
@@ -28,11 +26,11 @@ public class Attent {
 		this.attentId = attentId;
 	}
 
-	public Date getAttentDate() {
+	public String getAttentDate() {
 		return attentDate;
 	}
 
-	public void setAttentDate(Date attentDate) {
+	public void setAttentDate(String attentDate) {
 		this.attentDate = attentDate;
 	}
 

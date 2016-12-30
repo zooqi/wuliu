@@ -9,7 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.lanqiao.wuliu.dao.impl.HRManageDao;
 import org.lanqiao.wuliu.service.impl.HRManageServiceImpl;
+import org.lanqiao.wuliu.util.ParseUtils;
 
 /**
  * 删除考勤记录
@@ -27,9 +29,9 @@ public class AttentDele extends HttpServlet {
 		response.setContentType("application/json;charset=UTF-8");
 		PrintWriter out = response.getWriter();
 
-		int attentId = Integer.parseInt(request.getParameter("attentId"));
-		HRManageServiceImpl hsi = new HRManageServiceImpl();
-		if (hsi.attentDele(attentId) == 1) {
+		int attentId = ParseUtils.parseInt(request.getParameter("attentId"));
+		HRManageDao hd=new HRManageDao();
+		if (hd.attentDele(attentId) == 1) {
 			out.println("{\"success\":true}");
 		} else {
 			out.println("{\"success\":false}");

@@ -2,10 +2,6 @@ package org.lanqiao.wuliu.servlet.attent;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,7 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.lanqiao.wuliu.bean.Attent;
 import org.lanqiao.wuliu.bean.Emp;
+import org.lanqiao.wuliu.dao.impl.HRManageDao;
 import org.lanqiao.wuliu.service.impl.HRManageServiceImpl;
+import org.lanqiao.wuliu.util.ParseUtils;
 
 @WebServlet(name = "attentUpda", urlPatterns = { "/attentUpda" })
 public class AttentUpda extends HttpServlet {
@@ -27,47 +25,18 @@ public class AttentUpda extends HttpServlet {
 		response.setContentType("application/json;charset=UTF-8");
 		PrintWriter out = response.getWriter();
 
-		String empName = request.getParameter("empName");
-		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-		Date attentDate = null;
-		String a = request.getParameter("attentDate");
-		if (a != null && !a.equals("")) {
-			try {
-				attentDate = df.parse(a);
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}
-		}
-		String b = request.getParameter("attentNum");
-		double attentNum = 0;
-		if (b != null && !b.equals("")) {
-			attentNum = Double.parseDouble(b);
-		}
-		String c = request.getParameter("attentReasonNum");
-		double attentReasonNum = 0;
-		if (c != null && !c.equals("")) {
-			attentReasonNum = Double.parseDouble(c);
-		}
+		String empName=request.getParameter("empName");
+		String attentDate = request.getParameter("attentDate");
+		double attentNum = ParseUtils.parseDouble(request.getParameter("attentNum"));
+		double attentReasonNum = ParseUtils.parseDouble(request.getParameter("attentReasonNum"));
 		String attentReason = request.getParameter("attentReason");
-		String d = request.getParameter("attentOverTimeNum");
-		double attentOverTimeNum = 0;
-		if (d != null && !d.equals("")) {
-			attentOverTimeNum = Double.parseDouble(d);
-		}
-		String e = request.getParameter("attentOverTimePay");
-		double attentOverTimePay = 0;
-		if (e != null && !e.equals("")) {
-			attentOverTimePay = Double.parseDouble(e);
-		}
-		String f = request.getParameter("attentBonus");
-		double attentBonus = 0;
-		if (f != null && !f.equals("")) {
-			attentBonus = Double.parseDouble(f);
-		}
+		double attentOverTimeNum = ParseUtils.parseDouble(request.getParameter("attentOverTimeNum"));
+		double attentOverTimePay = ParseUtils.parseDouble(request.getParameter("attentOverTimePay"));
+		double attentBonus = ParseUtils.parseDouble(request.getParameter("attentBonus"));
 		String attentRemark = request.getParameter("attentRemark");
-
-		int attentId = Integer.parseInt(request.getParameter("attentId"));
-
+		int empId = ParseUtils.parseInt(request.getParameter("empName"));
+		int attentId=ParseUtils.parseInt(request.getParameter("attentId"));
+		
 		Attent attent = new Attent();
 		Emp emp = new Emp();
 		emp.setEmpName(empName);
@@ -82,9 +51,9 @@ public class AttentUpda extends HttpServlet {
 		attent.setAttentRemark(attentRemark);
 		attent.setAttentId(attentId);
 
-		HRManageServiceImpl hsi = new HRManageServiceImpl();
-
-		if (hsi.attentUpda(attent, attentId) == 1) {
+		HRManageDao hd=new HRManageDao();
+		
+		if (hd.attentUpda(attent, attentId) == 1) {
 			out.println("{\"success\":true}");
 		} else {
 			out.println("{\"success\":false}");

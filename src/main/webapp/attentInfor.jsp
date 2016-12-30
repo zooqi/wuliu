@@ -20,15 +20,10 @@
 				data-options="iconCls:'icon-remove',plain:true">删除</a> <a
 				id="attent_search" href="javascript:void(0)" class="easyui-linkbutton"
 				data-options="iconCls:'icon-search',plain:true">搜索</a>
-				<!-- 
-				<a
-				id="attent_export" href="javascript:void(0)" class="easyui-linkbutton"
-				data-options="iconCls:'icon-save',plain:true">导出此页</a>
-				 --> 
 		</div>
 		<!-- 对话框 -->
 		<div id="attent_edit_dlg" class="easyui-dialog"
-			style="padding: 0px 0px; width: 500px; height: 320px;"
+			style="padding: 0px 0px; width: 550px; height: 320px;"
 			data-options="closed:true,buttons:'#attent_edit_dlg-buttons'">
 			<form id="attent_edit_fm">
 				<div id="attent_edit_tabs" class="easyui-tabs">
@@ -42,7 +37,7 @@
 									<input id="empInfor" name="empName" style="width: 144px">
 								</td>
 								<td style="width: 93px; text-align: center;">时&emsp;&emsp;间：</td>
-								<td><input class="easyui-datebox" name="attentDate"
+								<td><input id="datetime11" name="attentDate"
 									data-options="validType:'length[0,32]'" style="width: 144px">
 								</td>
 							</tr>
@@ -106,7 +101,7 @@
 		<form id="attent_search_fm">
 			<table class="zooqi-frame-text" style="border-spacing: 10px;">
 				<tr>
-					<td width="70px">职 &nbsp;工 &nbsp;号 ：</td>
+					<td width="72px">职 &nbsp;工 &nbsp;号 ：</td>
 					<td><input id="attent_empNum" name="empNum" style="width: 114px"></td>
 				</tr>
 				<tr>
@@ -114,13 +109,10 @@
 					<td><input id="attent_empName" name="empName" style="width: 114px"></td>
 				</tr>
 				<tr>
-					<td width="70px">部&emsp;&emsp;门 ：</td>
-					<td><input id="attent_empDepart" name="empDepart" style="width: 114px"></td>
-				</tr>
-				<tr>
-					<td width="70px">考勤日期：</td>
-					<td><input class="easyui-datebox" name="attentDate" id="attent_attentDate"
-									data-options="validType:'length[0,32]'" style="width: 114px"></td>
+					<td>时&emsp;&emsp;间：</td>
+					<td><input id="datetime1" name="attentDate"
+						data-options="validType:'length[0,32]'" style="width: 114px">
+					</td>
 				</tr>
 			</table>
 		</form>
@@ -151,7 +143,7 @@
 				field : 'empNum',
 				align : 'center',
 				sortable : true,
-				width : 150,
+				width : 100,
 				formatter : function(value, row, index) {
 					if(row.empId) {
 						return row.empNum;
@@ -190,6 +182,12 @@
 				field : 'attentDate',
 				align : 'center',
 				sortable : true,
+				width : 100,
+			}, {
+				title : '请假理由',
+				field : 'attentReason',
+				align : 'center',
+				sortable : true,
 				width : 140,
 			}, {
 				title : '出勤数',
@@ -204,7 +202,7 @@
 				sortable : true,
 				width : 100
 			}, {
-				title : '请假原因',
+				title : '请假次数',
 				field : 'attentReasonNum',
 				align : 'center',
 				sortable : true,
@@ -226,7 +224,7 @@
 				field : 'attentBonus',
 				align : 'center',
 				sortable : true,
-				width : 150
+				width : 100
 			}, {
 				title : '备注',
 				field : 'attentRemark',
@@ -357,14 +355,95 @@
 				return;
 			}
 			$('#attent_datagrid').datagrid('load', {
-				attentLicence : $('#attent_attentLicence').val(),
+				empNum : $('#attent_empNum').combobox('getText'),
 				empName : $('#attent_empName').combobox('getText'),
-				attentDate : $('#attent_attentDate').datebox('getValue')
+				attentDate : $('#datetime1').datebox('getValue')
 			});
 			$('#attent_search_dlg').dialog('close');
 			$('#attent_search_fm').form('clear');
 		});
 
+		/*修改easyUI的日期控件*/
+		$(function() {      
+      		$('#datetime1').datebox({    
+           		 onShowPanel : function() {// 显示日趋选择对象后再触发弹出月份层的事件，初始化时没有生成月份层    
+                	span.trigger('click'); // 触发click事件弹出月份层    
+                if (!tds)    
+                    setTimeout(function() {// 延时触发获取月份对象，因为上面的事件触发和对象生成有时间间隔    
+                        tds = p.find('div.calendar-menu-month-inner td');    
+                        tds.click(function(e) {    
+                            e.stopPropagation(); // 禁止冒泡执行easyui给月份绑定的事件    
+                            var year = /\d{4}/.exec(span.html())[0]// 得到年份    
+                            , month = parseInt($(this).attr('abbr'), 10) + 1; // 月份    
+                            $('#datetime1').datebox('hidePanel')// 隐藏日期对象    
+                            .datebox('setValue', year + '-' + month); // 设置日期的值    
+                        });    
+                    }, 0);    
+            },    
+            parser : function(s) {// 配置parser，返回选择的日期    
+                if (!s)    
+                    return new Date();    
+                var arr = s.split('-');    
+                return new Date(parseInt(arr[0], 10), parseInt(arr[1], 10) - 1, 1);    
+            },    
+            formatter : function(d) {    
+                var month = d.getMonth();  
+                if(month<=10){  
+                    month = "0"+month;  
+                }  
+                if (d.getMonth() == 0) {    
+                    return d.getFullYear()-1 + '-' + 12;    
+                } else {    
+                    return d.getFullYear() + '-' + month;    
+                }    
+            }// 配置formatter，只返回年月    
+        });    
+        var p = $('#datetime1').datebox('panel'), // 日期选择对象    
+        tds = false, // 日期选择对象中月份    
+        span = p.find('span.calendar-text'); // 显示月份层的触发控件    
+        
+    });    
+		
+		$(function() {      
+      		$('#datetime11').datebox({    
+           		 onShowPanel : function() {// 显示日趋选择对象后再触发弹出月份层的事件，初始化时没有生成月份层    
+                	span.trigger('click'); // 触发click事件弹出月份层    
+                if (!tds)    
+                    setTimeout(function() {// 延时触发获取月份对象，因为上面的事件触发和对象生成有时间间隔    
+                        tds = p.find('div.calendar-menu-month-inner td');    
+                        tds.click(function(e) {    
+                            e.stopPropagation(); // 禁止冒泡执行easyui给月份绑定的事件    
+                            var year = /\d{4}/.exec(span.html())[0]// 得到年份    
+                            , month = parseInt($(this).attr('abbr'), 10) + 1; // 月份    
+                            $('#datetime11').datebox('hidePanel')// 隐藏日期对象    
+                            .datebox('setValue', year + '-' + month); // 设置日期的值    
+                        });    
+                    }, 0);    
+            },    
+            parser : function(s) {// 配置parser，返回选择的日期    
+                if (!s)    
+                    return new Date();    
+                var arr = s.split('-');    
+                return new Date(parseInt(arr[0], 10), parseInt(arr[1], 10) - 1, 1);    
+            },    
+            formatter : function(d) {    
+                var month = d.getMonth();  
+                if(month<=10){  
+                    month = "0"+month;  
+                }  
+                if (d.getMonth() == 0) {    
+                    return d.getFullYear()-1 + '-' + 12;    
+                } else {    
+                    return d.getFullYear() + '-' + month;    
+                }    
+            }// 配置formatter，只返回年月    
+        });    
+        var p = $('#datetime11').datebox('panel'), // 日期选择对象    
+        tds = false, // 日期选择对象中月份    
+        span = p.find('span.calendar-text'); // 显示月份层的触发控件    
+        
+    });  
+  
 		/* 验证函数 */
 		$.extend($.fn.validatebox.defaults.rules, {
 			maxLength : {

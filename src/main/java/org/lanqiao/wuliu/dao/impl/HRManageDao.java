@@ -173,7 +173,7 @@ public class HRManageDao extends BaseDaoImpl {
 		}
 		return ar;
 	}
-	
+
 	/**
 	 * 记录每月员工考勤
 	 * 
@@ -223,7 +223,7 @@ public class HRManageDao extends BaseDaoImpl {
 	public ArrayList<Attent> attentSel(int pageCurrentFirst, int pageRows,
 			Attent attentReach, String attentDate) {
 		StringBuffer sql = new StringBuffer(
-				"SELECT e.empNum,e.empName,e.empDepart,a.attentDate,a.attentNum,a.attentReasonNum,a.attentReason,a.attentBonus,a.attentRemark,a.attentOverTimePay,a.attentOverTimeNum,e.empId,a.attentId FROM emp e,attent a WHERE a.empId=e.empId ");
+				"SELECT e.empNum,e.empName,e.empDepart,a.attentDate,a.attentNum,a.attentReasonNum,a.attentReason,a.attentBonus,a.attentRemark,a.attentOverTimePay,a.attentOverTimeNum,e.empId,a.attentId FROM emp e ,attent a WHERE a.empId=e.empId ");
 		if (attentReach.getEmp().getEmpNum() != null
 				&& !attentReach.getEmp().getEmpNum().equals("")) {
 			sql.append("AND e.empNum like '%")
@@ -234,15 +234,9 @@ public class HRManageDao extends BaseDaoImpl {
 			sql.append("AND e.empName like '%")
 					.append(attentReach.getEmp().getEmpName()).append("%' ");
 		}
-		if (attentReach.getEmp().getEmpDepart() != null
-				&& !attentReach.getEmp().getEmpDepart().equals("")) {
-			sql.append("AND e.empDepart like '%")
-					.append(attentReach.getEmp().getEmpDepart()).append("%' ");
-		}
-		if (attentReach.getAttentDate() != null
-				&& !attentReach.getAttentDate().equals("")) {
-			sql.append("AND a.attentDate like '%")
-					.append(attentReach.getAttentDate()).append("%' ");
+		if (attentDate != null && !attentDate.equals("")) {
+			sql.append("AND a.attentDate like '%").append(attentDate)
+					.append("%' ");
 		}
 		sql.append("ORDER BY e.empId  LIMIT ?, ?");
 		ArrayList<Attent> ar = new ArrayList<Attent>();
@@ -256,7 +250,7 @@ public class HRManageDao extends BaseDaoImpl {
 				emp.setEmpNum(rs.getString(1));
 				emp.setEmpName(rs.getString(2));
 				emp.setEmpDepart(rs.getString(3));
-				attent.setAttentDate(rs.getDate(4));
+				attent.setAttentDate(rs.getString(4));
 				attent.setAttentNum(rs.getDouble(5));
 				attent.setAttentReasonNum(rs.getDouble(6));
 				attent.setAttentReason(rs.getString(7));
@@ -285,12 +279,16 @@ public class HRManageDao extends BaseDaoImpl {
 	 * @return 返回int
 	 */
 	public int attentUpda(Attent attent, int attentId) {
-		String sql = "UPDATE attent SET attentDate=?,attentNum=?,attentReasonNum=?,attentReasonNum=?,attentReason=?,attentBonus=?,attentRemark=?,attentOverTimePay=?,empId=? WHERE attentId=?";
+		String sql = "UPDATE attent SET attentDate=?,attentNum=?,attentReasonNum=?,attentReason=?,attentOverTimeNum=?,attentBonus=?,attentRemark=?,attentOverTimePay=? WHERE "
+				+ " attentId=?";
 		Object[] params = new Object[] { attent.getAttentDate(),
 				attent.getAttentNum(), attent.getAttentReasonNum(),
 				attent.getAttentReason(), attent.getAttentOverTimeNum(),
-				attent.getAttentOverTimePay(), attent.getAttentBonus(),
-				attent.getAttentRemark(), attent.getEmp().getEmpId(), attentId };
+				attent.getAttentBonus(), attent.getAttentRemark(),
+				attent.getAttentOverTimePay(), 
+
+				attentId };
+		System.out.println(sql);
 		return cud(sql, params);
 	}
 
