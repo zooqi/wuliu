@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50552
 File Encoding         : 65001
 
-Date: 2016-12-30 14:19:08
+Date: 2016-12-31 12:21:21
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -21,13 +21,14 @@ SET FOREIGN_KEY_CHECKS=0;
 DROP TABLE IF EXISTS `attent`;
 CREATE TABLE `attent` (
   `attentId` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '考勤ID',
-  `attentDate` date DEFAULT NULL COMMENT '考勤日期',
+  `attentDate` varchar(255) DEFAULT NULL COMMENT '考勤日期',
   `attentNum` double(10,2) unsigned DEFAULT NULL COMMENT '出勤次数',
   `attentReasonNum` double(10,2) unsigned DEFAULT NULL COMMENT '请假次数',
   `attentReason` varchar(255) DEFAULT '' COMMENT '请假理由',
   `attentOverTimeNum` double(10,0) unsigned DEFAULT NULL COMMENT '加班次数',
   `attentOverTimePay` double(10,2) unsigned DEFAULT NULL COMMENT '加班费用',
   `attentBonus` double(10,2) unsigned DEFAULT NULL COMMENT '奖金',
+  `empWage` double(10,0) unsigned DEFAULT NULL COMMENT '每月工资',
   `attentRemark` varchar(255) DEFAULT '' COMMENT '备注',
   `empId` int(11) unsigned DEFAULT NULL COMMENT '员工ID',
   PRIMARY KEY (`attentId`),
@@ -38,9 +39,9 @@ CREATE TABLE `attent` (
 -- ----------------------------
 -- Records of attent
 -- ----------------------------
-INSERT INTO `attent` VALUES ('1', '2016-08-08', '0.00', '0.00', null, '0', '0.00', '0.00', null, '3');
-INSERT INTO `attent` VALUES ('2', '2016-08-07', '0.00', '0.00', null, '0', '0.00', '0.00', null, '3');
-INSERT INTO `attent` VALUES ('3', '2016-08-02', '0.00', '0.00', null, '0', '0.00', '0.00', null, '3');
+INSERT INTO `attent` VALUES ('1', '2016-03', '0.00', '0.00', '发烧', '5', '500.00', '100.00', '100', '', '1');
+INSERT INTO `attent` VALUES ('2', '2015-05', '1.00', '0.00', '发烧', '100', '10.00', '100.00', '0', '生病了', '2');
+INSERT INTO `attent` VALUES ('3', '2016-01', '11.00', '3.00', '', '50', '2.00', '50.00', null, '', '3');
 
 -- ----------------------------
 -- Table structure for emp
@@ -202,6 +203,7 @@ CREATE TABLE `goods` (
   `goRemark` varchar(255) DEFAULT '' COMMENT '备注信息',
   `goType` int(11) unsigned NOT NULL COMMENT '发到货类型，发：0；到：1',
   `logId` int(11) unsigned DEFAULT NULL COMMENT '物流ID',
+  `goSmsStatus` int(11) unsigned DEFAULT NULL COMMENT '短信发送状态',
   PRIMARY KEY (`goId`),
   KEY `logId` (`logId`),
   CONSTRAINT `goods_ibfk_1` FOREIGN KEY (`logId`) REFERENCES `logistics` (`logId`) ON DELETE CASCADE ON UPDATE CASCADE
@@ -210,10 +212,10 @@ CREATE TABLE `goods` (
 -- ----------------------------
 -- Records of goods
 -- ----------------------------
-INSERT INTO `goods` VALUES ('1', 'HYC2105', '桌面等', '', '58', '0.00', '2.50', '', '13793895796', '', '', '18577358707', '', '自提', '到付', '440.00', '0.00', '0.00', '0.00', '0.00', '0.00', '桂林', '', '1', '1');
-INSERT INTO `goods` VALUES ('2', 'HYC2060', '厨具', '麻袋', '104', '1.10', '2.20', '王兴明', '15762156741', '桂电', '刘雄杰', '13307733339', '中国', '送货', '到付', '3.30', '4.40', '5.50', '6.60', '7.70', '8.80', '桂林', '', '1', '2');
-INSERT INTO `goods` VALUES ('3', 'HYC3', '电脑', '', '56', null, '5.60', '六六', '15762156741', '', '张三', '13307733339', null, '送货', '到付', '1150.00', null, null, null, null, null, null, null, '0', '1');
-INSERT INTO `goods` VALUES ('4', 'HYC236', '南瓜', '', '100', null, '2.66', '赵六', '', '', '', '', '', '', '已付', '3500.00', null, null, '500.00', '400.00', null, '', '', '0', '1');
+INSERT INTO `goods` VALUES ('1', 'HYC2105', '桌面等', '', '58', '0.00', '2.50', '', '13793895796', '', '', '18577358707', '', '自提', '到付', '440.00', '0.00', '0.00', '0.00', '0.00', '0.00', '桂林', '', '1', '1', null);
+INSERT INTO `goods` VALUES ('2', 'HYC2060', '厨具', '麻袋', '104', '1.10', '2.20', '王兴明', '15762156741', '桂电', '刘雄杰', '13307733339', '中国', '送货', '到付', '3.30', '4.40', '5.50', '6.60', '7.70', '8.80', '桂林', '', '1', '2', null);
+INSERT INTO `goods` VALUES ('3', 'HYC3', '电脑', '', '56', null, '5.60', '六六', '15762156741', '', '张三', '13307733339', null, '送货', '到付', '1150.00', null, null, null, null, null, null, null, '0', '1', null);
+INSERT INTO `goods` VALUES ('4', 'HYC236', '南瓜', '', '100', null, '2.66', '赵六', '', '', '', '', '', '', '已付', '3500.00', null, null, '500.00', '400.00', null, '', '', '0', '1', null);
 
 -- ----------------------------
 -- Table structure for logistics

@@ -352,7 +352,7 @@
 	<script type="text/javascript">
 		$('#dlvgs_datagrid').datagrid({
 			url : 'goodsReach',
-			singleSelect : true,
+			//singleSelect : true,
 			pagination : true,
 			rownumbers : true,
 			toolbar : '#dlvgs_toolbar',
@@ -381,6 +381,7 @@
 				field : 'goBank',
 				align : 'center',
 				sortable : true,
+				checkbox : true,
 				width : 100
 			}, {
 				title : '货品名称',
@@ -578,12 +579,16 @@
 		var url;
 		/* 弹出编辑对话框 */
 		$('#dlvgs_edit').click(function() {
-			var row = $('#dlvgs_datagrid').datagrid('getSelected');
-			if (row) {
+			var row = $('#dlvgs_datagrid').datagrid('getChecked');
+			if (row.length > 1) {
+				$.messager.alert('提示', '只能选择一条数据进行此操作！');
+				return;
+			}
+			if (row.length != 0) {
 				$('#dlvgs_dlg').dialog('open').dialog('setTitle', '编辑');
 				$('#dlvgs_fm').form('clear');
-				$('#dlvgs_fm').form('load', row);
-				url = 'goodsUpdate?goId=' + row.goId;
+				$('#dlvgs_fm').form('load', row[0]);
+				url = 'goodsUpdate?goId=' + row[0].goId;
 			} else {
 				$.messager.alert('提示', '请选择数据！');
 			}
@@ -621,15 +626,23 @@
 
 		/* 删除 */
 		$('#dlvgs_delete').click(function() {
-			var row = $('#dlvgs_datagrid').datagrid('getSelected');
-			if (row) {
-				$.messager.confirm('确认', '确认删除吗？', function(r) {
+			var row = $('#dlvgs_datagrid').datagrid('getChecked');
+			if (row.length != 0) {
+				var array = [];
+				for (var i = 0; i < row.length; i++) {
+					var json = {};
+					json["goId"] = row[i].goId;
+					array.push(json);
+				}
+				var jsonString = JSON.stringify(array);
+				$.messager.confirm('确认', '共选中' + array.length
+						+ '条数据, 确认删除吗？', function(r) {
 					if (r) {
 						$.ajax({
 							type : 'POST',
 							url : 'goodsDelete',
 							data : {
-								goId : row.goId
+								params : jsonString
 							},
 							success : function(data) {
 								if (data.success) {
@@ -652,13 +665,17 @@
 		
 		/*打印货物单*/
 		$('#dlvgs_print').click(function() {
-			var row = $('#dlvgs_datagrid').datagrid('getSelected');
-			if (row) {
+			var row = $('#dlvgs_datagrid').datagrid('getChecked');
+			if (row.length > 1) {
+				$.messager.alert('提示', '只能选择一条数据进行此操作！');
+				return;
+			}
+			if (row.length != 0) {
 				$.ajax({
 					type : 'POST',
 					url : 'goodsPrint',
 					data : {
-						row : JSON.stringify(row)
+						row : JSON.stringify(row[0])
 					},
 					success : function(data) {
 						window.location.href = 'deliverPrint.jsp'
@@ -674,13 +691,17 @@
 		
 		/*打印标签*/
 		$('#dlvgs_printl').click(function() {
-			var row = $('#dlvgs_datagrid').datagrid('getSelected');
-			if (row) {
+			var row = $('#dlvgs_datagrid').datagrid('getChecked');
+			if (row.length > 1) {
+				$.messager.alert('提示', '只能选择一条数据进行此操作！');
+				return;
+			}
+			if (row.length != 0) {
 				$.ajax({
 					type : 'POST',
 					url : 'goodsPrintl',
 					data : {
-						row : JSON.stringify(row)
+						row : JSON.stringify(row[0])
 					},
 					success : function(data) {
 						window.location.href = 'deliverPrintlable.jsp'

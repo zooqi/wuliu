@@ -45,6 +45,8 @@
 				data-options="iconCls:'icon-reload',plain:true">显示所有</a> <a
 				id="arvgs_edit" href="javascript:void(0)" class="easyui-linkbutton"
 				data-options="iconCls:'icon-edit',plain:true">编辑</a> <a
+				id="arvgs_sms" href="javascript:void(0)" class="easyui-linkbutton"
+				data-options="iconCls:'icon-man',plain:true">短信提醒</a> <a
 				id="arvgs_delete" href="javascript:void(0)"
 				class="easyui-linkbutton"
 				data-options="iconCls:'icon-remove',plain:true">删除</a> <a
@@ -212,7 +214,7 @@
 	<script type="text/javascript">
 		$('#arvgs_datagrid').datagrid({
 			url : 'goodsReach',
-			singleSelect : true,
+			//singleSelect : true,
 			pagination : true,
 			rownumbers : true,
 			toolbar : '#arvgs_toolbar',
@@ -241,6 +243,7 @@
 				field : 'goBank',
 				align : 'center',
 				sortable : true,
+				checkbox : true,
 				width : 100
 			}, {
 				title : '货品名称',
@@ -327,6 +330,22 @@
 				sortable : true,
 				width : 150
 			}, {
+				title : '短信提醒状态',
+				field : 'goSmsStatus',
+				align : 'center',
+				sortable : true,
+				width : 100,
+				formatter : function(value, row, index) {
+					switch (row.goSmsStatus) {
+					case 0:
+						return '未提醒';
+					case 1:
+						return '已提醒';
+					default:
+						return value;
+					}
+				}
+			}, {
 				title : '提货方式',
 				field : 'goGetWay',
 				align : 'center',
@@ -401,12 +420,16 @@
 		var url;
 		/* 弹出编辑对话框 */
 		$('#arvgs_edit').click(function() {
-			var row = $('#arvgs_datagrid').datagrid('getSelected');
-			if (row) {
+			var row = $('#arvgs_datagrid').datagrid('getChecked');
+			if (row.length > 1) {
+				$.messager.alert('提示', '只能选择一条数据进行此操作！');
+				return;
+			}
+			if (row.length != 0) {
 				$('#arvgs_dlg').dialog('open').dialog('setTitle', '编辑');
 				$('#arvgs_fm').form('clear');
-				$('#arvgs_fm').form('load', row);
-				url = 'goodsUpdate?goId=' + row.goId;
+				$('#arvgs_fm').form('load', row[0]);
+				url = 'goodsUpdate?goId=' + row[0].goId;
 			} else {
 				$.messager.alert('提示', '请选择数据！');
 			}
@@ -442,36 +465,97 @@
 			});
 		});
 
-		/* 删除 */
-		$('#arvgs_delete').click(function() {
-			var row = $('#arvgs_datagrid').datagrid('getSelected');
-			if (row) {
-				$.messager.confirm('确认', '确认删除吗？', function(r) {
-					if (r) {
-						$.ajax({
-							type : 'POST',
-							url : 'goodsDelete',
-							data : {
-								goId : row.goId
-							},
-							success : function(data) {
-								if (data.success) {
-									$.messager.alert('提示', '删除成功！');
-									$("#arvgs_datagrid").datagrid("reload");
-								} else {
-									$.messager.alert('提示', '删除失败，请稍后再试！');
-								}
-							},
-							error : function(request, error) {
-								$.messager.alert('提示', '删除失败，请稍后再试！');
+		/* 短信提醒 */
+		$('#arvgs_sms').click(
+				function() {
+					var row = $('#arvgs_datagrid').datagrid('getChecked');
+					if (row.length != 0) {
+						var array = [];
+						for (var i = 0; i < row.length; i++) {
+							var phone = row[i].goForPhone;
+							if (phone.length == 0 || phone.length != 11) {
+								continue;
+							}
+
+							var json = {};
+							json["goId"] = row[i].goId;
+							json["goName"] = row[i].goName;
+							json["goForMan"] = row[i].goForMan;
+							json["goForPhone"] = phone;
+							array.push(json);
+						}
+						var jsonString = JSON.stringify(array);
+						$.messager.confirm('确认', '共' + array.length
+								+ '个号码有效, 确认发送短信提醒吗？', function(r) {
+							if (r) {
+								$.ajax({
+									type : 'POST',
+									url : 'sendArrivalSms',
+									data : {
+										params : jsonString
+									},
+									success : function(data) {
+										if (data.success) {
+											$.messager.alert('提示', '发送成功！');
+											$("#arvgs_datagrid").datagrid(
+													"reload");
+										} else {
+											$.messager.alert('提示',
+													'发送失败, 余额不足！');
+										}
+									},
+									error : function(request, error) {
+										$.messager.alert('提示', '发送失败，请稍后再试！');
+									}
+								});
 							}
 						});
+					} else {
+						$.messager.alert('提示', '请选择数据！');
 					}
 				});
-			} else {
-				$.messager.alert('提示', '请选择数据！');
-			}
-		});
+
+		/* 删除 */
+		$('#arvgs_delete').click(
+				function() {
+					var row = $('#arvgs_datagrid').datagrid('getChecked');
+					if (row.length != 0) {
+						var array = [];
+						for (var i = 0; i < row.length; i++) {
+							var json = {};
+							json["goId"] = row[i].goId;
+							array.push(json);
+						}
+						var jsonString = JSON.stringify(array);
+						$.messager.confirm('确认', '共选中' + array.length
+								+ '条数据, 确认删除吗？', function(r) {
+							if (r) {
+								$.ajax({
+									type : 'POST',
+									url : 'goodsDelete',
+									data : {
+										params : jsonString
+									},
+									success : function(data) {
+										if (data.success) {
+											$.messager.alert('提示', '删除成功！');
+											$("#arvgs_datagrid").datagrid(
+													"reload");
+										} else {
+											$.messager.alert('提示',
+													'删除失败，请稍后再试！');
+										}
+									},
+									error : function(request, error) {
+										$.messager.alert('提示', '删除失败，请稍后再试！');
+									}
+								});
+							}
+						});
+					} else {
+						$.messager.alert('提示', '请选择数据！');
+					}
+				});
 
 		/* 搜索功能按钮 */
 		$('#arvgs_search').click(function() {

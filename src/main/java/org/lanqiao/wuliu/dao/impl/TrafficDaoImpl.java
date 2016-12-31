@@ -215,7 +215,7 @@ public class TrafficDaoImpl extends BaseDaoImpl {
 
 	public int importArrival(Logistics traffic, List<Goods> list) {
 		int count = 0;
-		String logSql = "INSERT INTO logistics(logContractNum, logSendDate, logSiteStart, logSiteEnd, logCarLicence, logCarDriver, logCarPhone, logCarPay, logUnloadPay, logPartner, logType) VALUES(?,?,?,?,?,?,?,?,?,?)";
+		String logSql = "INSERT INTO logistics(logContractNum, logSendDate, logSiteStart, logSiteEnd, logCarLicence, logCarDriver, logCarPhone, logCarPay, logUnloadPay, logPartner, logType) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
 		Object[] logParams = new Object[] { traffic.getLogContractNum(), traffic.getLogSendDate(),
 				traffic.getLogSiteStart(), traffic.getLogSiteEnd(), traffic.getLogCarLicence(),
 				traffic.getLogCarDriver(), traffic.getLogCarPhone(), traffic.getLogCarPay(), traffic.getLogUnloadPay(),
@@ -267,5 +267,35 @@ public class TrafficDaoImpl extends BaseDaoImpl {
 			DBUtils.closeResultSet(resultSet);
 		}
 		return count;
+	}
+
+	/**
+	 * 保存短信发送状态
+	 * 
+	 * @param ids
+	 */
+	public void saveSmsStatus(List<Integer> ids) {
+		String sql = "UPDATE goods set goSmsStatus = ? where goId = ?";
+
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		try {
+			connection = DBUtils.getConnection();
+
+			for (int i = 0; i < ids.size(); i++) {
+				preparedStatement = connection.prepareStatement(sql);
+				setParameter(preparedStatement, sql, new Object[] { 1, ids.get(i) });
+				preparedStatement.executeUpdate();
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return;
+		} finally {
+			DBUtils.closeConnection(connection);
+			DBUtils.closePreparedStatement(preparedStatement);
+			DBUtils.closeResultSet(resultSet);
+		}
 	}
 }

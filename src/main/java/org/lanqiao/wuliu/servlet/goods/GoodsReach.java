@@ -76,6 +76,7 @@ public class GoodsReach extends HttpServlet {
 			row.put("goForMan", good.getGoForMan());
 			row.put("goForPhone", good.getGoForPhone());
 			row.put("goForAddress", good.getGoForAddress());
+			row.put("goSmsStatus", good.getGoSmsStatus());
 			row.put("goGetWay", good.getGoGetWay());
 			row.put("goPayWay", good.getGoPayWay());
 			row.put("goPay", good.getGoPay());

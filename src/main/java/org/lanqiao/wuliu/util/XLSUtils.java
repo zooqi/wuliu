@@ -50,7 +50,7 @@ public class XLSUtils {
 		for (int i = 3; i <= sheet.getLastRowNum(); i++) {
 			Row row = sheet.getRow(i);
 			if (row.getCell(0).getCellType() != Cell.CELL_TYPE_NUMERIC) {
-				break;
+				continue;
 			}
 
 			Goods goods = new Goods();

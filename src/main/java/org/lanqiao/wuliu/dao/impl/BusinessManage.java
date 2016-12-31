@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.lanqiao.wuliu.bean.Goods;
 import org.lanqiao.wuliu.bean.Logistics;
@@ -155,7 +156,7 @@ public class BusinessManage extends BaseDaoImpl {
 			String srhDateStr) {
 		ArrayList<Goods> ar = new ArrayList<Goods>();
 		StringBuffer sql = new StringBuffer(
-				"SELECT goBank,goName,goNum,goPack,goWeight,goVolume,goSendMan,goSendPhone,goSendAddress,goForMan,goForPhone,goForAddress,goGetWay,goPayWay,goPay,goInsurancePay,goReplacePay,goCommission,goDamagePay,goTransitPay,goSiteEnd,goRemark,goId,goType,g.logId,l.logSendDate,l.logCarLicence,l.logCarDriver,l.logContractNum,l.logSiteStart,l.logSiteEnd FROM logistics l RIGHT JOIN goods g ON l.logId = g.logId WHERE goType = ? ");
+				"SELECT goBank,goName,goNum,goPack,goWeight,goVolume,goSendMan,goSendPhone,goSendAddress,goForMan,goForPhone,goForAddress,goGetWay,goPayWay,goPay,goInsurancePay,goReplacePay,goCommission,goDamagePay,goTransitPay,goSiteEnd,goRemark,goId,goType,g.logId,l.logSendDate,l.logCarLicence,l.logCarDriver,l.logContractNum,l.logSiteStart,l.logSiteEnd,g.goSmsStatus FROM logistics l RIGHT JOIN goods g ON l.logId = g.logId WHERE goType = ? ");
 
 		if (srhLicence != null && !srhLicence.equals("")) {
 			sql.append("AND l.logCarLicence like '%").append(srhLicence).append("%' ");
@@ -202,6 +203,7 @@ public class BusinessManage extends BaseDaoImpl {
 				logistics.setLogSiteStart(rs.getString(30));
 				logistics.setLogSiteEnd(rs.getString(31));
 
+				goods.setGoSmsStatus(rs.getInt(32));
 				goods.setLogistics(logistics);
 				ar.add(goods);
 			}
@@ -228,6 +230,29 @@ public class BusinessManage extends BaseDaoImpl {
 			preparedStatement = connection.prepareStatement(sql);
 			setParameter(preparedStatement, sql, new Object[] { goId });
 			count = preparedStatement.executeUpdate();
+		} catch (SQLException e) {
+			return 0;
+		} finally {
+			DBUtils.closeConnection(connection);
+			DBUtils.closePreparedStatement(preparedStatement);
+		}
+		return count;
+	}
+
+	public int goBatchDelete(List<Integer> ids) {
+		int count = 0;
+		String sql = "DELETE FROM goods WHERE goId=?";
+
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		try {
+			connection = DBUtils.getConnection();
+			for (int id : ids) {
+				preparedStatement = connection.prepareStatement(sql);
+				setParameter(preparedStatement, sql, new Object[] { id });
+				preparedStatement.executeUpdate();
+				count++;
+			}
 		} catch (SQLException e) {
 			return 0;
 		} finally {

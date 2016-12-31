@@ -2,6 +2,8 @@ package org.lanqiao.wuliu.servlet.goods;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.LinkedList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,8 +11,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.lanqiao.wuliu.dao.impl.BusinessManage;
-import org.lanqiao.wuliu.util.ParseUtils;
 
 /**
  * 删除物流记录
@@ -28,11 +31,16 @@ public class GoodsDelete extends HttpServlet {
 		response.setContentType("application/json;charset=UTF-8");
 		PrintWriter out = response.getWriter();
 
-		int goId = ParseUtils.parseInt(request.getParameter("goId"));
-
+		String params = request.getParameter("params");
+		JSONArray array = new JSONArray(params);
+		List<Integer> ids = new LinkedList<Integer>();
+		for (Object object : array) {
+			JSONObject json = (JSONObject) object;
+			ids.add(json.getInt("goId"));
+		}
 		BusinessManage dao = new BusinessManage();
 
-		if (dao.goDelete(goId) == 1) {
+		if (dao.goBatchDelete(ids) == ids.size()) {
 			out.println("{\"success\":true}");
 		} else {
 			out.println("{\"success\":false}");

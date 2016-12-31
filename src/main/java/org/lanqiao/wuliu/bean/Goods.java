@@ -34,6 +34,7 @@ public class Goods implements Serializable {
 	private String goSiteEnd;
 	private String goRemark;
 	private Integer goType;
+	private Integer goSmsStatus;
 	private Logistics logistics;
 	private static final long serialVersionUID = 3578834615726369308L;
 
@@ -227,6 +228,14 @@ public class Goods implements Serializable {
 
 	public void setGoType(Integer goType) {
 		this.goType = goType;
+	}
+
+	public Integer getGoSmsStatus() {
+		return goSmsStatus;
+	}
+
+	public void setGoSmsStatus(Integer goSmsStatus) {
+		this.goSmsStatus = goSmsStatus;
 	}
 
 	public Logistics getLogistics() {
