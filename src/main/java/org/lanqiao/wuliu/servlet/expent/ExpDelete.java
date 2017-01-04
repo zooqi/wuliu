@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.lanqiao.wuliu.service.impl.ExpentSerciceImpl;
+import org.lanqiao.wuliu.util.ParseUtils;
 
 @WebServlet(name = "expDelete", urlPatterns = { "/expDelete" })
 public class ExpDelete extends HttpServlet {
@@ -21,7 +22,7 @@ public class ExpDelete extends HttpServlet {
 		response.setContentType("application/json;charset=UTF-8");
 		PrintWriter out = response.getWriter();
 
-		int expId = Integer.parseInt(request.getParameter("expId"));
+		int expId = ParseUtils.parseInt(request.getParameter("expId"));
 
 		ExpentSerciceImpl exi = new ExpentSerciceImpl();
 

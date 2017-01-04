@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.lanqiao.wuliu.bean.Expent;
 import org.lanqiao.wuliu.service.impl.ExpentSerciceImpl;
+import org.lanqiao.wuliu.util.ParseUtils;
 
 @WebServlet(name = "expUpdate", urlPatterns = { "/expUpdate" })
 public class ExpUpdate extends HttpServlet {
@@ -29,8 +30,8 @@ public class ExpUpdate extends HttpServlet {
 
 		String expEmpNum=request.getParameter("expEmpNum");
 		String expEmpName=request.getParameter("expEmpName");
-		int expId = Integer.parseInt(request.getParameter("expId"));
-		//System.out.println(expId);
+		int expId = ParseUtils.parseInt(request.getParameter("expId"));
+		
 		String expFunction = request.getParameter("expFunction");
 		
 		String money=request.getParameter("expMoney");

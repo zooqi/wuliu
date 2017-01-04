@@ -76,7 +76,7 @@ public class ExpentDaoImpl extends BaseDaoImpl {
 		ArrayList<Expent> list = new ArrayList<Expent>();
 
 		StringBuffer sql = new StringBuffer(
-				"SELECT expEmpNum,expEmpName,expFunction,expMoney,expDate,expRemark FROM expent WHERE 1=1 ");
+				"SELECT expEmpNum,expEmpName,expFunction,expMoney,expDate,expRemark,expId FROM expent WHERE 1=1 ");
 		if (expReach.getExpEmpNum() != null
 				&& !expReach.getExpEmpNum().equals("")) {
 			sql.append("AND expEmpNum like '%").append(expReach.getExpEmpNum())
@@ -108,6 +108,7 @@ public class ExpentDaoImpl extends BaseDaoImpl {
 				expent.setExpMoney(rs.getDouble(4));
 				expent.setExpDate(rs.getDate(5));
 				expent.setExpRemark(rs.getString(6));
+				expent.setExpId(rs.getInt(7));
 				list.add(expent);
 			}
 		} catch (SQLException e) {
