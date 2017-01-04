@@ -50,26 +50,32 @@
 		<table width="800" align="center" cellspacing="0"
 			style="font-size: 18px; text-align: center">
 			<tr>
-				<td  width="95" style="text-align: center;">货运日期</td>
-				<td id="logSendDate" width="140"><input 
+				<td class="noprint" width="95" style="text-align: center;">货运日期</td>
+				<td id="logSendDate" width="140"><input class="noprint"
 					type="text" style="width: 140px; font-size: 18px; border: 0px;"
 					class="print"
 					value="<%=json.has("logSendDate") ? json.get("logSendDate") : ""%>" />
 				</td>
-				<td  width="90" style="text-align: center;">起始地</td>
-				<td id="logSiteStart" width="150"><input 
-					type="text" style="width: 150px; font-size: 18px; border: 0px;"
+				<td class="noprint" width="60" style="text-align: center;">起始地</td>
+				<td id="goSiteStart" width="120"><input class="noprint"
+					type="text" style="width: 100px; font-size: 18px; border: 0px;"
 					class="print"
 					value="<%=json.has("logSiteStart") ? json.get("logSiteStart") : ""%>" />
 				</td>
-				<td  width="60" style="text-align: center;">到达地</td>
-				<td colspan="5" id="goSiteEnd" width="150"><input type="text"
-					style="width: 200px; font-size: 18px; border: 0px; text-align: left;"
+				<td class="noprint" width="60" style="text-align: center;">到达地</td>
+				<td id="goSiteEnd" width="120"><input class="noprint"
+					type="text" style="width: 100px; font-size: 18px; border: 0px;"
 					class="print"
-					value="<%=json.has("goSiteEnd") ? json.get("goSiteEnd") : ""%>" /></td>
+					value="<%=json.has("goSiteEnd") ? json.get("goSiteEnd") : ""%>" />
+				</td>
+				<td class="noprint" width="40" style="text-align: center;">货号</td>
+				<td id="goBank" width="120"><input class="noprint"
+					type="text" style="width: 100px; font-size: 18px; border: 0px;"
+					class="print"
+					value="<%=json.has("goBank") ? json.get("goBank") : ""%>" />
+				</td>
 			</tr>
 		</table>
-
 		<table width="800" border="1" cellspacing="0" align="center"
 			style="font-family: '宋体'; font-size: 18px; text-align: center">
 			<tr>
