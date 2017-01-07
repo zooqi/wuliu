@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.lanqiao.wuliu.bean.Goods;
@@ -33,7 +33,7 @@ public class BusinessDaoImpl extends BaseDaoImpl {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
-		int count=0;
+		int count = 0;
 		try {
 			connection = DBUtils.getConnection();
 			preparedStatement = connection.prepareStatement(sql);
@@ -56,17 +56,43 @@ public class BusinessDaoImpl extends BaseDaoImpl {
 	 *            物流类型(发货、到货)
 	 * @return
 	 */
-	public int goCount(int goType) {
+	public int goCount(int goType, String searchLogSendDate, String searchGoBank, String searchGoName,
+			String searchLogContractNum, String searchLogCarLicence) {
 		int count = 0;
-		String sql = "SELECT COUNT(*) FROM goods WHERE goType = ?";
+		StringBuffer sql = new StringBuffer(
+				"SELECT COUNT(*) FROM goods g, logistics l WHERE g.logId = l.logId AND goType = ? ");
+
+		List<Object> params = new LinkedList<Object>();
+		params.add(goType);
+
+		if (!searchLogSendDate.equals("")) {
+			sql.append("AND l.logSendDate = ? ");
+			params.add(searchLogSendDate);
+		}
+		if (!searchGoBank.equals("")) {
+			sql.append("AND g.goBank like ? ");
+			params.add("%" + searchGoBank + "%");
+		}
+		if (!searchGoName.equals("")) {
+			sql.append("AND g.goName like ? ");
+			params.add("%" + searchGoName + "%");
+		}
+		if (!searchLogContractNum.equals("")) {
+			sql.append("AND l.logContractNum like ? ");
+			params.add("%" + searchLogContractNum + "%");
+		}
+		if (!searchLogCarLicence.equals("")) {
+			sql.append("AND l.logCarLicence = like ");
+			params.add("%" + searchLogCarLicence + "%");
+		}
 
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		try {
 			connection = DBUtils.getConnection();
-			preparedStatement = connection.prepareStatement(sql);
-			setParameter(preparedStatement, sql, new Object[] { goType });
+			preparedStatement = connection.prepareStatement(sql.toString());
+			setParameter(preparedStatement, sql.toString(), params.toArray());
 			resultSet = preparedStatement.executeQuery();
 
 			if (resultSet.next()) {
@@ -162,34 +188,53 @@ public class BusinessDaoImpl extends BaseDaoImpl {
 	 *            当前页
 	 * @param rowsPerPage
 	 *            每页记录数
-	 * @param srhLicence
-	 *            车牌号关键字
-	 * @param srhDate
-	 *            日期字符串(yyyy-MM-dd)
-	 * @return 物流信息列表
+	 * @param searchLogSendDate
+	 * @param searchGoBank
+	 * @param searchGoName
+	 * @param searchLogContractNum
+	 * @param searchLogCarLicence
+	 * @return
 	 */
-	public ArrayList<Goods> goReach(int goType, int currentPage, int rowsPerPage, String srhLicence,
-			String srhDateStr) {
-		ArrayList<Goods> ar = new ArrayList<Goods>();
+	public List<Goods> goReach(int goType, int currentPage, int rowsPerPage, String searchLogSendDate,
+			String searchGoBank, String searchGoName, String searchLogContractNum, String searchLogCarLicence) {
+		List<Goods> ar = new LinkedList<Goods>();
 		StringBuffer sql = new StringBuffer(
 				"SELECT goBank,goName,goNum,goPack,goWeight,goVolume,goSendMan,goSendPhone,goSendAddress,goForMan,goForPhone,goForAddress,goGetWay,goPayWay,goPay,goInsurancePay,goReplacePay,goCommission,goDamagePay,goTransitPay,goSiteEnd,goRemark,goId,goType,g.logId,l.logSendDate,l.logCarLicence,l.logCarDriver,l.logContractNum,l.logSiteStart,l.logSiteEnd,g.goSmsStatus FROM logistics l RIGHT JOIN goods g ON l.logId = g.logId WHERE goType = ? ");
+		List<Object> params = new LinkedList<Object>();
+		params.add(goType);
 
-		if (srhLicence != null && !srhLicence.equals("")) {
-			sql.append("AND l.logCarLicence like '%").append(srhLicence).append("%' ");
+		if (!searchLogSendDate.equals("")) {
+			sql.append("AND logSendDate = ? ");
+			params.add(searchLogSendDate);
 		}
-		if (srhDateStr != null && !srhDateStr.equals("")) {
-			sql.append("AND l.logSendDate = '").append(srhDateStr).append("' ");
+		if (!searchGoBank.equals("")) {
+			sql.append("AND goBank like ? ");
+			params.add("%" + searchGoBank + "%");
 		}
-		sql.append(" ORDER BY g.goId LIMIT ?, ?");// 待定
-		//ResultSet rs = select(sql.toString(), new Object[] { goType, (currentPage - 1), rowsPerPage });
-		Object[] params = new Object[] { goType, (currentPage - 1), rowsPerPage   };
+		if (!searchGoName.equals("")) {
+			sql.append("AND goName like ? ");
+			params.add("%" + searchGoName + "%");
+		}
+		if (!searchLogContractNum.equals("")) {
+			sql.append("AND logContractNum like ? ");
+			params.add("%" + searchLogContractNum + "%");
+		}
+		if (!searchLogCarLicence.equals("")) {
+			sql.append("AND logCarLicence = like ");
+			params.add("%" + searchLogCarLicence + "%");
+		}
+
+		sql.append("ORDER BY g.goId LIMIT ?, ?");
+		params.add(DBUtils.getOffset(currentPage, rowsPerPage));
+		params.add(rowsPerPage);
+
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
 		try {
 			connection = DBUtils.getConnection();
 			preparedStatement = connection.prepareStatement(sql.toString());
-			setParameter(preparedStatement, sql.toString(), params);
+			setParameter(preparedStatement, sql.toString(), params.toArray());
 			rs = preparedStatement.executeQuery();
 			while (rs.next()) {
 				Goods goods = new Goods();
@@ -233,7 +278,7 @@ public class BusinessDaoImpl extends BaseDaoImpl {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return null;
+			return ar;
 		} finally {
 			DBUtils.closeConnection(connection);
 			DBUtils.closePreparedStatement(preparedStatement);

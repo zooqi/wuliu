@@ -35,8 +35,13 @@ public class TrafficReach extends HttpServlet {
 		int currentPage = ParseUtils.parseInt(req.getParameter("page"));
 		int rowsPerPage = ParseUtils.parseInt(req.getParameter("rows"));
 
+		String searchLogSendDate = ParseUtils.toLegalString(req.getParameter("searchLogSendDate"));
+		String searchLogContractNum = ParseUtils.toLegalString(req.getParameter("searchLogContractNum"));
+		String searchLogCarLicence = ParseUtils.toLegalString(req.getParameter("searchLogCarLicence"));
+
 		TrafficDaoImpl dao = new TrafficDaoImpl();
-		List<Logistics> list = dao.trafficReach(currentPage, rowsPerPage);
+		List<Logistics> list = dao.trafficReach(currentPage, rowsPerPage, searchLogSendDate, searchLogContractNum,
+				searchLogCarLicence);
 		JSONObject json = new JSONObject();
 		JSONArray array = new JSONArray();
 		for (Logistics logistics : list) {
@@ -59,7 +64,7 @@ public class TrafficReach extends HttpServlet {
 			array.put(row);
 		}
 		json.put("rows", array);
-		json.put("total", dao.trafficCount());
+		json.put("total", dao.trafficCount(searchLogSendDate, searchLogContractNum, searchLogCarLicence));
 		out.println(json);
 	}
 

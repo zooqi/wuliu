@@ -125,6 +125,44 @@
 			style="width: 90px">取消</a>
 	</div>
 
+	<!-- Search Dialog -->
+	<div id="traffic_search_dlg" class="easyui-dialog"
+		style="padding: 10px;"
+		data-options="closed:true,buttons:'#traffic_search_dlg-buttons'">
+		<form id="traffic_search_fm">
+			<table class="zooqi-frame-text" style="border-spacing: 10px;">
+				<tr>
+					<td width="90px">发/到车日期：</td>
+					<td><input id="traffic_search_logSendDate"
+						class="easyui-datebox" data-options="validType:'length[0,32]'"
+						style="width: 220px"></td>
+				</tr>
+
+				<tr>
+					<td width="90px">&emsp;合同编号：</td>
+					<td><input id="traffic_search_logContractNum"
+						class="easyui-validatebox" data-options="validType:'length[0,32]'"
+						style="width: 220px"></td>
+				</tr>
+
+				<tr>
+					<td width="90px">&emsp;&emsp;车牌号：</td>
+					<td><input id="traffic_search_logCarLicence"
+						class="easyui-validatebox" data-options="validType:'length[0,32]'"
+						style="width: 220px"></td>
+				</tr>
+			</table>
+		</form>
+	</div>
+	<div id="traffic_search_dlg-buttons">
+		<a id="traffic_search_button" href="javascript:void(0)"
+			class="easyui-linkbutton c6" data-options="iconCls:'icon-ok'"
+			style="width: 90px">搜索</a> <a href="javascript:void(0)"
+			class="easyui-linkbutton" data-options="iconCls:'icon-cancel'"
+			onclick="javascript:$('#traffic_search_dlg').dialog('close')"
+			style="width: 90px">取消</a>
+	</div>
+
 	<script type="text/javascript">
 		$('#traffic_datagrid').datagrid({
 			url : 'trafficReach',
@@ -328,7 +366,11 @@
 				$.messager.alert('提示', '请正确填写信息！');
 				return;
 			}
-			$('#traffic_datagrid').datagrid('load', {});
+			$('#traffic_datagrid').datagrid('load', {
+				searchLogSendDate : $('#traffic_search_logSendDate').combobox('getText'),
+				searchLogContractNum : $('#traffic_search_logContractNum').val(),
+				searchLogCarLicence : $('#traffic_search_logCarLicence').val()
+			});
 			$('#traffic_search_dlg').dialog('close');
 		});
 

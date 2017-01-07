@@ -21,19 +21,37 @@ public class TrafficDaoImpl extends BaseDaoImpl {
 	 * @param rowsPerPage
 	 * @return
 	 */
-	public List<Logistics> trafficReach(int currentPage, int rowsPerPage) {
+	public List<Logistics> trafficReach(int currentPage, int rowsPerPage, String searchLogSendDate,
+			String searchLogContractNum, String searchLogCarLicence) {
 		List<Logistics> list = new LinkedList<Logistics>();
 
-		String sql = "SELECT * FROM logistics ORDER BY logSendDate DESC LIMIT ?, ?";
-		Object[] params = new Object[] { DBUtils.getOffset(currentPage, rowsPerPage), rowsPerPage };
+		StringBuilder sql = new StringBuilder("SELECT * FROM logistics WHERE 1 = 1 ");
+		List<Object> params = new LinkedList<Object>();
+
+		if (!searchLogSendDate.equals("")) {
+			sql.append("AND logSendDate = ? ");
+			params.add(searchLogSendDate);
+		}
+		if (!searchLogContractNum.equals("")) {
+			sql.append("AND logContractNum like ? ");
+			params.add("%" + searchLogContractNum + "%");
+		}
+		if (!searchLogCarLicence.equals("")) {
+			sql.append("AND logCarLicence like ? ");
+			params.add("%" + searchLogCarLicence + "%");
+		}
+
+		sql.append("ORDER BY logSendDate DESC LIMIT ?, ?");
+		params.add(DBUtils.getOffset(currentPage, rowsPerPage));
+		params.add(rowsPerPage);
 
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		try {
 			connection = DBUtils.getConnection();
-			preparedStatement = connection.prepareStatement(sql);
-			setParameter(preparedStatement, sql, params);
+			preparedStatement = connection.prepareStatement(sql.toString());
+			setParameter(preparedStatement, sql.toString(), params.toArray());
 			resultSet = preparedStatement.executeQuery();
 			while (resultSet.next()) {
 				Logistics logistics = new Logistics();
@@ -158,17 +176,32 @@ public class TrafficDaoImpl extends BaseDaoImpl {
 	 * 
 	 * @return
 	 */
-	public int trafficCount() {
+	public int trafficCount(String searchLogSendDate, String searchLogContractNum, String searchLogCarLicence) {
 		int count = 0;
-		String sql = "SELECT COUNT(*) FROM logistics";
+		StringBuilder sql = new StringBuilder("SELECT COUNT(*) FROM logistics WHERE 1 = 1 ");
+		List<Object> params = new LinkedList<Object>();
+
+		if (!searchLogSendDate.equals("")) {
+			sql.append("AND logSendDate = ? ");
+			params.add(searchLogSendDate);
+		}
+		if (!searchLogContractNum.equals("")) {
+			sql.append("AND logContractNum like ? ");
+			params.add("%" + searchLogContractNum + "%");
+		}
+		if (!searchLogCarLicence.equals("")) {
+			sql.append("AND logCarLicence like ? ");
+			params.add("%" + searchLogCarLicence + "%");
+		}
 
 		Connection connection = null;
-		Statement statement = null;
+		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		try {
 			connection = DBUtils.getConnection();
-			statement = connection.createStatement();
-			resultSet = statement.executeQuery(sql);
+			preparedStatement = connection.prepareStatement(sql.toString());
+			setParameter(preparedStatement, sql.toString(), params.toArray());
+			resultSet = preparedStatement.executeQuery();
 			if (resultSet.next()) {
 				count = resultSet.getInt(1);
 			}
@@ -176,7 +209,7 @@ public class TrafficDaoImpl extends BaseDaoImpl {
 			return 0;
 		} finally {
 			DBUtils.closeConnection(connection);
-			DBUtils.closeStatement(statement);
+			DBUtils.closePreparedStatement(preparedStatement);
 			DBUtils.closeResultSet(resultSet);
 		}
 		return count;

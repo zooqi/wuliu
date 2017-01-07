@@ -55,11 +55,9 @@
 				data-options="iconCls:'icon-search',plain:true">搜索</a> <a
 				id="dlvgs_export" href="javascript:void(0)"
 				class="easyui-linkbutton"
-				data-options="iconCls:'icon-undo',plain:true">导出</a><a
-				id="dlvgs_print" href="javascript:void(0)"
-				class="easyui-linkbutton"
-				data-options="iconCls:'icon-print',plain:true">打印货物单</a>
-				<a
+				data-options="iconCls:'icon-redo',plain:true">导出</a><a
+				id="dlvgs_print" href="javascript:void(0)" class="easyui-linkbutton"
+				data-options="iconCls:'icon-print',plain:true">打印货物单</a> <a
 				id="dlvgs_printl" href="javascript:void(0)"
 				class="easyui-linkbutton"
 				data-options="iconCls:'icon-print',plain:true">打印标签</a>
@@ -349,6 +347,55 @@
 			style="width: 90px">取消</a>
 	</div>
 
+	<!-- Search Dialog -->
+	<div id="dlvgs_search_dlg" class="easyui-dialog" style="padding: 10px;"
+		data-options="closed:true,buttons:'#dlvgs_search_dlg-buttons'">
+		<form id="dlvgs_search_fm">
+			<table class="zooqi-frame-text" style="border-spacing: 10px;">
+				<tr>
+					<td width="70px">发货日期：</td>
+					<td><input id="dlvgs_search_logSendDate"
+						class="easyui-datebox" data-options="validType:'length[0,32]'"
+						style="width: 220px"></td>
+				</tr>
+
+				<tr>
+					<td width="70px">&emsp;货&emsp;号：</td>
+					<td><input id="dlvgs_search_goBank" class="easyui-validatebox"
+						data-options="validType:'length[0,32]'" style="width: 220px"></td>
+				</tr>
+
+				<tr>
+					<td width="70px">货品名称：</td>
+					<td><input id="dlvgs_search_goName" class="easyui-validatebox"
+						data-options="validType:'length[0,32]'" style="width: 220px"></td>
+				</tr>
+
+				<tr>
+					<td width="70px">合同编号：</td>
+					<td><input id="dlvgs_search_logContractNum"
+						class="easyui-validatebox" data-options="validType:'length[0,32]'"
+						style="width: 220px"></td>
+				</tr>
+
+				<tr>
+					<td width="70px">&emsp;车牌号：</td>
+					<td><input id="dlvgs_search_logCarLicence"
+						class="easyui-validatebox" data-options="validType:'length[0,32]'"
+						style="width: 220px"></td>
+				</tr>
+			</table>
+		</form>
+	</div>
+	<div id="dlvgs_search_dlg-buttons">
+		<a id="dlvgs_search_button" href="javascript:void(0)"
+			class="easyui-linkbutton c6" data-options="iconCls:'icon-ok'"
+			style="width: 90px">搜索</a> <a href="javascript:void(0)"
+			class="easyui-linkbutton" data-options="iconCls:'icon-cancel'"
+			onclick="javascript:$('#dlvgs_search_dlg').dialog('close')"
+			style="width: 90px">取消</a>
+	</div>
+
 	<script type="text/javascript">
 		$('#dlvgs_datagrid').datagrid({
 			url : 'goodsReach',
@@ -625,44 +672,47 @@
 		});
 
 		/* 删除 */
-		$('#dlvgs_delete').click(function() {
-			var row = $('#dlvgs_datagrid').datagrid('getChecked');
-			if (row.length != 0) {
-				var array = [];
-				for (var i = 0; i < row.length; i++) {
-					var json = {};
-					json["goId"] = row[i].goId;
-					array.push(json);
-				}
-				var jsonString = JSON.stringify(array);
-				$.messager.confirm('确认', '共选中' + array.length
-						+ '条数据, 确认删除吗？', function(r) {
-					if (r) {
-						$.ajax({
-							type : 'POST',
-							url : 'goodsDelete',
-							data : {
-								params : jsonString
-							},
-							success : function(data) {
-								if (data.success) {
-									$.messager.alert('提示', '删除成功！');
-									$("#dlvgs_datagrid").datagrid("reload");
-								} else {
-									$.messager.alert('提示', '删除失败，请稍后再试！');
-								}
-							},
-							error : function(request, error) {
-								$.messager.alert('提示', '删除失败，请稍后再试！');
+		$('#dlvgs_delete').click(
+				function() {
+					var row = $('#dlvgs_datagrid').datagrid('getChecked');
+					if (row.length != 0) {
+						var array = [];
+						for (var i = 0; i < row.length; i++) {
+							var json = {};
+							json["goId"] = row[i].goId;
+							array.push(json);
+						}
+						var jsonString = JSON.stringify(array);
+						$.messager.confirm('确认', '共选中' + array.length
+								+ '条数据, 确认删除吗？', function(r) {
+							if (r) {
+								$.ajax({
+									type : 'POST',
+									url : 'goodsDelete',
+									data : {
+										params : jsonString
+									},
+									success : function(data) {
+										if (data.success) {
+											$.messager.alert('提示', '删除成功！');
+											$("#dlvgs_datagrid").datagrid(
+													"reload");
+										} else {
+											$.messager.alert('提示',
+													'删除失败，请稍后再试！');
+										}
+									},
+									error : function(request, error) {
+										$.messager.alert('提示', '删除失败，请稍后再试！');
+									}
+								});
 							}
 						});
+					} else {
+						$.messager.alert('提示', '请选择数据！');
 					}
 				});
-			} else {
-				$.messager.alert('提示', '请选择数据！');
-			}
-		});
-		
+
 		/*打印货物单*/
 		$('#dlvgs_print').click(function() {
 			var row = $('#dlvgs_datagrid').datagrid('getChecked');
@@ -688,7 +738,7 @@
 				$.messager.alert('提示', '请选择数据！');
 			}
 		});
-		
+
 		/*打印标签*/
 		$('#dlvgs_printl').click(function() {
 			var row = $('#dlvgs_datagrid').datagrid('getChecked');
@@ -715,19 +765,32 @@
 			}
 		});
 
-
 		/* 搜索功能按钮 */
 		$('#dlvgs_search').click(function() {
 			$('#dlvgs_search_dlg').dialog('open').dialog('setTitle', '搜索');
 		});
 		/* 搜索 */
-		$('#dlvgs_search_button').click(function() {
-			if (!$('#dlvgs_search_fm').form('validate')) {
-				$.messager.alert('提示', '请正确填写信息！');
-				return;
-			}
-			$('#dlvgs_datagrid').datagrid('load', {});
-			$('#dlvgs_search_dlg').dialog('close');
-		});
+		$('#dlvgs_search_button').click(
+				function() {
+					if (!$('#dlvgs_search_fm').form('validate')) {
+						$.messager.alert('提示', '请正确填写信息！');
+						return;
+					}
+					$('#dlvgs_datagrid').datagrid(
+							'load',
+							{
+								searchLogSendDate : $(
+										'#dlvgs_search_logSendDate').combobox(
+										'getText'),
+								searchGoBank : $('#dlvgs_search_goBank').val(),
+								searchGoName : $('#dlvgs_search_goName').val(),
+								searchLogContractNum : $(
+										'#dlvgs_search_logContractNum').val(),
+								searchLogCarLicence : $(
+										'#dlvgs_search_logCarLicence').val(),
+								goType : 0
+							});
+					$('#dlvgs_search_dlg').dialog('close');
+				});
 	</script>
 </div>

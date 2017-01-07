@@ -77,4 +77,16 @@ public class ParseUtils {
 		return date;
 	}
 
+	/**
+	 * 将来自表单的输入转化为合法的字符串(保证不出现{@link java.lang.NullPointerExcepftion})
+	 * 
+	 * @return
+	 */
+	public static String toLegalString(String str) {
+		if (str != null) {
+			return str;
+		}
+		return "";
+	}
+
 }

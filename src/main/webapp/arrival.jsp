@@ -211,6 +211,55 @@
 			style="width: 90px">取消</a>
 	</div>
 
+	<!-- Search Dialog -->
+	<div id="arvgs_search_dlg" class="easyui-dialog" style="padding: 10px;"
+		data-options="closed:true,buttons:'#arvgs_search_dlg-buttons'">
+		<form id="arvgs_search_fm">
+			<table class="zooqi-frame-text" style="border-spacing: 10px;">
+				<tr>
+					<td width="70px">发货日期：</td>
+					<td><input id="arvgs_search_logSendDate"
+						class="easyui-datebox" data-options="validType:'length[0,32]'"
+						style="width: 220px"></td>
+				</tr>
+
+				<tr>
+					<td width="70px">&emsp;货&emsp;号：</td>
+					<td><input id="arvgs_search_goBank" class="easyui-validatebox"
+						data-options="validType:'length[0,32]'" style="width: 220px"></td>
+				</tr>
+
+				<tr>
+					<td width="70px">货品名称：</td>
+					<td><input id="arvgs_search_goName" class="easyui-validatebox"
+						data-options="validType:'length[0,32]'" style="width: 220px"></td>
+				</tr>
+
+				<tr>
+					<td width="70px">合同编号：</td>
+					<td><input id="arvgs_search_logContractNum"
+						class="easyui-validatebox" data-options="validType:'length[0,32]'"
+						style="width: 220px"></td>
+				</tr>
+
+				<tr>
+					<td width="70px">&emsp;车牌号：</td>
+					<td><input id="arvgs_search_logCarLicence"
+						class="easyui-validatebox" data-options="validType:'length[0,32]'"
+						style="width: 220px"></td>
+				</tr>
+			</table>
+		</form>
+	</div>
+	<div id="arvgs_search_dlg-buttons">
+		<a id="arvgs_search_button" href="javascript:void(0)"
+			class="easyui-linkbutton c6" data-options="iconCls:'icon-ok'"
+			style="width: 90px">搜索</a> <a href="javascript:void(0)"
+			class="easyui-linkbutton" data-options="iconCls:'icon-cancel'"
+			onclick="javascript:$('#arvgs_search_dlg').dialog('close')"
+			style="width: 90px">取消</a>
+	</div>
+
 	<script type="text/javascript">
 		$('#arvgs_datagrid').datagrid({
 			url : 'goodsReach',
@@ -557,20 +606,6 @@
 					}
 				});
 
-		/* 搜索功能按钮 */
-		$('#arvgs_search').click(function() {
-			$('#arvgs_search_dlg').dialog('open').dialog('setTitle', '搜索');
-		});
-		/* 搜索 */
-		$('#arvgs_search_button').click(function() {
-			if (!$('#arvgs_search_fm').form('validate')) {
-				$.messager.alert('提示', '请正确填写信息！');
-				return;
-			}
-			$('#arvgs_datagrid').datagrid('load', {});
-			$('#arvgs_search_dlg').dialog('close');
-		});
-
 		/* 导入 */
 		$('#arvgs_import').click(function() {
 			$('#arvgs_import_dlg').dialog('open').dialog('setTitle', '导入');
@@ -601,5 +636,33 @@
 				}
 			});
 		});
+
+		/* 搜索功能按钮 */
+		$('#arvgs_search').click(function() {
+			$('#arvgs_search_dlg').dialog('open').dialog('setTitle', '搜索');
+		});
+		/* 搜索 */
+		$('#arvgs_search_button').click(
+				function() {
+					if (!$('#arvgs_search_fm').form('validate')) {
+						$.messager.alert('提示', '请正确填写信息！');
+						return;
+					}
+					$('#arvgs_datagrid').datagrid(
+							'load',
+							{
+								searchLogSendDate : $(
+										'#arvgs_search_logSendDate').combobox(
+										'getText'),
+								searchGoBank : $('#arvgs_search_goBank').val(),
+								searchGoName : $('#arvgs_search_goName').val(),
+								searchLogContractNum : $(
+										'#arvgs_search_logContractNum').val(),
+								searchLogCarLicence : $(
+										'#arvgs_search_logCarLicence').val(),
+								goType : 1
+							});
+					$('#arvgs_search_dlg').dialog('close');
+				});
 	</script>
 </div>

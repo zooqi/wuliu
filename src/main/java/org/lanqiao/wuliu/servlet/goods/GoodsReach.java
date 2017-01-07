@@ -3,8 +3,8 @@ package org.lanqiao.wuliu.servlet.goods;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,6 +16,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.lanqiao.wuliu.bean.Goods;
 import org.lanqiao.wuliu.dao.impl.BusinessDaoImpl;
+import org.lanqiao.wuliu.util.ParseUtils;
 
 /**
  * 查找物流记录
@@ -33,32 +34,19 @@ public class GoodsReach extends HttpServlet {
 		response.setContentType("application/json;charset=UTF-8");
 		PrintWriter out = response.getWriter();
 
-		// 分页参数、发、到货类型
-		int goType;
-		int currentPage;
-		int rowsPerPage;
-		try {
-			currentPage = Integer.parseInt(request.getParameter("page"));
-			rowsPerPage = Integer.parseInt(request.getParameter("rows"));
-			goType = Integer.parseInt(request.getParameter("goType"));
-		} catch (Exception e) {
-			return;
-		}
+		int goType = ParseUtils.parseInt(request.getParameter("goType"));
+		int currentPage = ParseUtils.parseInt(request.getParameter("page"));
+		int rowsPerPage = ParseUtils.parseInt(request.getParameter("rows"));
 
-		String logCarLicence = request.getParameter("logCarLicence");
-
-		// 验证日期
-		String logSendDate = request.getParameter("logSendDate");
-		if (logSendDate != null && !logSendDate.equals("")) {
-			try {
-				new SimpleDateFormat("yyyy-MM-dd").parse(logSendDate);
-			} catch (Exception e) {
-				return;
-			}
-		}
+		String searchLogSendDate = ParseUtils.toLegalString(request.getParameter("searchLogSendDate"));
+		String searchGoBank = ParseUtils.toLegalString(request.getParameter("searchGoBank"));
+		String searchGoName = ParseUtils.toLegalString(request.getParameter("searchGoName"));
+		String searchLogContractNum = ParseUtils.toLegalString(request.getParameter("searchLogContractNum"));
+		String searchLogCarLicence = ParseUtils.toLegalString(request.getParameter("searchLogCarLicence"));
 
 		BusinessDaoImpl bdi = new BusinessDaoImpl();
-		ArrayList<Goods> goods = bdi.goReach(goType, currentPage, rowsPerPage, logCarLicence, logSendDate);
+		List<Goods> goods = bdi.goReach(goType, currentPage, rowsPerPage, searchLogSendDate, searchGoBank, searchGoName,
+				searchLogContractNum, searchLogCarLicence);
 		JSONObject json = new JSONObject();
 		JSONArray array = new JSONArray();
 		for (Goods good : goods) {
@@ -100,7 +88,8 @@ public class GoodsReach extends HttpServlet {
 			array.put(row);
 		}
 		json.put("rows", array);
-		json.put("total", bdi.goCount(goType));
+		json.put("total", bdi.goCount(goType, searchLogSendDate, searchGoBank, searchGoName, searchLogContractNum,
+				searchLogCarLicence));
 		out.println(json);
 	}
 
