@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.lanqiao.wuliu.dao.impl.BusinessManage;
+import org.lanqiao.wuliu.dao.impl.BusinessDaoImpl;
 
 /**
  * 删除物流记录
@@ -38,7 +38,7 @@ public class GoodsDelete extends HttpServlet {
 			JSONObject json = (JSONObject) object;
 			ids.add(json.getInt("goId"));
 		}
-		BusinessManage dao = new BusinessManage();
+		BusinessDaoImpl dao = new BusinessDaoImpl();
 
 		if (dao.goBatchDelete(ids) == ids.size()) {
 			out.println("{\"success\":true}");

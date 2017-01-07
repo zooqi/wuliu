@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.lanqiao.wuliu.service.impl.HRManageServiceImpl;
+import org.lanqiao.wuliu.dao.impl.HrDaoImpl;
 
 @WebServlet(name = "empDelete", urlPatterns = { "/empDelete" })
 public class EmpDelete extends HttpServlet {
@@ -25,9 +25,9 @@ public class EmpDelete extends HttpServlet {
 		PrintWriter out = response.getWriter();
 
 		int empId = Integer.parseInt(request.getParameter("empId"));
-		HRManageServiceImpl hsi = new HRManageServiceImpl();
+		HrDaoImpl hd = new HrDaoImpl();
 
-		if (hsi.empInforDele(empId) == 1) {
+		if (hd.empInforDele(empId) == 1) {
 			out.println("{\"success\":true}");
 		} else {
 			out.println("{\"success\":false}");

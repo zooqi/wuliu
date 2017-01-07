@@ -11,8 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.lanqiao.wuliu.bean.Attent;
 import org.lanqiao.wuliu.bean.Emp;
-import org.lanqiao.wuliu.dao.impl.HRManageDao;
-import org.lanqiao.wuliu.service.impl.HRManageServiceImpl;
+import org.lanqiao.wuliu.dao.impl.HrDaoImpl;
 import org.lanqiao.wuliu.util.ParseUtils;
 
 @WebServlet(name = "attentUpda", urlPatterns = { "/attentUpda" })
@@ -34,7 +33,7 @@ public class AttentUpda extends HttpServlet {
 		double attentOverTimePay = ParseUtils.parseDouble(request.getParameter("attentOverTimePay"));
 		double attentBonus = ParseUtils.parseDouble(request.getParameter("attentBonus"));
 		String attentRemark = request.getParameter("attentRemark");
-		int empId = ParseUtils.parseInt(request.getParameter("empName"));
+		//int empId = ParseUtils.parseInt(request.getParameter("empName"));
 		int attentId=ParseUtils.parseInt(request.getParameter("attentId"));
 		double empWage = ParseUtils.parseDouble(request.getParameter("empWage"));
 		
@@ -52,7 +51,7 @@ public class AttentUpda extends HttpServlet {
 		attent.setAttentRemark(attentRemark);
 		attent.setAttentId(attentId);
 		attent.setEmpWage(empWage);
-		HRManageDao hd=new HRManageDao();
+		HrDaoImpl hd=new HrDaoImpl();
 		
 		if (hd.attentUpda(attent, attentId) == 1) {
 			out.println("{\"success\":true}");

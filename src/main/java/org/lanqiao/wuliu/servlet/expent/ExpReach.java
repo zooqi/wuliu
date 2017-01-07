@@ -16,9 +16,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.lanqiao.wuliu.bean.Attent;
 import org.lanqiao.wuliu.bean.Expent;
-import org.lanqiao.wuliu.service.impl.ExpentSerciceImpl;
+import org.lanqiao.wuliu.dao.impl.ExpentDaoImpl;
 
 @WebServlet(name = "expReach", urlPatterns = { "/expReach" })
 public class ExpReach extends HttpServlet {
@@ -56,9 +55,9 @@ public class ExpReach extends HttpServlet {
 		exp.setExpFunction(expFunction);
 		exp.setExpDate(expDate);
 		
-		ExpentSerciceImpl esi=new ExpentSerciceImpl();
+		ExpentDaoImpl edi=new ExpentDaoImpl();
 		
-		ArrayList<Expent> expents = esi.expSelect((page - 1) * rowsPerPage, rowsPerPage, exp);
+		ArrayList<Expent> expents = edi.expSelect((page - 1) * rowsPerPage, rowsPerPage, exp);
 		JSONObject json = new JSONObject();
 		JSONArray array = new JSONArray();
 		for (Expent expent : expents) {
@@ -73,7 +72,7 @@ public class ExpReach extends HttpServlet {
 			array.put(row);
 		}
 		json.put("rows", array);
-		json.put("total", esi.expCount());
+		json.put("total", edi.expCount());
 		out.println(json);
 	}
 

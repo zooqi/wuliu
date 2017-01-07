@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.lanqiao.wuliu.bean.Emp;
-import org.lanqiao.wuliu.service.impl.HRManageServiceImpl;
+import org.lanqiao.wuliu.dao.impl.HrDaoImpl;
 
 @WebServlet(name = "empAdd", urlPatterns = { "/empAdd" })
 public class EmpAdd extends HttpServlet {
@@ -84,9 +84,9 @@ public class EmpAdd extends HttpServlet {
 		emp.setEmpPasswd(empPasswd);
 		emp.setEmpAddress(empAddress);
 
-		HRManageServiceImpl hsi = new HRManageServiceImpl();
+		HrDaoImpl hd = new HrDaoImpl();
 
-		int num = hsi.empInforInser(emp);
+		int num = hd.empInforInser(emp);
 
 		if (num == 1) {
 			out.println("{\"success\":true}");

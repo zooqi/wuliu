@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.lanqiao.wuliu.service.impl.ExpentSerciceImpl;
+import org.lanqiao.wuliu.dao.impl.ExpentDaoImpl;
 import org.lanqiao.wuliu.util.ParseUtils;
 
 @WebServlet(name = "expDelete", urlPatterns = { "/expDelete" })
@@ -24,9 +24,9 @@ public class ExpDelete extends HttpServlet {
 
 		int expId = ParseUtils.parseInt(request.getParameter("expId"));
 
-		ExpentSerciceImpl exi = new ExpentSerciceImpl();
+		ExpentDaoImpl edi = new ExpentDaoImpl();
 
-		if (exi.expDelete(expId) == 1) {
+		if (edi.expDelete(expId) == 1) {
 			out.println("{\"success\":true}");
 		} else {
 			out.println("{\"success\":false}");

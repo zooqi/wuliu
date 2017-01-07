@@ -14,8 +14,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.lanqiao.wuliu.bean.Attent;
 import org.lanqiao.wuliu.bean.Emp;
-import org.lanqiao.wuliu.dao.impl.HRManageDao;
-import org.lanqiao.wuliu.service.impl.HRManageServiceImpl;
+import org.lanqiao.wuliu.dao.impl.HrDaoImpl;
 
 @WebServlet(name = "attentReach", urlPatterns = { "/attentReach" })
 public class AttentReach extends HttpServlet {
@@ -41,7 +40,7 @@ public class AttentReach extends HttpServlet {
 		emp.setEmpNum(empNum);
 		attentReach.setEmp(emp);
 		
-		HRManageDao hd=new HRManageDao();
+		HrDaoImpl hd=new HrDaoImpl();
 
 		ArrayList<Attent> attents = hd.attentSel((page - 1) * rowsPerPage, rowsPerPage, attentReach, attentDate);
 		JSONObject json = new JSONObject();

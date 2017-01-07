@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.lanqiao.wuliu.bean.Emp;
-import org.lanqiao.wuliu.service.impl.HRManageServiceImpl;
+import org.lanqiao.wuliu.dao.impl.HrDaoImpl;
 
 @WebServlet(name = "empReach", urlPatterns = { "/empReach" })
 public class EmpReach extends HttpServlet {
@@ -38,8 +38,8 @@ public class EmpReach extends HttpServlet {
 		searchEmp.setEmpDepart(empDepart);
 		searchEmp.setEmpSex(empSex);
 
-		HRManageServiceImpl hsi = new HRManageServiceImpl();
-		ArrayList<Emp> emps = hsi.empInforSel((page - 1) * rowsPerPage, rowsPerPage, searchEmp);
+		HrDaoImpl hd = new HrDaoImpl();
+		ArrayList<Emp> emps = hd.empInforSel((page - 1) * rowsPerPage, rowsPerPage, searchEmp);
 
 		JSONObject json = new JSONObject();
 		JSONArray array = new JSONArray();
@@ -65,7 +65,7 @@ public class EmpReach extends HttpServlet {
 			array.put(row);
 		}
 		json.put("rows", array);
-		json.put("total", hsi.empCount());
+		json.put("total", hd.empCount());
 		out.println(json);
 	}
 

@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.lanqiao.wuliu.bean.Expent;
-import org.lanqiao.wuliu.service.impl.ExpentSerciceImpl;
+import org.lanqiao.wuliu.dao.impl.ExpentDaoImpl;
 
 @WebServlet(name = "expInsert", urlPatterns = { "/expInsert" })
 public class ExpInsert extends HttpServlet {
@@ -54,9 +54,9 @@ public class ExpInsert extends HttpServlet {
 		expent.setExpDate(expDate);
 		expent.setExpRemark(expRemark);
 
-		ExpentSerciceImpl esi = new ExpentSerciceImpl();
+		ExpentDaoImpl edi = new ExpentDaoImpl();
 
-		int num = esi.expInsert(expent);
+		int num = edi.expInsert(expent);
 
 		if (num == 1) {
 			out.println("{\"success\":true}");

@@ -11,8 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.lanqiao.wuliu.bean.Attent;
 import org.lanqiao.wuliu.bean.Emp;
-import org.lanqiao.wuliu.dao.impl.HRManageDao;
-import org.lanqiao.wuliu.service.impl.HRManageServiceImpl;
+import org.lanqiao.wuliu.dao.impl.HrDaoImpl;
 import org.lanqiao.wuliu.util.ParseUtils;
 
 @WebServlet(name = "attentAdd", urlPatterns = { "/attentAdd" })
@@ -50,7 +49,7 @@ public class AttentAdd extends HttpServlet {
 		attent.setAttentRemark(attentRemark);
 		attent.setEmpWage(empWage);
 		
-		HRManageDao hd=new HRManageDao();
+		HrDaoImpl hd=new HrDaoImpl();
 
 		int num = hd.attentInsert(attent, empId);
 		if (num == 1) {

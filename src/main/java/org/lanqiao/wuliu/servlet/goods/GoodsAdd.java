@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.lanqiao.wuliu.bean.Goods;
-import org.lanqiao.wuliu.dao.impl.BusinessManage;
+import org.lanqiao.wuliu.dao.impl.BusinessDaoImpl;
 import org.lanqiao.wuliu.util.ParseUtils;
 
 /**
@@ -83,7 +83,7 @@ public class GoodsAdd extends HttpServlet {
 		goods.setGoRemark(goRemark);
 		goods.setGoType(goType);
 
-		BusinessManage dao = new BusinessManage();
+		BusinessDaoImpl dao = new BusinessDaoImpl();
 		int count = dao.goAdd(goods, logId);
 		if (count == 1) {
 			out.println("{\"success\":true}");

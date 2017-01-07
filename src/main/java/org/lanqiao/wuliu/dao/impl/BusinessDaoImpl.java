@@ -16,7 +16,7 @@ import org.lanqiao.wuliu.util.DBUtils;
  * 
  * @author 杨明静
  */
-public class BusinessManage extends BaseDaoImpl {
+public class BusinessDaoImpl extends BaseDaoImpl {
 
 	/**
 	 * 添加物流信息
@@ -30,7 +30,23 @@ public class BusinessManage extends BaseDaoImpl {
 		Object[] params = new Object[] { logistics.getLogContractNum(), logistics.getLogSendDate(),
 				logistics.getLogSiteStart(), logistics.getLogSiteEnd(), logistics.getLogCarLicence(),
 				logistics.getLogCarDriver(), logistics.getLogCarPhone(), logistics.getLogPartner() };
-		return cud(sql, params);
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		int count=0;
+		try {
+			connection = DBUtils.getConnection();
+			preparedStatement = connection.prepareStatement(sql);
+			setParameter(preparedStatement, sql, params);
+			count = preparedStatement.executeUpdate();
+		} catch (SQLException e) {
+			return 0;
+		} finally {
+			DBUtils.closeConnection(connection);
+			DBUtils.closePreparedStatement(preparedStatement);
+			DBUtils.closeResultSet(resultSet);
+		}
+		return count;
 	}
 
 	/**
@@ -165,8 +181,16 @@ public class BusinessManage extends BaseDaoImpl {
 			sql.append("AND l.logSendDate = '").append(srhDateStr).append("' ");
 		}
 		sql.append(" ORDER BY g.goId LIMIT ?, ?");// 待定
-		ResultSet rs = select(sql.toString(), new Object[] { goType, (currentPage - 1), rowsPerPage });
+		//ResultSet rs = select(sql.toString(), new Object[] { goType, (currentPage - 1), rowsPerPage });
+		Object[] params = new Object[] { goType, (currentPage - 1), rowsPerPage   };
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet rs = null;
 		try {
+			connection = DBUtils.getConnection();
+			preparedStatement = connection.prepareStatement(sql.toString());
+			setParameter(preparedStatement, sql.toString(), params);
+			rs = preparedStatement.executeQuery();
 			while (rs.next()) {
 				Goods goods = new Goods();
 				Logistics logistics = new Logistics();
@@ -209,6 +233,11 @@ public class BusinessManage extends BaseDaoImpl {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+			return null;
+		} finally {
+			DBUtils.closeConnection(connection);
+			DBUtils.closePreparedStatement(preparedStatement);
+			DBUtils.closeResultSet(rs);
 		}
 		return ar;
 	}

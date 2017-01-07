@@ -1,11 +1,14 @@
 package org.lanqiao.wuliu.dao.impl;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 import org.lanqiao.wuliu.bean.Attent;
 import org.lanqiao.wuliu.bean.Emp;
+import org.lanqiao.wuliu.util.DBUtils;
 
 /**
  * 人事行政管理(CRUD)
@@ -13,7 +16,7 @@ import org.lanqiao.wuliu.bean.Emp;
  * @author 杨明静
  *
  */
-public class HRManageDao extends BaseDaoImpl {
+public class HrDaoImpl extends BaseDaoImpl {
 	/**
 	 * 添加员工信息
 	 * 
@@ -28,7 +31,23 @@ public class HRManageDao extends BaseDaoImpl {
 				emp.getEmpBorn(), emp.getEmpPhone(), emp.getEmpQQ(),
 				emp.getEmpAddress(), emp.getEmpHealth(), emp.getEmpMarriage(),
 				emp.getEmpPasswd() };
-		return cud(sql, params);
+		int count = 0;
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		try {
+			connection = DBUtils.getConnection();
+			preparedStatement = connection.prepareStatement(sql);
+			setParameter(preparedStatement, sql, params);
+			count = preparedStatement.executeUpdate();
+		} catch (SQLException e) {
+			return 0;
+		} finally {
+			DBUtils.closeConnection(connection);
+			DBUtils.closePreparedStatement(preparedStatement);
+			DBUtils.closeResultSet(resultSet);
+		}
+		return count;
 	}
 
 	/**
@@ -38,21 +57,26 @@ public class HRManageDao extends BaseDaoImpl {
 	 */
 	public int empCount() {
 		String sql = "SELECT COUNT(*) FROM emp";
-		ResultSet resultSet = select(sql);
+		//ResultSet resultSet = select(sql);
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		int count = 0;
 		try {
+			connection = DBUtils.getConnection();
+			preparedStatement = connection.prepareStatement(sql);
+			resultSet = preparedStatement.executeQuery();
 			if (resultSet.next()) {
-				return resultSet.getInt(1);
+				count = resultSet.getInt(1);
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			return 0;
 		} finally {
-			try {
-				resultSet.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+			DBUtils.closeConnection(connection);
+			DBUtils.closePreparedStatement(preparedStatement);
+			DBUtils.closeResultSet(resultSet);
 		}
-		return 0;
+		return count;
 	}
 
 	/**
@@ -89,9 +113,17 @@ public class HRManageDao extends BaseDaoImpl {
 		}
 		sql.append("ORDER BY empId  LIMIT ?, ?");
 		ArrayList<Emp> ar = new ArrayList<Emp>();
-		ResultSet rs = select(sql.toString(), new Object[] { pageCurrentFirst,
-				pageRows });
+		//ResultSet rs = select(sql.toString(), new Object[] { pageCurrentFirst,
+		//		pageRows });
+		Object[] params = new Object[] { pageCurrentFirst, pageRows  };
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet rs = null;
 		try {
+			connection = DBUtils.getConnection();
+			preparedStatement = connection.prepareStatement(sql.toString());
+			setParameter(preparedStatement, sql.toString(), params);
+			rs = preparedStatement.executeQuery();
 			while (rs.next()) {
 				Emp emp = new Emp();
 				emp.setEmpNum(rs.getString(1));
@@ -115,6 +147,11 @@ public class HRManageDao extends BaseDaoImpl {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+			return ar;
+		} finally {
+			DBUtils.closeConnection(connection);
+			DBUtils.closePreparedStatement(preparedStatement);
+			DBUtils.closeResultSet(rs);
 		}
 		return ar;
 	}
@@ -135,7 +172,26 @@ public class HRManageDao extends BaseDaoImpl {
 				emp.getEmpPhone(), emp.getEmpQQ(), emp.getEmpAddress(),
 				emp.getEmpHealth(), emp.getEmpMarriage(), emp.getEmpPasswd(),
 				emp.getEmpRemark(), empId };
-		return cud(sql, params);
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		int count = 0;
+		try {
+			connection = DBUtils.getConnection();
+
+			preparedStatement = connection.prepareStatement(sql);
+			setParameter(preparedStatement, sql, params);
+			count = preparedStatement.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return 0;
+		} finally {
+			DBUtils.closeConnection(connection);
+			DBUtils.closePreparedStatement(preparedStatement);
+			DBUtils.closeResultSet(resultSet);
+		}
+		return count;
 	}
 
 	/**
@@ -147,7 +203,23 @@ public class HRManageDao extends BaseDaoImpl {
 	 */
 	public int empInforDele(int empId) {
 		String sql = "DELETE FROM emp WHERE empId=?";
-		return cud(sql, new Object[] { empId });
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		int count = 0;
+		try {
+			connection = DBUtils.getConnection();
+			preparedStatement = connection.prepareStatement(sql);
+			setParameter(preparedStatement, sql, new Object[]{empId});
+			count = preparedStatement.executeUpdate();
+		} catch (SQLException e) {
+			return 0;
+		} finally {
+			DBUtils.closeConnection(connection);
+			DBUtils.closePreparedStatement(preparedStatement);
+			DBUtils.closeResultSet(resultSet);
+		}
+		return count;
 	}
 
 	/**
@@ -158,8 +230,15 @@ public class HRManageDao extends BaseDaoImpl {
 	public ArrayList<Emp> empInfor() {
 		ArrayList<Emp> ar = new ArrayList<Emp>();
 		String sql = "SELECT empId,empName,empDepart,empNum FROM emp ";
-		ResultSet rs = select(sql);
+		//ResultSet rs = select(sql);
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet rs = null;
 		try {
+			connection = DBUtils.getConnection();
+			preparedStatement = connection.prepareStatement(sql.toString());
+			
+			rs = preparedStatement.executeQuery();
 			while (rs.next()) {
 				Emp emp = new Emp();
 				emp.setEmpId(rs.getInt(1));
@@ -170,6 +249,11 @@ public class HRManageDao extends BaseDaoImpl {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+			return ar;
+		} finally {
+			DBUtils.closeConnection(connection);
+			DBUtils.closePreparedStatement(preparedStatement);
+			DBUtils.closeResultSet(rs);
 		}
 		return ar;
 	}
@@ -187,7 +271,23 @@ public class HRManageDao extends BaseDaoImpl {
 				attent.getAttentReason(), attent.getAttentBonus(),
 				attent.getAttentOverTimeNum(), attent.getAttentOverTimePay(),
 				attent.getAttentRemark(), empId, attent.getEmpWage() };
-		return cud(sql, params);
+		int count = 0;
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		try {
+			connection = DBUtils.getConnection();
+			preparedStatement = connection.prepareStatement(sql);
+			setParameter(preparedStatement, sql, params);
+			count = preparedStatement.executeUpdate();
+		} catch (SQLException e) {
+			return 0;
+		} finally {
+			DBUtils.closeConnection(connection);
+			DBUtils.closePreparedStatement(preparedStatement);
+			DBUtils.closeResultSet(resultSet);
+		}
+		return count;
 	}
 
 	/**
@@ -197,14 +297,24 @@ public class HRManageDao extends BaseDaoImpl {
 	 */
 	public int attentCount() {
 		String sql = "SELECT COUNT(attentId) FROM attent";
-		ResultSet rs = select(sql);
+		//ResultSet rs = select(sql);
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
 		int count = 0;
 		try {
-			if (rs.next()) {
-				count = rs.getInt(1);
+			connection = DBUtils.getConnection();
+			preparedStatement = connection.prepareStatement(sql);
+			resultSet = preparedStatement.executeQuery();
+			if (resultSet.next()) {
+				count = resultSet.getInt(1);
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			return 0;
+		} finally {
+			DBUtils.closeConnection(connection);
+			DBUtils.closePreparedStatement(preparedStatement);
+			DBUtils.closeResultSet(resultSet);
 		}
 		return count;
 	}
@@ -241,9 +351,17 @@ public class HRManageDao extends BaseDaoImpl {
 		sql.append("ORDER BY e.empId  LIMIT ?, ?");
 		ArrayList<Attent> ar = new ArrayList<Attent>();
 
-		ResultSet rs = select(sql.toString(), new Object[] { pageCurrentFirst,
-				pageRows });
+		//ResultSet rs = select(sql.toString(), new Object[] { pageCurrentFirst,
+			//	pageRows });
+		Object[] params = new Object[] { pageCurrentFirst, pageRows  };
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet rs = null;
 		try {
+			connection = DBUtils.getConnection();
+			preparedStatement = connection.prepareStatement(sql.toString());
+			setParameter(preparedStatement, sql.toString(), params);
+			rs = preparedStatement.executeQuery();
 			while (rs.next()) {
 				Attent attent = new Attent();
 				Emp emp = new Emp();
@@ -266,6 +384,11 @@ public class HRManageDao extends BaseDaoImpl {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+			return ar;
+		} finally {
+			DBUtils.closeConnection(connection);
+			DBUtils.closePreparedStatement(preparedStatement);
+			DBUtils.closeResultSet(rs);
 		}
 		return ar;
 	}
@@ -287,8 +410,26 @@ public class HRManageDao extends BaseDaoImpl {
 				attent.getAttentReason(), attent.getAttentOverTimeNum(),
 				attent.getAttentBonus(), attent.getAttentRemark(),
 				attent.getAttentOverTimePay(), attent.getEmpWage(),attentId };
-		System.out.println(sql);
-		return cud(sql, params);
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		int count = 0;
+		try {
+			connection = DBUtils.getConnection();
+
+			preparedStatement = connection.prepareStatement(sql);
+			setParameter(preparedStatement, sql, params);
+			count = preparedStatement.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return 0;
+		} finally {
+			DBUtils.closeConnection(connection);
+			DBUtils.closePreparedStatement(preparedStatement);
+			DBUtils.closeResultSet(resultSet);
+		}
+		return count;
 	}
 
 	/**
@@ -300,7 +441,23 @@ public class HRManageDao extends BaseDaoImpl {
 	 */
 	public int attentDele(int attentId) {
 		String sql = "DELETE FROM attent WHERE attentId=?";
-		return cud(sql, new Object[] { attentId });
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		int count = 0;
+		try {
+			connection = DBUtils.getConnection();
+			preparedStatement = connection.prepareStatement(sql);
+			setParameter(preparedStatement, sql, new Object[]{attentId});
+			count = preparedStatement.executeUpdate();
+		} catch (SQLException e) {
+			return 0;
+		} finally {
+			DBUtils.closeConnection(connection);
+			DBUtils.closePreparedStatement(preparedStatement);
+			DBUtils.closeResultSet(resultSet);
+		}
+		return count;
 	}
 
 }

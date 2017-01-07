@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.lanqiao.wuliu.bean.Expent;
-import org.lanqiao.wuliu.service.impl.ExpentSerciceImpl;
+import org.lanqiao.wuliu.dao.impl.ExpentDaoImpl;
 import org.lanqiao.wuliu.util.ParseUtils;
 
 @WebServlet(name = "expUpdate", urlPatterns = { "/expUpdate" })
@@ -62,8 +62,8 @@ public class ExpUpdate extends HttpServlet {
 		exp.setExpDate(expDate);
 		exp.setExpRemark(expRemark);
 		
-		ExpentSerciceImpl esi = new ExpentSerciceImpl();
-		if (esi.expUpdate(exp, expId)==1) {
+		ExpentDaoImpl edi = new ExpentDaoImpl();
+		if (edi.expUpdate(exp, expId)==1) {
 			out.println("{\"success\":true}");
 		} else {
 			out.println("{\"success\":false}");

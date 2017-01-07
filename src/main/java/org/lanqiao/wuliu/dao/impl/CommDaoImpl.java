@@ -61,7 +61,7 @@ public class CommDaoImpl extends BaseDaoImpl {
 				role.setRoleId(rs.getInt(1));
 				role.setRoleName(rs.getString(2));
 				arrayList.add(role);
-				System.out.println("角色：" + rs.getString("roleName"));
+				//System.out.println("角色：" + rs.getString("roleName"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -93,7 +93,7 @@ public class CommDaoImpl extends BaseDaoImpl {
 		try {
 			while (rs.next()) {
 				Integer menuId = rs.getInt(1);
-				System.out.println("一级菜单：" + rs.getString("menuName"));
+				//System.out.println("一级菜单：" + rs.getString("menuName"));
 				List<Menu> subMenus = new ArrayList<Menu>();
 				// 这里查询上面主菜单对应的子菜单，查他的功能列表
 				sql = "SELECT menuId, menuName FROM menu WHERE menuFather = "
@@ -101,15 +101,14 @@ public class CommDaoImpl extends BaseDaoImpl {
 				ResultSet subRs = select(sql);
 				while (subRs.next()) {
 					Integer subMenuId = subRs.getInt(1);
-					System.out.println("\t二级菜单：" + subRs.getString("menuName"));
+					//System.out.println("\t二级菜单：" + subRs.getString("menuName"));
 					List<Fun> funs = new ArrayList<Fun>();
 					sql = "SELECT f.funId, f.funURI, f.funName FROM fun f,menu m WHERE f.menuId = m.menuId AND m.menuId = "
 							+ subMenuId;
 					ResultSet funRs = select(sql);
 					while (funRs.next()) {
 						Fun fun = new Fun();
-						System.out.println("\t\t功能列表："
-								+ funRs.getString("funName"));
+						//System.out.println("\t\t功能列表："+ funRs.getString("funName"));	
 						fun.setFunId(funRs.getInt(1));
 						fun.setFunURI(funRs.getString(2));
 						fun.setFunName(funRs.getString(3));
@@ -129,8 +128,8 @@ public class CommDaoImpl extends BaseDaoImpl {
 				ResultSet mainFunRs = select(sql);
 				while (mainFunRs.next()) {
 					Fun fun = new Fun();
-					System.out.println("\t\t功能列表："
-							+ mainFunRs.getString("funName"));
+					//System.out.println("\t\t功能列表："	+ mainFunRs.getString("funName"));
+						
 					fun.setFunId(mainFunRs.getInt(1));
 					fun.setFunURI(mainFunRs.getString(2));
 					fun.setFunName(mainFunRs.getString(3));

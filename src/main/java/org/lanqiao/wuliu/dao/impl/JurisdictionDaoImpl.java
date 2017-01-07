@@ -13,7 +13,7 @@ import org.lanqiao.wuliu.util.DBUtils;
  * @author 杨明静
  *
  */
-public class Jurisdiction extends BaseDaoImpl {
+public class JurisdictionDaoImpl extends BaseDaoImpl {
 	/**
 	 * 根据empId查找funId及funName
 	 * 

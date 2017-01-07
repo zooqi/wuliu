@@ -13,13 +13,13 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.lanqiao.wuliu.bean.Goods;
-import org.lanqiao.wuliu.service.impl.BusinessManageServiceImpl;
+import org.lanqiao.wuliu.dao.impl.BusinessDaoImpl;
 
 public class InputData {
 
 	public static void input(String fileName) {
 
-		BusinessManageServiceImpl bms = null;
+		BusinessDaoImpl bms = null;
 
 		Goods goods = null;
 		org.lanqiao.wuliu.bean.Logistics log = null;

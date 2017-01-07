@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.lanqiao.wuliu.bean.Goods;
-import org.lanqiao.wuliu.service.impl.BusinessManageServiceImpl;
+import org.lanqiao.wuliu.dao.impl.BusinessDaoImpl;
 
 /**
  * 查找物流记录
@@ -57,8 +57,8 @@ public class GoodsReach extends HttpServlet {
 			}
 		}
 
-		BusinessManageServiceImpl bms = new BusinessManageServiceImpl();
-		ArrayList<Goods> goods = bms.goReach(goType, currentPage, rowsPerPage, logCarLicence, logSendDate);
+		BusinessDaoImpl bdi = new BusinessDaoImpl();
+		ArrayList<Goods> goods = bdi.goReach(goType, currentPage, rowsPerPage, logCarLicence, logSendDate);
 		JSONObject json = new JSONObject();
 		JSONArray array = new JSONArray();
 		for (Goods good : goods) {
@@ -100,7 +100,7 @@ public class GoodsReach extends HttpServlet {
 			array.put(row);
 		}
 		json.put("rows", array);
-		json.put("total", bms.goCount(goType));
+		json.put("total", bdi.goCount(goType));
 		out.println(json);
 	}
 

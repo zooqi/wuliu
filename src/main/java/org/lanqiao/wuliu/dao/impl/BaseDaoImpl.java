@@ -4,7 +4,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import org.lanqiao.wuliu.dao.IBaseDao;
 import org.lanqiao.wuliu.util.DBUtils;
 
 /**
@@ -13,7 +12,7 @@ import org.lanqiao.wuliu.util.DBUtils;
  * @author 杨明静
  *
  */
-public class BaseDaoImpl implements IBaseDao {
+public class BaseDaoImpl{
 	/**
 	 * 处理sql语句
 	 * 

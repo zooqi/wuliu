@@ -9,8 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.lanqiao.wuliu.dao.impl.HRManageDao;
-import org.lanqiao.wuliu.service.impl.HRManageServiceImpl;
+import org.lanqiao.wuliu.dao.impl.HrDaoImpl;
 import org.lanqiao.wuliu.util.ParseUtils;
 
 /**
@@ -30,7 +29,7 @@ public class AttentDele extends HttpServlet {
 		PrintWriter out = response.getWriter();
 
 		int attentId = ParseUtils.parseInt(request.getParameter("attentId"));
-		HRManageDao hd=new HRManageDao();
+		HrDaoImpl hd=new HrDaoImpl();
 		if (hd.attentDele(attentId) == 1) {
 			out.println("{\"success\":true}");
 		} else {

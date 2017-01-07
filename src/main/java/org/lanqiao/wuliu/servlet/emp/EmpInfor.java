@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.lanqiao.wuliu.bean.Emp;
-import org.lanqiao.wuliu.service.impl.HRManageServiceImpl;
+import org.lanqiao.wuliu.dao.impl.HrDaoImpl;
 
 @WebServlet(name = "empInfor", urlPatterns = { "/empInfor" })
 public class EmpInfor extends HttpServlet {
@@ -22,12 +22,12 @@ public class EmpInfor extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		HRManageServiceImpl hsi = new HRManageServiceImpl();
+		HrDaoImpl hd = new HrDaoImpl();
 
 		response.setContentType("application/json;charset=UTF-8");
 		PrintWriter out = response.getWriter();
 
-		ArrayList<Emp> emps = hsi.empInfor();
+		ArrayList<Emp> emps = hd.empInfor();
 
 		JSONArray array = new JSONArray();
 		for (Emp emp : emps) {

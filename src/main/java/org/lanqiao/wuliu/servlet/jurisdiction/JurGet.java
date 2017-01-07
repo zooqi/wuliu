@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.lanqiao.wuliu.dao.impl.Jurisdiction;
+import org.lanqiao.wuliu.dao.impl.JurisdictionDaoImpl;
 import org.lanqiao.wuliu.util.ParseUtils;
 
 @WebServlet(name = "jurGet", urlPatterns = { "/jurGet" })
@@ -24,7 +24,7 @@ public class JurGet extends HttpServlet{
 		response.setContentType("application/json;charset=UTF-8");
 		PrintWriter out = response.getWriter();
 		int empId = ParseUtils.parseInt(request.getParameter("empId"));
-		ArrayList<Object[]> lists=new Jurisdiction().getfun(empId);
+		ArrayList<Object[]> lists=new JurisdictionDaoImpl().getfun(empId);
 		JSONArray array = new JSONArray();
 		for(Object[] list:lists){
 			JSONObject row1=new JSONObject();
