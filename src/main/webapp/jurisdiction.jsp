@@ -11,9 +11,12 @@
 		<!-- 工具栏按钮 -->
 		<div id="jur_toolbar">
 			<a id="jur_reload" href="javascript:void(0)" class="easyui-linkbutton"
-				data-options="iconCls:'icon-reload',plain:true">显示所有</a><a id="jur_edit"
-				href="javascript:void(0)" class="easyui-linkbutton"
+				data-options="iconCls:'icon-reload',plain:true">显示所有</a><a 
+				id="jur_edit" href="javascript:void(0)" class="easyui-linkbutton"
 				data-options="iconCls:'icon-edit',plain:true">编辑</a><a
+				id="jur_delete" href="javascript:void(0)"
+				class="easyui-linkbutton"
+				data-options="iconCls:'icon-remove',plain:true">删除</a><a
 				id="jur_search" href="javascript:void(0)" class="easyui-linkbutton"
 				data-options="iconCls:'icon-search',plain:true">搜索</a> 
 		</div>
@@ -49,23 +52,23 @@
 								<td style="width: 80px; text-align: center">个人管理</td>
 							</tr>
 							<tr>
-								<td style="width: 10px; text-align: center" ><input id="checkbox1" name="1" type="checkbox" value="1"></td>
+								<td style="width: 10px; text-align: center" ><input id="checkbox1" name="checkbox" type="checkbox" value="1"></td>
 								<td style="width: 80px; text-align: center" id="empInfor">员工管理</td>
-								<td style="width: 10px; text-align: center" ><input id="checkbox2" name="3" type="checkbox" value="3"></td>
+								<td style="width: 10px; text-align: center" ><input id="checkbox3" name="checkbox" type="checkbox" value="3"></td>
 								<td style="width: 80px; text-align: center" id="deliver">发货管理</td>
-								<td style="width: 10px; text-align: center" ><input id="checkbox3" name="6" type="checkbox" value="6"></td>
+								<td style="width: 10px; text-align: center" ><input id="checkbox6" name="checkbox" type="checkbox" value="6"></td>
 								<td style="width: 80px; text-align: center" id="expent">日常支出</td>
-								<td style="width: 10px; text-align: center" ><input id="checkbox4" name="9" type="checkbox" value="9"></td>
+								<td style="width: 10px; text-align: center" ><input id="checkbox9" name="checkbox" type="checkbox" value="9"></td>
 								<td style="width: 80px; text-align: center" id="jurisdiction">授予权限</td>
-								<td style="width: 10px; text-align: center" ><input id="checkbox5" name="10" type="checkbox" value="10"></td>
+								<td style="width: 10px; text-align: center" ><input id="checkbox10" name="checkbox" type="checkbox" value="10"></td>
 								<td style="width: 80px; text-align: center" id="person">个人信息</td>
 							</tr>	
 							<tr>
-								<td style="width: 10px; text-align: center" ><input id="checkbox6" name="2" type="checkbox" value="2"></td>
+								<td style="width: 10px; text-align: center" ><input id="checkbox2" name="checkbox" type="checkbox" value="2"></td>
 								<td style="width: 80px; text-align: center" id="attentInfor">考勤管理</td>
-								<td style="width: 10px; text-align: center" ><input id="checkbox7" name="4" type="checkbox" value="4"></td>
+								<td style="width: 10px; text-align: center" ><input id="checkbox4" name="checkbox" type="checkbox" value="4"></td>
 								<td style="width: 80px; text-align: center" id="arrival">到货管理</td>
-								<td style="width: 10px; text-align: center" ><input id="checkbox8" name="7" type="checkbox" value="7"></td>
+								<td style="width: 10px; text-align: center" ><input id="checkbox7" name="checkbox" type="checkbox" value="7"></td>
 								<td style="width: 80px; text-align: center" id="income">业务收支</td>
 								<td></td>
 								<td></td>
@@ -73,9 +76,9 @@
 								<td></td>
 							</tr>
 							<tr>
-								<td style="width: 10px; text-align: center" ><input id="checkbox9" name="5" type="checkbox" value="5"></td>
+								<td style="width: 10px; text-align: center" ><input id="checkbox5" name="checkbox" type="checkbox" value="5"></td>
 								<td style="width: 80px; text-align: center" id="traffic">车流管理</td>
-								<td style="width: 10px; text-align: center" ><input  id="checkbox10" name="8" type="checkbox" value="8"></td>
+								<td style="width: 10px; text-align: center" ><input  id="checkbox8" name="checkbox" type="checkbox" value="8"></td>
 								<td style="width: 80px; text-align: center" id="money">每月结余</td>
 								<td></td>
 								<td></td>
@@ -98,7 +101,7 @@
 				onclick="javascript:$('#jur_edit_dlg').dialog('close');$('#jur_edit_fm').form('clear');"
 				style="width: 90px">取消</a>
 		</div>
-
+		
 	<!-- 搜索表单 -->
 	<div id="jur_search_dlg" class="easyui-dialog"
 		style="padding: 20px 50px;"
@@ -180,8 +183,10 @@
 		});
 
 		/* 弹出编辑窗口 */
+		var params;
 		$('#jur_edit').click(function() {
 			var row = $('#jur_datagrid').datagrid('getSelected');
+			params=row;
 			if (row) {
 				$('#jur_edit_dlg').dialog('open').dialog('setTitle', '编辑信息');
 				$.ajax({
@@ -191,33 +196,43 @@
 						for(var i=0;i<=data.length;i++) {
 							if(data[i].empId==1 &&  data[i].funId==$('#checkbox1').val()){
 								$("#checkbox1").prop("checked",true);
+								//$("#checkbox1").prop("disabled",true);
 							}
 							else if(data[i].empId==1 &&  data[i].funId==$('#checkbox2').val()){
 								$("#checkbox2").prop("checked",true);
+								//$("#checkbox2").prop("disabled",true);
 							}
 							else if(data[i].empId==1 &&  data[i].funId==$('#checkbox3').val()){
 								$("#checkbox3").prop("checked",true);
+								//$("#checkbox3").prop("disabled",true);
 							}
 							else if(data[i].empId==1 &&  data[i].funId==$('#checkbox4').val()){
 								$("#checkbox4").prop("checked",true);
+								//$("#checkbox4").prop("disabled",true);
 							}
 							else if(data[i].empId==1 &&  data[i].funId==$('#checkbox5').val()){
 								$("#checkbox5").prop("checked",true);
+								//$("#checkbox5").prop("disabled",true);
 							}
 							else if(data[i].empId==1 &&  data[i].funId==$('#checkbox6').val()){
 								$("#checkbox6").prop("checked",true);
+								//$("#checkbox6").prop("disabled",true);
 							}
 							else if(data[i].empId==1 &&  data[i].funId==$('#checkbox7').val()){
 								$("#checkbox7").prop("checked",true);
+								//$("#checkbox7").prop("disabled",true);
 							}
 							else if(data[i].empId==1 &&  data[i].funId==$('#checkbox8').val()){
 								$("#checkbox8").prop("checked",true);
+								//$("#checkbox8").prop("disabled",true);
 							}
 							else if(data[i].empId==1 &&  data[i].funId==$('#checkbox9').val()){
 								$("#checkbox9").prop("checked",true);
+								//$("#checkbox9").prop("disabled",true);
 							}
 							else if(data[i].empId==1 &&  data[i].funId==$('#checkbox10').val()){
 								$("#checkbox10").prop("checked",true);
+								//$("#checkbox10").prop("disabled",true);
 							}
 						}
 					}
@@ -236,9 +251,10 @@
 				if (r) {
 					$.ajax({
 						type : 'POST',
-						url : url,
+						url : 'jurUpda?empId=' + params.empId,
 						data : $('#jur_edit_fm').serialize(),
 						success : function(data) {
+							//alert(data.success);
 							if (data.success) {
 								$.messager.alert('提示', '保存成功！');
 								$('#jur_edit_dlg').dialog('close');
@@ -251,12 +267,13 @@
 							$.messager.alert('提示', '保存失败，请稍后再试！');
 						}
 					});
+					//console.log('nimeifu')
 				} else {
 					$('#jur_edit_dlg').dialog('close');
 				}
 				$('#jur_edit_fm').form('clear');
 			});
-		});
+		});  
 		
 		/*弹出搜索窗口*/
 		$('#jur_search').click(function() {

@@ -23,8 +23,9 @@ public class JurGet extends HttpServlet{
 			HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("application/json;charset=UTF-8");
 		PrintWriter out = response.getWriter();
+		
 		int empId = ParseUtils.parseInt(request.getParameter("empId"));
-		ArrayList<Object[]> lists=new JurisdictionDaoImpl().getfun(empId);
+		ArrayList<Object[]> lists=new JurisdictionDaoImpl().getFun(empId);
 		JSONArray array = new JSONArray();
 		for(Object[] list:lists){
 			JSONObject row1=new JSONObject();
