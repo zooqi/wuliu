@@ -29,35 +29,27 @@ public class ExpReach extends HttpServlet {
 
 		response.setContentType("application/json;charset=UTF-8");
 		PrintWriter out = response.getWriter();
-		
+
 		int rowsPerPage = Integer.parseInt(request.getParameter("rows"));
 		int page = Integer.parseInt(request.getParameter("page"));
 
-		String expEmpNum=request.getParameter("expEmpNum");
-		String expEmpName=request.getParameter("expEmpName");
+		String expEmpNum = request.getParameter("expEmpNum");
+		String expEmpName = request.getParameter("expEmpName");
 		String expFunction = request.getParameter("expFunction");
-		
+
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-		Date expDate = null;
-		String c = request.getParameter("expDate");
-		if (c != null && !c.equals("")) {
-			try {
-				expDate = df.parse(c);
-			} catch (ParseException e1) {
-				e1.printStackTrace();
-			}
-		}
+
+		String expDate = request.getParameter("expDate");
 
 		Expent exp = new Expent();
 
 		exp.setExpEmpName(expEmpName);
 		exp.setExpEmpNum(expEmpNum);
 		exp.setExpFunction(expFunction);
-		exp.setExpDate(expDate);
-		
-		ExpentDaoImpl edi=new ExpentDaoImpl();
-		
-		ArrayList<Expent> expents = edi.expSelect((page - 1) * rowsPerPage, rowsPerPage, exp);
+
+		ExpentDaoImpl edi = new ExpentDaoImpl();
+
+		ArrayList<Expent> expents = edi.expSelect((page - 1) * rowsPerPage, rowsPerPage, exp, expDate);
 		JSONObject json = new JSONObject();
 		JSONArray array = new JSONArray();
 		for (Expent expent : expents) {

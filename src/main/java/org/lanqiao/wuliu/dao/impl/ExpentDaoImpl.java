@@ -122,7 +122,7 @@ public class ExpentDaoImpl extends BaseDaoImpl {
 	 * @param expentReach
 	 * @return 返回一个ArrayList集合
 	 */
-	public ArrayList<Expent> expSelect(int pageCurrentFirst, int pageRows, Expent expReach) {
+	public ArrayList<Expent> expSelect(int pageCurrentFirst, int pageRows, Expent expReach,String expDate) {
 		ArrayList<Expent> list = new ArrayList<Expent>();
 
 		StringBuffer sql = new StringBuffer(
@@ -136,8 +136,8 @@ public class ExpentDaoImpl extends BaseDaoImpl {
 		if (expReach.getExpFunction() != null && !expReach.getExpFunction().equals("")) {
 			sql.append("AND expFunction like '%").append(expReach.getExpFunction()).append("%' ");
 		}
-		if (expReach.getExpDate() != null && !expReach.getExpDate().equals("")) {
-			sql.append("AND expDate like '%").append(expReach.getExpDate()).append("%' ");
+		if (expDate != null && !expDate.equals("")) {
+			sql.append("AND expDate like '%").append(expDate).append("%' ");
 		}
 		sql.append(" ORDER BY expId LIMIT ?, ?");
 		//ResultSet rs = select(sql.toString(), new Object[] { pageCurrentFirst, pageRows });
