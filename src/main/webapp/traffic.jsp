@@ -53,7 +53,10 @@
 				data-options="iconCls:'icon-remove',plain:true">删除</a> <a
 				id="traffic_search" href="javascript:void(0)"
 				class="easyui-linkbutton"
-				data-options="iconCls:'icon-search',plain:true">搜索</a>
+				data-options="iconCls:'icon-search',plain:true">搜索</a> <a
+				id="traffic_export" href="javascript:void(0)"
+				class="easyui-linkbutton"
+				data-options="iconCls:'icon-redo',plain:true">导出</a>
 		</div>
 	</div>
 
@@ -361,18 +364,29 @@
 			$('#traffic_search_dlg').dialog('open').dialog('setTitle', '搜索');
 		});
 		/* 搜索 */
-		$('#traffic_search_button').click(function() {
-			if (!$('#traffic_search_fm').form('validate')) {
-				$.messager.alert('提示', '请正确填写信息！');
-				return;
-			}
-			$('#traffic_datagrid').datagrid('load', {
-				searchLogSendDate : $('#traffic_search_logSendDate').combobox('getText'),
-				searchLogContractNum : $('#traffic_search_logContractNum').val(),
-				searchLogCarLicence : $('#traffic_search_logCarLicence').val()
-			});
-			$('#traffic_search_dlg').dialog('close');
-		});
+		$('#traffic_search_button')
+				.click(
+						function() {
+							if (!$('#traffic_search_fm').form('validate')) {
+								$.messager.alert('提示', '请正确填写信息！');
+								return;
+							}
+							$('#traffic_datagrid')
+									.datagrid(
+											'load',
+											{
+												searchLogSendDate : $(
+														'#traffic_search_logSendDate')
+														.combobox('getText'),
+												searchLogContractNum : $(
+														'#traffic_search_logContractNum')
+														.val(),
+												searchLogCarLicence : $(
+														'#traffic_search_logCarLicence')
+														.val()
+											});
+							$('#traffic_search_dlg').dialog('close');
+						});
 
 		/* 验证 */
 		$.extend($.fn.validatebox.defaults.rules, {
@@ -381,6 +395,16 @@
 					return value == '发车' || value == '到车';
 				},
 				message : '请选择正确的"车流类型"'
+			}
+		});
+		
+		/* 导出 */
+		$('#traffic_export').click(function() {
+			var row = $('#traffic_datagrid').datagrid('getSelected');
+			if (row) {
+				window.location.href = "deliverExport?logId=" + row.logId;
+			} else {
+				$.messager.alert('提示', '请选择数据！');
 			}
 		});
 	</script>

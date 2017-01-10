@@ -78,6 +78,19 @@ public class ParseUtils {
 	}
 
 	/**
+	 * 将Date对象格式化为yyyy年MM月dd日的格式
+	 * 
+	 * @param date
+	 * @return
+	 */
+	public static String formatDate(Date date) {
+		if (date == null) {
+			return "1970年01月01日";
+		}
+		return new SimpleDateFormat("yyyy年MM月dd日").format(date);
+	}
+
+	/**
 	 * 将来自表单的输入转化为合法的字符串(保证不出现{@link java.lang.NullPointerExcepftion})
 	 * 
 	 * @return

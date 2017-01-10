@@ -45,14 +45,14 @@
 				data-options="iconCls:'icon-reload',plain:true">显示所有</a> <a
 				id="arvgs_edit" href="javascript:void(0)" class="easyui-linkbutton"
 				data-options="iconCls:'icon-edit',plain:true">编辑</a> <a
-				id="arvgs_sms" href="javascript:void(0)" class="easyui-linkbutton"
-				data-options="iconCls:'icon-man',plain:true">短信提醒</a> <a
 				id="arvgs_delete" href="javascript:void(0)"
 				class="easyui-linkbutton"
 				data-options="iconCls:'icon-remove',plain:true">删除</a> <a
 				id="arvgs_search" href="javascript:void(0)"
 				class="easyui-linkbutton"
 				data-options="iconCls:'icon-search',plain:true">搜索</a> <a
+				id="arvgs_sms" href="javascript:void(0)" class="easyui-linkbutton"
+				data-options="iconCls:'icon-man',plain:true">短信提醒</a> <a
 				id="arvgs_import" href="javascript:void(0)"
 				class="easyui-linkbutton"
 				data-options="iconCls:'icon-undo',plain:true">导入</a>

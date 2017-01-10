@@ -331,4 +331,103 @@ public class TrafficDaoImpl extends BaseDaoImpl {
 			DBUtils.closeResultSet(resultSet);
 		}
 	}
+
+	/**
+	 * 获取特定车流信息
+	 * 
+	 * @param logId
+	 */
+	public Logistics getTraffic(int logId) {
+		Logistics traffic = new Logistics();
+		String sql = "SELECT * FROM logistics WHERE logId = ?";
+
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		try {
+			connection = DBUtils.getConnection();
+			preparedStatement = connection.prepareStatement(sql);
+			setParameter(preparedStatement, sql, new Object[] { logId });
+			resultSet = preparedStatement.executeQuery();
+			if (resultSet.next()) {
+				traffic.setLogId(resultSet.getInt(1));
+				traffic.setLogContractNum(resultSet.getString(2));
+				traffic.setLogSendDate(resultSet.getDate(3));
+				traffic.setLogSiteStart(resultSet.getString(4));
+				traffic.setLogSiteEnd(resultSet.getString(5));
+				traffic.setLogCarLicence(resultSet.getString(6));
+				traffic.setLogCarDriver(resultSet.getString(7));
+				traffic.setLogCarPhone(resultSet.getString(8));
+				traffic.setLogCarPay(resultSet.getDouble(9));
+				traffic.setLogUnloadPay(resultSet.getDouble(10));
+				traffic.setLogPartner(resultSet.getString(11));
+				traffic.setLogType(resultSet.getInt(12));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return traffic;
+		} finally {
+			DBUtils.closeConnection(connection);
+			DBUtils.closePreparedStatement(preparedStatement);
+			DBUtils.closeResultSet(resultSet);
+		}
+		return traffic;
+	}
+
+	/**
+	 * 获取特定车流中的货物列表
+	 * 
+	 * @param logId
+	 */
+	public List<Goods> getTrafficGoods(int logId) {
+		List<Goods> list = new LinkedList<Goods>();
+		String sql = "SELECT * FROM goods WHERE logId = ?";
+
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		try {
+			connection = DBUtils.getConnection();
+			preparedStatement = connection.prepareStatement(sql);
+			setParameter(preparedStatement, sql, new Object[] { logId });
+			resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()) {
+				Goods goods = new Goods();
+				goods.setGoId(resultSet.getInt(1));
+				goods.setGoBank(resultSet.getString(2));
+				goods.setGoName(resultSet.getString(3));
+				goods.setGoPack(resultSet.getString(4));
+				goods.setGoNum(resultSet.getInt(5));
+				goods.setGoWeight(resultSet.getDouble(6));
+				goods.setGoVolume(resultSet.getDouble(7));
+				goods.setGoSendMan(resultSet.getString(8));
+				goods.setGoSendPhone(resultSet.getString(9));
+				goods.setGoSendAddress(resultSet.getString(10));
+				goods.setGoForMan(resultSet.getString(11));
+				goods.setGoForPhone(resultSet.getString(12));
+				goods.setGoForAddress(resultSet.getString(13));
+				goods.setGoGetWay(resultSet.getString(14));
+				goods.setGoPayWay(resultSet.getString(15));
+				goods.setGoPay(resultSet.getDouble(16));
+				goods.setGoInsurancePay(resultSet.getDouble(17));
+				goods.setGoReplacePay(resultSet.getDouble(18));
+				goods.setGoCommission(resultSet.getDouble(19));
+				goods.setGoDamagePay(resultSet.getDouble(20));
+				goods.setGoTransitPay(resultSet.getDouble(21));
+				goods.setGoSiteEnd(resultSet.getString(22));
+				goods.setGoRemark(resultSet.getString(23));
+				goods.setGoType(resultSet.getInt(24));
+				goods.setGoSmsStatus(resultSet.getInt(26));
+				list.add(goods);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return list;
+		} finally {
+			DBUtils.closeConnection(connection);
+			DBUtils.closePreparedStatement(preparedStatement);
+			DBUtils.closeResultSet(resultSet);
+		}
+		return list;
+	}
 }

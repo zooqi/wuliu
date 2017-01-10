@@ -53,9 +53,6 @@
 				id="dlvgs_search" href="javascript:void(0)"
 				class="easyui-linkbutton"
 				data-options="iconCls:'icon-search',plain:true">搜索</a> <a
-				id="dlvgs_export" href="javascript:void(0)"
-				class="easyui-linkbutton"
-				data-options="iconCls:'icon-redo',plain:true">导出</a><a
 				id="dlvgs_print" href="javascript:void(0)" class="easyui-linkbutton"
 				data-options="iconCls:'icon-print',plain:true">打印货物单</a> <a
 				id="dlvgs_printl" href="javascript:void(0)"
