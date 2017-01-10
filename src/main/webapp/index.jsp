@@ -49,28 +49,16 @@
 		style="width: 180px;">
 		<div class="easyui-accordion" data-options="fit:true">
 			<ul class="easyui-tree">
-				<c:forEach var="list" items="${requestScope.lists}">
-					<c:forEach var="mainMenu" items="${list}">
-						<li><span>${mainMenu.getMenuName()}</span> <!-- fun -->
-							<ul>
-								<c:forEach var="fun" items="${mainMenu.getFun()}">
-									<li><a
-										onclick="add_tab('${fun.getFunName()}', '${fun.getFunURI()}')">${fun.getFunName()}</a></li>
-								</c:forEach>
-							</ul> <!-- two -->
-							<ul>
-								<c:forEach var="subMenu" items="${mainMenu.getChildMenu()}">
-									<li><span>${subMenu.getMenuName()}</span>
-
-										<ul>
-											<c:forEach var="fun" items="${subMenu.getFun()}">
-												<li><a
-													onclick="add_tab('${fun.getFunName()}', '${fun.getFunURI()}')">${fun.getFunName()}</a></li>
-											</c:forEach>
-										</ul></li>
-								</c:forEach>
-							</ul></li>
-					</c:forEach>
+				<c:forEach var="menu" items="${requestScope.menus}">
+					<li><span>${menu.getMenuName()}</span>
+						<ul>
+							<c:forEach var="fun" items="${menu.getFunList()}">
+								<li>
+									<a onclick="add_tab('${fun.getFunName()}', '${fun.getFunURI()}')">${fun.getFunName()}</a>
+								</li>
+							</c:forEach>
+						</ul>
+					</li>
 				</c:forEach>
 			</ul>
 		</div>

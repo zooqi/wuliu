@@ -2,15 +2,15 @@
 Navicat MySQL Data Transfer
 
 Source Server         : zooqi@debian
-Source Server Version : 50552
+Source Server Version : 50553
 Source Host           : debian:3306
 Source Database       : baishun
 
 Target Server Type    : MYSQL
-Target Server Version : 50552
+Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2016-12-31 12:21:21
+Date: 2017-01-10 16:02:25
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -102,24 +102,6 @@ INSERT INTO `emp_fun` VALUES ('1', '2');
 INSERT INTO `emp_fun` VALUES ('2', '2');
 INSERT INTO `emp_fun` VALUES ('1', '3');
 INSERT INTO `emp_fun` VALUES ('1', '4');
-
--- ----------------------------
--- Table structure for emp_role
--- ----------------------------
-DROP TABLE IF EXISTS `emp_role`;
-CREATE TABLE `emp_role` (
-  `roleId` int(11) unsigned NOT NULL COMMENT '角色Id，主键',
-  `empId` int(11) unsigned NOT NULL COMMENT '员工Id，主键',
-  PRIMARY KEY (`roleId`,`empId`),
-  KEY `emp_role_ibfk_2` (`empId`),
-  CONSTRAINT `emp_role_ibfk_1` FOREIGN KEY (`roleId`) REFERENCES `role` (`roleId`) ON UPDATE CASCADE,
-  CONSTRAINT `emp_role_ibfk_2` FOREIGN KEY (`empId`) REFERENCES `emp` (`empId`) ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of emp_role
--- ----------------------------
-INSERT INTO `emp_role` VALUES ('1', '1');
 
 -- ----------------------------
 -- Table structure for expent
@@ -251,55 +233,15 @@ INSERT INTO `logistics` VALUES ('4', 'UWP', '2016-12-25', '桂林', '南康', '�
 DROP TABLE IF EXISTS `menu`;
 CREATE TABLE `menu` (
   `menuId` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '菜单Id',
-  `menuFather` int(11) unsigned DEFAULT NULL COMMENT '菜单父Id',
   `menuName` varchar(255) DEFAULT '' COMMENT '菜单名字',
-  PRIMARY KEY (`menuId`),
-  KEY `menu_ibfk_1` (`menuFather`),
-  CONSTRAINT `menu_ibfk_1` FOREIGN KEY (`menuFather`) REFERENCES `menu` (`menuId`) ON UPDATE CASCADE
+  PRIMARY KEY (`menuId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of menu
 -- ----------------------------
-INSERT INTO `menu` VALUES ('1', null, '行政管理');
-INSERT INTO `menu` VALUES ('2', null, '业务管理');
-INSERT INTO `menu` VALUES ('3', null, '财务管理');
-INSERT INTO `menu` VALUES ('4', null, '权限管理');
-INSERT INTO `menu` VALUES ('5', null, '个人信息管理');
-
--- ----------------------------
--- Table structure for role
--- ----------------------------
-DROP TABLE IF EXISTS `role`;
-CREATE TABLE `role` (
-  `roleId` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '角色Id',
-  `roleName` varchar(255) DEFAULT '' COMMENT '角色名字',
-  PRIMARY KEY (`roleId`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of role
--- ----------------------------
-INSERT INTO `role` VALUES ('1', '管理员');
-
--- ----------------------------
--- Table structure for role_menu
--- ----------------------------
-DROP TABLE IF EXISTS `role_menu`;
-CREATE TABLE `role_menu` (
-  `roleId` int(11) unsigned NOT NULL COMMENT '角色Id',
-  `menuId` int(11) unsigned NOT NULL COMMENT '菜单Id',
-  PRIMARY KEY (`roleId`,`menuId`),
-  KEY `role_menu_ibfk_2` (`menuId`),
-  CONSTRAINT `role_menu_ibfk_1` FOREIGN KEY (`roleId`) REFERENCES `role` (`roleId`) ON UPDATE CASCADE,
-  CONSTRAINT `role_menu_ibfk_2` FOREIGN KEY (`menuId`) REFERENCES `menu` (`menuId`) ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of role_menu
--- ----------------------------
-INSERT INTO `role_menu` VALUES ('1', '1');
-INSERT INTO `role_menu` VALUES ('1', '2');
-INSERT INTO `role_menu` VALUES ('1', '3');
-INSERT INTO `role_menu` VALUES ('1', '4');
-INSERT INTO `role_menu` VALUES ('1', '5');
+INSERT INTO `menu` VALUES ('1', '行政管理');
+INSERT INTO `menu` VALUES ('2', '业务管理');
+INSERT INTO `menu` VALUES ('3', '财务管理');
+INSERT INTO `menu` VALUES ('4', '权限管理');
+INSERT INTO `menu` VALUES ('5', '个人信息管理');
