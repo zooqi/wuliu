@@ -7,6 +7,7 @@ package org.lanqiao.wuliu.bean;
  *
  */
 public class Fun {
+
 	private Integer funId;
 	private String funURI;
 	private String funName;

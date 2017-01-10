@@ -7,6 +7,7 @@ package org.lanqiao.wuliu.bean;
  *
  */
 public class Attent {
+
 	private Integer attentId;
 	private String attentDate;
 	private double attentNum;

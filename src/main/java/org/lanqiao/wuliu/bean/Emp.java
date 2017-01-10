@@ -1,10 +1,6 @@
 package org.lanqiao.wuliu.bean;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 /**
  * 职工信息表
@@ -13,6 +9,7 @@ import java.util.Set;
  *
  */
 public class Emp {
+
 	private Integer empId;
 	private String empNum;
 	private String empName;
@@ -30,7 +27,6 @@ public class Emp {
 	private String empMarriage;
 	private String empPasswd;
 	private String empRemark;
-	private List<Role> roles = new ArrayList<Role>();
 
 	public Integer getEmpId() {
 		return empId;
@@ -103,7 +99,7 @@ public class Emp {
 	public void setEmpSex(String empSex) {
 		this.empSex = empSex;
 	}
-	
+
 	public Date getEmpBorn() {
 		return empBorn;
 	}
@@ -159,21 +155,13 @@ public class Emp {
 	public void setEmpPasswd(String empPasswd) {
 		this.empPasswd = empPasswd;
 	}
-	
+
 	public String getEmpRemark() {
 		return empRemark;
 	}
 
 	public void setEmpRemark(String empRemark) {
 		this.empRemark = empRemark;
-	}
-
-	public List<Role> getRoles() {
-		return roles;
-	}
-
-	public void setRoles(List<Role> roles) {
-		this.roles = roles;
 	}
 
 }

@@ -1,6 +1,5 @@
 package org.lanqiao.wuliu.bean;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -10,11 +9,10 @@ import java.util.List;
  *
  */
 public class Menu {
+
 	private Integer menuId;
-	private Integer menuFather;
 	private String menuName;
-	private List<Menu> childMenu = new ArrayList<Menu>();
-	private List<Fun> fun = new ArrayList<Fun>();
+	private List<Fun> funList;
 
 	public Integer getMenuId() {
 		return menuId;
@@ -22,14 +20,6 @@ public class Menu {
 
 	public void setMenuId(Integer menuId) {
 		this.menuId = menuId;
-	}
-
-	public Integer getMenuFather() {
-		return menuFather;
-	}
-
-	public void setMenuFather(Integer menuFather) {
-		this.menuFather = menuFather;
 	}
 
 	public String getMenuName() {
@@ -40,20 +30,33 @@ public class Menu {
 		this.menuName = menuName;
 	}
 
-	public List<Menu> getChildMenu() {
-		return childMenu;
+	public List<Fun> getFunList() {
+		return funList;
 	}
 
-	public void setChildMenu(List<Menu> childMenu) {
-		this.childMenu = childMenu;
+	public void setFunList(List<Fun> funList) {
+		this.funList = funList;
 	}
 
-	public List<Fun> getFun() {
-		return fun;
+	@Override
+	public int hashCode() {
+		return menuId;
 	}
 
-	public void setFun(List<Fun> fun) {
-		this.fun = fun;
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (!(obj instanceof Menu)) {
+			return false;
+		}
+
+		Menu menu = (Menu) obj;
+		if (getMenuId().equals(menu.getMenuId()) && getMenuName().equals(menu.getMenuName())) {
+			return true;
+		}
+		return false;
 	}
 
 }
