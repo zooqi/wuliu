@@ -353,34 +353,26 @@
 					<td width="70px">发货日期：</td>
 					<td><input id="dlvgs_search_logSendDate"
 						class="easyui-datebox" data-options="validType:'length[0,32]'"
-						style="width: 220px"></td>
+						style="width: 124px"></td>
 				</tr>
-
 				<tr>
-					<td width="70px">&emsp;货&emsp;号：</td>
+					<td width="70px">货&emsp;&emsp;号：</td>
 					<td><input id="dlvgs_search_goBank" class="easyui-validatebox"
-						data-options="validType:'length[0,32]'" style="width: 220px"></td>
+						data-options="validType:'length[0,32]'" style="width: 120px"></td>
 				</tr>
 
 				<tr>
 					<td width="70px">货品名称：</td>
 					<td><input id="dlvgs_search_goName" class="easyui-validatebox"
-						data-options="validType:'length[0,32]'" style="width: 220px"></td>
+						data-options="validType:'length[0,32]'" style="width: 120px"></td>
+				</tr>
+				
+				<tr>
+					<td width="70px">&emsp;车&nbsp;牌&nbsp;号：</td>
+					<td><input id="dlvgs_search_logCarLicence" class="easyui-validatebox"
+						data-options="validType:'length[0,32]'" style="width: 120px"></td>
 				</tr>
 
-				<tr>
-					<td width="70px">合同编号：</td>
-					<td><input id="dlvgs_search_logContractNum"
-						class="easyui-validatebox" data-options="validType:'length[0,32]'"
-						style="width: 220px"></td>
-				</tr>
-
-				<tr>
-					<td width="70px">&emsp;车牌号：</td>
-					<td><input id="dlvgs_search_logCarLicence"
-						class="easyui-validatebox" data-options="validType:'length[0,32]'"
-						style="width: 220px"></td>
-				</tr>
 			</table>
 		</form>
 	</div>

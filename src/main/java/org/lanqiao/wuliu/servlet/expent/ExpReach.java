@@ -2,12 +2,7 @@ package org.lanqiao.wuliu.servlet.expent;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -37,7 +32,7 @@ public class ExpReach extends HttpServlet {
 		String expEmpName = request.getParameter("expEmpName");
 		String expFunction = request.getParameter("expFunction");
 
-		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		//DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
 		String expDate = request.getParameter("expDate");
 

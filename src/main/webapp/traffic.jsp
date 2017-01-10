@@ -135,24 +135,24 @@
 		<form id="traffic_search_fm">
 			<table class="zooqi-frame-text" style="border-spacing: 10px;">
 				<tr>
-					<td width="90px">发/到车日期：</td>
+					<td width="85px">发/到车日期：</td>
 					<td><input id="traffic_search_logSendDate"
 						class="easyui-datebox" data-options="validType:'length[0,32]'"
-						style="width: 220px"></td>
+						style="width: 124px"></td>
 				</tr>
 
 				<tr>
-					<td width="90px">&emsp;合同编号：</td>
+					<td width="85px">合&nbsp;同&nbsp;编&nbsp; 号：</td>
 					<td><input id="traffic_search_logContractNum"
 						class="easyui-validatebox" data-options="validType:'length[0,32]'"
-						style="width: 220px"></td>
+						style="width: 120px"></td>
 				</tr>
 
 				<tr>
-					<td width="90px">&emsp;&emsp;车牌号：</td>
+					<td width="85px">车&emsp;牌&emsp; 号：</td>
 					<td><input id="traffic_search_logCarLicence"
 						class="easyui-validatebox" data-options="validType:'length[0,32]'"
-						style="width: 220px"></td>
+						style="width: 120px"></td>
 				</tr>
 			</table>
 		</form>

@@ -122,7 +122,7 @@ public class ExpentDaoImpl extends BaseDaoImpl {
 	 * @param expentReach
 	 * @return 返回一个ArrayList集合
 	 */
-	public ArrayList<Expent> expSelect(int pageCurrentFirst, int pageRows, Expent expReach,String expDate) {
+	public ArrayList<Expent> expSelect(int pageCurrentFirst, int pageRows, Expent expReach, String expDate) {
 		ArrayList<Expent> list = new ArrayList<Expent>();
 
 		StringBuffer sql = new StringBuffer(
@@ -140,8 +140,9 @@ public class ExpentDaoImpl extends BaseDaoImpl {
 			sql.append("AND expDate like '%").append(expDate).append("%' ");
 		}
 		sql.append(" ORDER BY expId LIMIT ?, ?");
-		//ResultSet rs = select(sql.toString(), new Object[] { pageCurrentFirst, pageRows });
-		Object[] params = new Object[] { pageCurrentFirst, pageRows  };
+		// ResultSet rs = select(sql.toString(), new Object[] {
+		// pageCurrentFirst, pageRows });
+		Object[] params = new Object[] { pageCurrentFirst, pageRows };
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
@@ -431,6 +432,17 @@ public class ExpentDaoImpl extends BaseDaoImpl {
 		return list;
 	}
 
+	/**
+	 * 每月支付员工的金钱情况
+	 * 
+	 * @param pageCurrentFirst
+	 *            第一条记录
+	 * @param pageRows
+	 *            页数
+	 * @param date
+	 *            时间
+	 * @return ArrayList
+	 */
 	public ArrayList<Object[]> getAttent(int pageCurrentFirst, int pageRows, String date) {
 		ArrayList<Object[]> list = new ArrayList<Object[]>();
 		String sql = "SELECT attentDate,SUM(attentOverTimePay),SUM(attentBonus),SUM(empWage) FROM attent WHERE attentDate LIKE ? GROUP BY attentDate LIMIT ?,?";
@@ -445,7 +457,7 @@ public class ExpentDaoImpl extends BaseDaoImpl {
 			preparedStatement = connection.prepareStatement(sql);
 			setParameter(preparedStatement, sql, params);
 			rs = preparedStatement.executeQuery();
-			while(rs.next()){
+			while (rs.next()) {
 				Object[] object = new Object[4];
 				object[0] = rs.getString(1);
 				object[1] = rs.getDouble(2);
@@ -453,7 +465,7 @@ public class ExpentDaoImpl extends BaseDaoImpl {
 				object[3] = rs.getDouble(4);
 				list.add(object);
 			}
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return list;

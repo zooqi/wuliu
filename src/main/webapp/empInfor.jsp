@@ -161,19 +161,19 @@
 				<tr>
 					<td width="70px">职 &nbsp;工 &nbsp;号：</td>
 					<td><input id="emp_empNum" class="easyui-validatebox"
-						data-options="validType:'length[0,32]'" style="width: 110px"></td>
+						data-options="validType:'length[0,32]'" style="width: 115px"></td>
 				</tr>
 
 				<tr>
 					<td width="70px">姓&emsp;&emsp;名：</td>
 					<td><input id="emp_empName" class="easyui-validatebox"
-						data-options="validType:'length[0,32]'" style="width: 110px"></td>
+						data-options="validType:'length[0,32]'" style="width: 115px"></td>
 				</tr>
 
 				<tr>
 					<td width="70px">性&emsp;&emsp;别：</td>
 					<td><select id="emp_empSex" class="easyui-combobox"
-						data-options="validType:'sex'" style="width: 114px;">
+						data-options="validType:'sex'" style="width: 115px;">
 							<option value=""></option>
 							<option value="男">男</option>
 							<option value="女">女</option>
@@ -183,7 +183,7 @@
 				<tr>
 					<td width="70px">部&emsp;&emsp;门：</td>
 					<td><input id="emp_empDepart" class="easyui-validatebox"
-						data-options="validType:'length[0,64]'" style="width: 110px"></td>
+						data-options="validType:'length[0,64]'" style="width: 115px"></td>
 				</tr>
 			</table>
 		</form>
@@ -337,6 +337,31 @@
 				sortable : true,
 				width : 100
 			} ] ]
+		});
+		
+		/* 获取职工姓名  */
+		$('#empInfor').combobox({ 
+			url:'empInfor', 
+			valueField:'empId',
+			textField:'empName'
+		});
+		$('#emp_empName').combobox({ 
+			url:'empInfor', 
+			valueField:'empId',
+			textField:'empName'
+		});
+		
+		/*获取职工号*/
+		$('#emp_empNum').combobox({ 
+			url:'empInfor', 
+			valueField:'empId',
+			textField:'empNum'
+		});
+		/*获取职工部门*/
+		$('#emp_empDepart').combobox({ 
+			url:'empInfor', 
+			valueField:'empId',
+			textField:'empDepart'
 		});
 		
 		/* 显示所有 */

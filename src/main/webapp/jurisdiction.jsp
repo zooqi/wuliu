@@ -173,6 +173,26 @@
 				width : 140
 			}] ]
 		});
+		/* 获取职工姓名  */
+	
+		$('#jur_empName').combobox({ 
+			url:'empInfor', 
+			valueField:'empId',
+			textField:'empName'
+		});
+		
+		/*获取职工号*/
+		$('#jur_empNum').combobox({ 
+			url:'empInfor', 
+			valueField:'empId',
+			textField:'empNum'
+		});
+		/*获取职工部门*/
+		$('#jur_empDepart').combobox({ 
+			url:'empInfor', 
+			valueField:'empId',
+			textField:'empDepart'
+		});
 		
 		/* 显示所有 */
 		$('#jur_reload').click(function() {

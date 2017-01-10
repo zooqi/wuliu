@@ -255,6 +255,7 @@
 			valueField:'empId',
 			textField:'empName'
 		});
+		
 		$('#attent_empName').combobox({ 
 			url:'empInfor', 
 			valueField:'empId',
