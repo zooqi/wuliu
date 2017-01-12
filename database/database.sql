@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2017-01-10 16:02:25
+Date: 2017-01-12 16:36:23
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -34,14 +34,11 @@ CREATE TABLE `attent` (
   PRIMARY KEY (`attentId`),
   KEY `attent_ibfk_1` (`empId`),
   CONSTRAINT `attent_ibfk_1` FOREIGN KEY (`empId`) REFERENCES `emp` (`empId`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of attent
 -- ----------------------------
-INSERT INTO `attent` VALUES ('1', '2016-03', '0.00', '0.00', '发烧', '5', '500.00', '100.00', '100', '', '1');
-INSERT INTO `attent` VALUES ('2', '2015-05', '1.00', '0.00', '发烧', '100', '10.00', '100.00', '0', '生病了', '2');
-INSERT INTO `attent` VALUES ('3', '2016-01', '11.00', '3.00', '', '50', '2.00', '50.00', null, '', '3');
 
 -- ----------------------------
 -- Table structure for emp
@@ -67,17 +64,14 @@ CREATE TABLE `emp` (
   `empRemark` varchar(255) DEFAULT '' COMMENT '备注',
   PRIMARY KEY (`empId`),
   UNIQUE KEY `empNum` (`empNum`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of emp
 -- ----------------------------
-INSERT INTO `emp` VALUES ('1', 'BS01001', '张三', '秘书部', '老板', '1000.00', '2016-08-07', '学士', '女', null, '13687753833', '1183085964', '广西桂林市七星区', '健康', '离异', '1234', null);
-INSERT INTO `emp` VALUES ('2', 'BS02001', '李四', '财务部', '普通员工', '800.00', '2016-08-07', '本科', '女', null, '13654453833', '118308594', '广东广州市', '健康', '已婚', '123456', null);
-INSERT INTO `emp` VALUES ('3', '005', '刘二', '市场部', '经理', '12345.00', null, '博士', '', null, '', '', '', '', '', '1234', null);
-INSERT INTO `emp` VALUES ('4', '012', '大黄', '财务部', '普通员工', '1200.00', '2016-08-07', '研究生', '女', null, '13687735833', '', '广西桂林市七星区', '健康', '   ', '1234', null);
-INSERT INTO `emp` VALUES ('5', 'BS01002', '大佬', '秘书室', '老板助理', '2500.00', '2016-08-08', '大专', '女', null, '16377865899', '1183085964', '桂林市七星区花江', '健康', '未婚', '1234', null);
-INSERT INTO `emp` VALUES ('6', 'BS03002', '张根生', '销售部', '经理', '5000.00', '2016-08-09', '研究生', '男', null, '', '', '', '健康', '未婚', '1234', null);
+INSERT INTO `emp` VALUES ('1', 'BS01001', '老板', '老板', '老板', '1000.00', '2016-08-07', '学士', '女', null, '13686757533', '1123084964', '广西桂林市七星区', '健康', '未婚', '1234', null);
+INSERT INTO `emp` VALUES ('2', 'BS01002', '取货员', '取货员', '取货员', '2500.00', '2016-08-08', '大专', '女', null, '16377865899', '1283085164', '桂林市七星区花江', '健康', '未婚', '1234', null);
+INSERT INTO `emp` VALUES ('3', 'BS01003', '会计', '会计', '会计', '5000.00', '2016-08-09', '研究生', '男', null, '', '', '', '健康', '未婚', '1234', null);
 
 -- ----------------------------
 -- Table structure for emp_fun
@@ -96,12 +90,22 @@ CREATE TABLE `emp_fun` (
 -- Records of emp_fun
 -- ----------------------------
 INSERT INTO `emp_fun` VALUES ('1', '1');
-INSERT INTO `emp_fun` VALUES ('2', '1');
-INSERT INTO `emp_fun` VALUES ('3', '1');
 INSERT INTO `emp_fun` VALUES ('1', '2');
-INSERT INTO `emp_fun` VALUES ('2', '2');
+INSERT INTO `emp_fun` VALUES ('3', '2');
 INSERT INTO `emp_fun` VALUES ('1', '3');
+INSERT INTO `emp_fun` VALUES ('2', '3');
 INSERT INTO `emp_fun` VALUES ('1', '4');
+INSERT INTO `emp_fun` VALUES ('2', '4');
+INSERT INTO `emp_fun` VALUES ('1', '5');
+INSERT INTO `emp_fun` VALUES ('2', '5');
+INSERT INTO `emp_fun` VALUES ('1', '6');
+INSERT INTO `emp_fun` VALUES ('3', '6');
+INSERT INTO `emp_fun` VALUES ('1', '7');
+INSERT INTO `emp_fun` VALUES ('3', '7');
+INSERT INTO `emp_fun` VALUES ('1', '8');
+INSERT INTO `emp_fun` VALUES ('3', '8');
+INSERT INTO `emp_fun` VALUES ('1', '9');
+INSERT INTO `emp_fun` VALUES ('1', '10');
 
 -- ----------------------------
 -- Table structure for expent
@@ -116,16 +120,11 @@ CREATE TABLE `expent` (
   `expDate` date DEFAULT NULL COMMENT '支出日期',
   `expRemark` varchar(255) DEFAULT '' COMMENT '备注',
   PRIMARY KEY (`expId`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of expent
 -- ----------------------------
-INSERT INTO `expent` VALUES ('1', 'BS01001', '张三', '外卖', '150.00', '2016-12-03', '');
-INSERT INTO `expent` VALUES ('2', 'BS01001', '张三', '临时工', '250.00', '2016-11-01', '');
-INSERT INTO `expent` VALUES ('3', 'BS01001', '张三', '外卖', '60.00', '2016-10-01', '');
-INSERT INTO `expent` VALUES ('4', 'BS01001', '张三', '餐具', '120.00', '2016-03-01', '');
-INSERT INTO `expent` VALUES ('5', 'BS01001', '张三', '搬运工', '500.00', '2016-06-01', '');
 
 -- ----------------------------
 -- Table structure for fun
@@ -189,15 +188,11 @@ CREATE TABLE `goods` (
   PRIMARY KEY (`goId`),
   KEY `logId` (`logId`),
   CONSTRAINT `goods_ibfk_1` FOREIGN KEY (`logId`) REFERENCES `logistics` (`logId`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of goods
 -- ----------------------------
-INSERT INTO `goods` VALUES ('1', 'HYC2105', '桌面等', '', '58', '0.00', '2.50', '', '13793895796', '', '', '18577358707', '', '自提', '到付', '440.00', '0.00', '0.00', '0.00', '0.00', '0.00', '桂林', '', '1', '1', null);
-INSERT INTO `goods` VALUES ('2', 'HYC2060', '厨具', '麻袋', '104', '1.10', '2.20', '王兴明', '15762156741', '桂电', '刘雄杰', '13307733339', '中国', '送货', '到付', '3.30', '4.40', '5.50', '6.60', '7.70', '8.80', '桂林', '', '1', '2', null);
-INSERT INTO `goods` VALUES ('3', 'HYC3', '电脑', '', '56', null, '5.60', '六六', '15762156741', '', '张三', '13307733339', null, '送货', '到付', '1150.00', null, null, null, null, null, null, null, '0', '1', null);
-INSERT INTO `goods` VALUES ('4', 'HYC236', '南瓜', '', '100', null, '2.66', '赵六', '', '', '', '', '', '', '已付', '3500.00', null, null, '500.00', '400.00', null, '', '', '0', '1', null);
 
 -- ----------------------------
 -- Table structure for logistics
@@ -217,15 +212,11 @@ CREATE TABLE `logistics` (
   `logPartner` varchar(255) DEFAULT '' COMMENT '客户公司名',
   `logType` int(11) unsigned NOT NULL COMMENT '车流类型，发：0；到：1',
   PRIMARY KEY (`logId`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of logistics
 -- ----------------------------
-INSERT INTO `logistics` VALUES ('1', 'DYC182', '2016-07-11', '山东', '桂林', '鲁', '侯怀学', '15864839998', null, null, '淄博永昶物流有限公司', '1');
-INSERT INTO `logistics` VALUES ('2', 'GZ201607-0019', '2016-07-05', '桂林', '桂林', '桂', '罗欢', '13597135772', null, null, '广州明联嘉源公司', '0');
-INSERT INTO `logistics` VALUES ('3', 'BMW', '2016-12-24', '桂林', '赣州', '赣B 4827', '朱启晖', '13138384833', '6.5', null, '养猪场', '0');
-INSERT INTO `logistics` VALUES ('4', 'UWP', '2016-12-25', '桂林', '南康', '赣B 4827', '朱爷', '13138384833', '6.5', null, '肥佬', '0');
 
 -- ----------------------------
 -- Table structure for menu
