@@ -20,7 +20,7 @@
 	</div>
 	<!-- 对话框 -->
 		<div id="jur_edit_dlg" class="easyui-dialog"
-			style="padding: 0px 0px; width: 730px; height: 300px;"
+			style="padding: 0px 0px; width: 600px; height: 300px;"
 			data-options="closed:true,buttons:'#jur_edit_dlg-buttons'">
 			<form id="jur_edit_fm">
 				<div id="jur_edit_tabs" class="easyui-tabs">
@@ -45,8 +45,6 @@
 								<td style="width: 50px; text-align: center" >财务管理</td>
 								<td></td>
 								<td style="width: 80px; text-align: center" >权限管理</td>
-								<td></td>
-								<td style="width: 80px; text-align: center">个人管理</td>
 							</tr>
 							<tr>
 								<td style="width: 10px; text-align: center" ><input id="checkbox1" name="checkbox" type="checkbox" value="1"></td>
@@ -57,8 +55,6 @@
 								<td style="width: 80px; text-align: center" id="expent">日常支出</td>
 								<td style="width: 10px; text-align: center" ><input id="checkbox9" name="checkbox" type="checkbox" value="9"></td>
 								<td style="width: 80px; text-align: center" id="jurisdiction">授予权限</td>
-								<td style="width: 10px; text-align: center" ><input id="checkbox10" name="checkbox" type="checkbox" value="10"></td>
-								<td style="width: 80px; text-align: center" id="person">个人信息</td>
 							</tr>	
 							<tr>
 								<td style="width: 10px; text-align: center" ><input id="checkbox2" name="checkbox" type="checkbox" value="2"></td>
@@ -69,20 +65,17 @@
 								<td style="width: 80px; text-align: center" id="income">业务收支</td>
 								<td></td>
 								<td></td>
-								<td></td>
-								<td></td>
 							</tr>
 							<tr>
+								<td></td>
+								<td></td>
 								<td style="width: 10px; text-align: center" ><input id="checkbox5" name="checkbox" type="checkbox" value="5"></td>
 								<td style="width: 80px; text-align: center" id="traffic">车流管理</td>
 								<td style="width: 10px; text-align: center" ><input  id="checkbox8" name="checkbox" type="checkbox" value="8"></td>
 								<td style="width: 80px; text-align: center" id="money">每月结余</td>
 								<td></td>
 								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
+								
 							</tr>	
 						</table>
 					</div>
@@ -246,10 +239,6 @@
 							else if(data[i].empId==1 &&  data[i].funId==$('#checkbox9').val()){
 								$("#checkbox9").prop("checked",true);
 								//$("#checkbox9").prop("disabled",true);
-							}
-							else if(data[i].empId==1 &&  data[i].funId==$('#checkbox10').val()){
-								$("#checkbox10").prop("checked",true);
-								//$("#checkbox10").prop("disabled",true);
 							}
 						}
 					}
